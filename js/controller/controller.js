@@ -11,5 +11,12 @@ var Controller = Class({
         this.initialPheromoneLevel = params.initialPheromoneLevel;
         this.colonySize = params.colonySize;
         this.maximumIterations = params.maximumIterations;
+    },
+    createGraph: function(){
+        // Make nodes and edges using parameters.
+        console.log("Made graph.");
     }
 });
+
+
+// Functions - setup ants, setup graph, deploy ants, etc
