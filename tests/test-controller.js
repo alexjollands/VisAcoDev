@@ -40,4 +40,16 @@ QUnit.test("Testing the Controller", function( assert ) {
     assert.equal(edges[0].distance, 50);
     assert.equal(edges[0].pheromoneLevel, controller.initialPheromoneLevel);
 
+
+    /* Test the setupGraph() function */
+    var graph = controller.setupGraph();
+    assert.equal(graph.nodes.length, nodes.length);
+    assert.equal(graph.nodes[0].id, nodes[0].id);
+    assert.equal(graph.nodes[0].x, nodes[0].x);
+    assert.equal(graph.nodes[0].y, nodes[0].y);
+    assert.equal(graph.edges.length, edges.length);
+    assert.equal(graph.edges[0].nodeA, edges[0].nodeA);
+    assert.equal(graph.edges[0].nodeB, edges[0].nodeB);
+    assert.equal(graph.edges[0].pheromoneLevel, edges[0].pheromoneLevel);
+
 });
