@@ -12,6 +12,9 @@ params.colonySize             = 30;
 params.maximumIterations      = 200;
 
 var controller = new Controller(params);
-var nodes = controller.loadNodes();
-var edges = controller.createEdges(nodes);
+var graph = controller.setupGraph();
+
+// Create ants, deploy on graph
+
+// Run an iteration (move each ant it's maximum distance, lay pheromone, update pheromone)
 
