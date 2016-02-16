@@ -48,8 +48,8 @@ QUnit.test("Testing the Controller", function( assert ) {
     assert.equal(graph.nodes[0].x, nodes[0].x);
     assert.equal(graph.nodes[0].y, nodes[0].y);
     assert.equal(graph.edges.length, edges.length);
-    assert.equal(graph.edges[0].nodeA, edges[0].nodeA);
-    assert.equal(graph.edges[0].nodeB, edges[0].nodeB);
+    assert.equal(graph.edges[0].nodeA.id, edges[0].nodeA.id);
+    assert.equal(graph.edges[0].nodeB.id, edges[0].nodeB.id);
     assert.equal(graph.edges[0].pheromoneLevel, edges[0].pheromoneLevel);
 
 });

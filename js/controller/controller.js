@@ -40,8 +40,8 @@ var Controller = Class({
         return edges;
     },
     setupGraph: function(){
-        //var nodes = loadNodes();
-        //var edges = generateEdges();
-        //return new Graph(nodes, edges);
+        var nodes = this.loadNodes();
+        var edges = this.createEdges(nodes);
+        return new Graph(nodes, edges);
     }
 });
