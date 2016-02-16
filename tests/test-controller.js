@@ -14,7 +14,7 @@ QUnit.test("Testing the Controller", function( assert ) {
         maximumIterations: 500
     };
 
-    /* Test */
+    /* Test the constructor */
     var controller = new Controller(params);
     assert.equal(controller.pheromoneImportance, params.pheromoneImportance);
     assert.equal(controller.distanceImportance, params.distanceImportance);
@@ -23,4 +23,15 @@ QUnit.test("Testing the Controller", function( assert ) {
     assert.equal(controller.initialPheromoneLevel, params.initialPheromoneLevel);
     assert.equal(controller.colonySize, params.colonySize);
     assert.equal(controller.maximumIterations, params.maximumIterations);
+
+    /* Test the loadNodes() function */
+    var nodes = controller.loadNodes();
+    assert.equal(nodes.length, 20);
+    assert.equal(nodes[0].id, 1);
+    assert.equal(nodes[0].x, 10);
+    assert.equal(nodes[0].y, 20);
+    assert.equal(nodes[19].id, 20);
+    assert.equal(nodes[19].x, 25);
+    assert.equal(nodes[19].y, 75);
+
 });

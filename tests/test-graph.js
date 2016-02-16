@@ -13,12 +13,15 @@ QUnit.test("Testing the Graph class", function( assert ) {
     var edges = [];
     edges.push(new Edge(nodeA, nodeB, 0), new Edge(nodeB, nodeC, 0), new Edge(nodeC, nodeD, 0), new Edge(nodeD, nodeA, 0));
 
-    /* Test */
+    /* Test the constructor */
     var graph = new Graph(nodes, edges);
     assert.equal(graph.nodes.length, 4);
     assert.equal(graph.edges.length, 4);
-
     edges.push(new Edge(nodeA, nodeC, 0));
     assert.equal(graph.edges.length, 5);
+
+    /* Test the setupGraph() function */
+
+
 
 });

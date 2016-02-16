@@ -3,13 +3,13 @@
  */
 
 var Node = Class({
-    initialize: function(id, x, y, edges) {
-        this.id = id;
-        this.x = x;
-        this.y  = y;
-        this.edges = edges;
+    initialize: function(id, x, y) {
+        this.id = Number(id);
+        this.x = Number(x);
+        this.y  = Number(y);
+        this.edges = null;
     },
     toDetailedString: function() {
-        return "Node #" + this.id + " is at X:" + this.x + ", Y:" + this.y + " with " + edges.length + " edges.";
+        return "Node #" + this.id + " is at X:" + this.x + ", Y:" + this.y + " with " + this.edges.length + " edges.";
     }
 });
