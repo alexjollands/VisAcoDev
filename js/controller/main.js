@@ -13,4 +13,5 @@ params.maximumIterations      = 200;
 
 var controller = new Controller(params);
 var nodes = controller.loadNodes();
+var edges = controller.createEdges(nodes);
 

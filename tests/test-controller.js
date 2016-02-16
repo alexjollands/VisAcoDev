@@ -34,4 +34,10 @@ QUnit.test("Testing the Controller", function( assert ) {
     assert.equal(nodes[19].x, 25);
     assert.equal(nodes[19].y, 75);
 
+    /* Test the createEdges() function */
+    var edges = controller.createEdges(nodes);
+    assert.equal(edges.length, 190); // (20 nodes) 1 + 2 + 3 +...+ 17 + 18 + 19 = 190
+    assert.equal(edges[0].distance, 50);
+    assert.equal(edges[0].pheromoneLevel, controller.initialPheromoneLevel);
+
 });

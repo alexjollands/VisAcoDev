@@ -3,7 +3,7 @@
  */
 
 var Controller = Class({
-    initialize: function(params) {
+    initialize: function(params){
         this.pheromoneImportance = params.pheromoneImportance;      // Alpha
         this.distanceImportance = params.distanceImportance;        // Beta
         this.pheromoneDecayRate = params.pheromoneDecayRate;        // Rho
@@ -12,7 +12,7 @@ var Controller = Class({
         this.colonySize = params.colonySize;
         this.maximumIterations = params.maximumIterations;
     },
-    loadNodes: function() {
+    loadNodes: function(){
         var nodes = [];
         var dataURL = "js/model/nodes.json";
         $.ajax({
@@ -27,6 +27,17 @@ var Controller = Class({
             }
         });
         return nodes;
+    },
+    createEdges: function(nodes){
+        var edges = [];
+        for (var i = 0; i < nodes.length; i++){
+            for (var ii = i; ii < nodes.length; ii++){
+                if (nodes[i] != nodes[ii]) {
+                    edges.push(new Edge(nodes[i], nodes[ii], this.initialPheromoneLevel));
+                }
+            }
+        }
+        return edges;
     },
     setupGraph: function(){
         //var nodes = loadNodes();
