@@ -16,3 +16,6 @@ controller.setupGraph();
 controller.createColony();
 controller.disperseAnts();
 
+for (var i = 0; i < controller.maximumIterations; i++) {
+    controller.performACOIteration();
+}

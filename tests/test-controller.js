@@ -69,4 +69,30 @@ QUnit.test("Testing the Controller", function( assert ) {
     assert.notEqual(colony[0].position.toNode, undefined);
     assert.equal(colony[0].position.distance, 0);
 
+
+    /* Testing the performACOIteration() function */
+    var iterationNum = controller.currentIteration;
+    assert.equal(iterationNum, 0);
+    controller.performACOIteration();
+    assert.equal(controller.currentIteration, 1);
+    for (var i = 0; i < 10; i++) {
+        controller.performACOIteration();
+    }
+    assert.equal(controller.currentIteration, 11);
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

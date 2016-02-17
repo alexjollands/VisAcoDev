@@ -11,6 +11,7 @@ var Controller = Class({
         this.initialPheromoneLevel = params.initialPheromoneLevel;
         this.colonySize = params.colonySize;
         this.maximumIterations = params.maximumIterations;
+        this.currentIteration = 0;
         this.graph = null;
         this.colony = null;
     },
@@ -63,6 +64,36 @@ var Controller = Class({
             var alongEdge = this.graph.findEdge(originNode, destinationNode);
             this.colony[i].position = new Position(originNode, destinationNode, alongEdge, 0);
         }
-    }
+    },
+    performACOIteration: function(){
 
+        this.currentIteration++;
+
+        // Update pheromone level
+        this.graph.applyPheromoneDecay();
+
+        // Update ants
+        // ---------------------------------- Do I need a colony class? ------------------------------------ //
+
+        // Save shortest route
+
+    }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
