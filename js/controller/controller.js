@@ -58,10 +58,10 @@ var Controller = Class({
     },
     disperseAnts: function(){
         for (var i = 0; i < this.colony.length; i++){
-            var randomNodeCurrent = random(0, this.graph.nodes.length - 1);
-            var randomNodeNext = random(0, this.graph.nodes.length - 1);
-            // Get edge! Distance is 0.
-            var position = new Position(fromNode, toNode, alongEdge, distance);
+            var originNode = this.graph.nodes[random(0, this.graph.nodes.length - 1)];
+            var destinationNode = this.graph.nodes[random(0, this.graph.nodes.length - 1)];
+            var alongEdge = this.graph.findEdge(originNode, destinationNode);
+            this.colony[i].position = new Position(originNode, destinationNode, alongEdge, 0);
         }
     }
 
