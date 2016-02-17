@@ -9,6 +9,14 @@ var Node = Class({
         this.y  = Number(y);
         this.edges = [];
     },
+    getEdgeTo: function(targetNode){
+        for (var i = 0; i < this.edges.length; i++){
+            if (this.edges[i].nodeA.id == targetNode.id || this.edges[i].nodeB.id == targetNode.id){
+                return this.edges[i];
+            }
+        }
+        return null; // Raise exception
+    },
     toDetailedString: function() {
         return "Node #" + this.id + " is at X:" + this.x + ", Y:" + this.y + " with " + this.edges.length + " edges.";
     }
