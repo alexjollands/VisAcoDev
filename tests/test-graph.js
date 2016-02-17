@@ -27,5 +27,15 @@ QUnit.test("Testing the Graph class", function( assert ) {
     assert.equal(graph.nodes[1].edges.length, 2);
     assert.equal(graph.nodes[1].edges[1].nodeA, nodeB);
 
+    /* Test the findEdge() function */
+    var edge1 = graph.findEdge(nodeA, nodeB);
+    assert.equal(edge1.nodeA.id, nodeA.id);
+    assert.equal(edge1.nodeB.id, nodeB.id);
+
+    var edge2 = graph.findEdge(nodeA, nodeD);
+    assert.equal(edge2.nodeA.id, nodeD.id);
+    assert.equal(edge2.nodeB.id, nodeA.id);
+
+
 
 });
