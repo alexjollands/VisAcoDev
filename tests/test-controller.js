@@ -60,7 +60,13 @@ QUnit.test("Testing the Controller", function( assert ) {
     assert.notEqual(colony[0].tour.unvisitedNodes, controller.graph.nodes);
     assert.equal(colony[0].tour.unvisitedNodes.length, controller.graph.nodes.length);
 
+
     /* Testing the disperseAnts() function */
+    assert.equal(colony[0].position.fromNode, undefined);
+    assert.equal(colony[0].position.toNode, undefined);
     controller.disperseAnts();
+    assert.notEqual(colony[0].position.fromNode, undefined);
+    assert.notEqual(colony[0].position.toNode, undefined);
+    assert.equal(colony[0].position.distance, 0);
 
 });

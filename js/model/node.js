@@ -7,7 +7,7 @@ var Node = Class({
         this.id = Number(id);
         this.x = Number(x);
         this.y  = Number(y);
-        this.edges = null;
+        this.edges = [];
     },
     toDetailedString: function() {
         return "Node #" + this.id + " is at X:" + this.x + ", Y:" + this.y + " with " + this.edges.length + " edges.";

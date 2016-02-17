@@ -45,6 +45,7 @@ var Controller = Class({
         var nodes = this.loadNodes();
         var edges = this.createEdges(nodes);
         this.graph = new Graph(nodes, edges);
+        this.graph.linkNodesAndEdges(nodes, edges);
         return this.graph;
     },
     createColony: function(){
@@ -56,12 +57,12 @@ var Controller = Class({
         return ants;
     },
     disperseAnts: function(){
-        for (var i = 0; i < this.colony.length; i++){
-            var randomNodeCurrent = random(0, this.graph.nodes.length - 1);
-            var randomNodeNext = random(0, this.graph.nodes.length - 1);
-            // Get edge! Distance is 0.
-            var position = new Position(fromNode, toNode, alongEdge, distance);
-        }
+        //for (var i = 0; i < this.colony.length; i++){
+        //    var randomNodeCurrent = random(0, this.graph.nodes.length - 1);
+        //    var randomNodeNext = random(0, this.graph.nodes.length - 1);
+        //    // Get edge! Distance is 0.
+        //    var position = new Position(fromNode, toNode, alongEdge, distance);
+        //}
     }
 
 });

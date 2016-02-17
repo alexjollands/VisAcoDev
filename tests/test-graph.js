@@ -20,8 +20,12 @@ QUnit.test("Testing the Graph class", function( assert ) {
     edges.push(new Edge(nodeA, nodeC, 0));
     assert.equal(graph.edges.length, 5);
 
-    /* Test the setupGraph() function */
-
+    /* Test the linkNodesAndEdges() function */
+    graph.linkNodesAndEdges();
+    assert.equal(graph.nodes[0].edges.length, 3);       // There are three edges that include nodeA in edges array above.
+    assert.equal(graph.nodes[0].edges[0].nodeA, nodeA);
+    assert.equal(graph.nodes[1].edges.length, 2);
+    assert.equal(graph.nodes[1].edges[1].nodeA, nodeB);
 
 
 });
