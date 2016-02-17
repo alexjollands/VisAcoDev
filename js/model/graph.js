@@ -25,6 +25,9 @@ var Graph = Class({
             }
         }
     },
+    applyPheromoneDecay: function(decayRate){
+
+    },
     toDetailedString: function() {
         return "This graph has " + this.nodes.length + " nodes and " + this.edges.length + " edges.";
     }

@@ -9,12 +9,10 @@ params.pheromoneDecayRate     = 0.1;    // Rho
 params.pheromoneDepositRate   = 1;
 params.initialPheromoneLevel  = 1;
 params.colonySize             = 30;
-params.maximumIterations      = 200;
+params.maximumIterations      = 5;
 
 var controller = new Controller(params);
-var graph = controller.setupGraph();
-
-// Create ants, deploy on graph
-
-// Run an iteration (move each ant it's maximum distance, lay pheromone, update pheromone)
+controller.setupGraph();
+controller.createColony();
+controller.disperseAnts();
 

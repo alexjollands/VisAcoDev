@@ -31,11 +31,17 @@ QUnit.test("Testing the Graph class", function( assert ) {
     var edge1 = graph.findEdge(nodeA, nodeB);
     assert.equal(edge1.nodeA.id, nodeA.id);
     assert.equal(edge1.nodeB.id, nodeB.id);
-
     var edge2 = graph.findEdge(nodeA, nodeD);
     assert.equal(edge2.nodeA.id, nodeD.id);
     assert.equal(edge2.nodeB.id, nodeA.id);
 
-
+    /* Test the applyPheromoneDecay() function */
+    var decayRate = 0.1;
+    graph.edges[0].pheromoneLevel = 10;
+    graph.edges[1].pheromoneLevel = 20;
+    graph.applyPheromoneDecay(decayRate);
+    assert.equal(graph.edges[0].pheromoneLevel, 9);
+    assert.equal(graph.edges[1].pheromoneLevel, 18);
+    assert.equal(graph.edges[2].pheromoneLevel, 0);
 
 });
