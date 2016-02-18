@@ -10,6 +10,7 @@ var Controller = Class({
         this.pheromoneDepositRate = params.pheromoneDepositRate;
         this.initialPheromoneLevel = params.initialPheromoneLevel;
         this.colonySize = params.colonySize;
+        this.antMovementPerUpdate = params.antMovementPerUpdate;
         this.maximumIterations = params.maximumIterations;
         this.currentIteration = 0;
         this.graph = null;
@@ -63,6 +64,8 @@ var Controller = Class({
             var destinationNode = this.graph.nodes[random(0, this.graph.nodes.length - 1)];
             var alongEdge = this.graph.findEdge(originNode, destinationNode);
             this.colony[i].position = new Position(originNode, destinationNode, alongEdge, 0);
+            this.colony[i].tour.nodeVisited(originNode);
+            this.colony[i].tour.nodeVisited(destinationNode);
         }
     },
     performACOIteration: function(){

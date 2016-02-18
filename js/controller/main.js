@@ -9,6 +9,7 @@ params.pheromoneDecayRate     = 0.1;    // Rho
 params.pheromoneDepositRate   = 1;
 params.initialPheromoneLevel  = 1;
 params.colonySize             = 30;
+params.antMovementPerUpdate   = 500;
 params.maximumIterations      = 5;
 
 var controller = new Controller(params);
