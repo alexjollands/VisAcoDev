@@ -4,18 +4,8 @@
 
 QUnit.test("Testing the Controller", function( assert ) {
     /* Setup */
-    //var params = {
-    //    pheromoneImportance: 0.7,      // Alpha
-    //    distanceImportance: 5,         // Beta
-    //    pheromoneDecayRate: 0.1,       // Rho
-    //    pheromoneDepositRate: 1,
-    //    initialPheromoneLevel: 1,
-    //    colonySize: 4,
-    //    maximumIterations: 3
-    //};
-    //
-    ///* Test the constructor */
-    //var controller = new Controller(params);
+    controller = new Controller(params);
+
     assert.equal(controller.pheromoneImportance, params.pheromoneImportance);
     assert.equal(controller.distanceImportance, params.distanceImportance);
     assert.equal(controller.pheromoneDecayRate, params.pheromoneDecayRate);

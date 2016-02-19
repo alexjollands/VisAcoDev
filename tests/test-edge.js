@@ -4,6 +4,8 @@
 
 QUnit.test("Testing the Edge class", function( assert ) {
     /* Setup */
+    controller = new Controller(params);
+
     var nodeA = new Node(1,0,100,[]);
     var nodeB = new Node(2,0,0,[]);
     var pheromoneLevel = 10;

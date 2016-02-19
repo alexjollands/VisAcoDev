@@ -4,6 +4,8 @@
 
 QUnit.test("Testing the Node class", function( assert ) {
     /* Setup */
+    controller = new Controller(params);
+
     var nodes = [];
     var nodeA = new Node(1,0,100,[]);
     var nodeB = new Node(2,50,100,[]);

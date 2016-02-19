@@ -11,6 +11,9 @@ var Colony = Class({
         for (var i = 0; i < this.ants.length; i++){
             var originNode = controller.graph.nodes[random(0, controller.graph.nodes.length - 1)];
             var destinationNode = controller.graph.nodes[random(0, controller.graph.nodes.length - 1)];
+            while (originNode == destinationNode){
+                destinationNode = controller.graph.nodes[random(0, controller.graph.nodes.length - 1)];
+            }
             var alongEdge = controller.graph.findEdge(originNode, destinationNode);
             this.ants[i].position = new Position(originNode, destinationNode, alongEdge, 0);
             this.ants[i].tour.nodeVisited(originNode);

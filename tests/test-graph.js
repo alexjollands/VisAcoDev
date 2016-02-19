@@ -4,6 +4,8 @@
 
 QUnit.test("Testing the Graph class", function( assert ) {
     /* Setup */
+    controller = new Controller(params);
+
     var nodeA = new Node(1,0,100,[]);
     var nodeB = new Node(2,50,100,[]);
     var nodeC = new Node(3,100,50,[]);
