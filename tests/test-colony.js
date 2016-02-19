@@ -4,7 +4,6 @@
 
 QUnit.test("Testing the Colony class", function( assert ) {
     /* Setup */
-    /* Setup */
     var nodes = [];
     var nodeA = new Node(1,0,100,[]);
     var nodeB = new Node(2,50,100,[]);
@@ -27,15 +26,24 @@ QUnit.test("Testing the Colony class", function( assert ) {
     nodeD.edges.push(edgeCD, edgeAD, edgeBD);
 
     var ants = [];
-    var antA = new Ant(1, new Tour(nodes.slice()), new Position(nodeA, nodeB, edgeAB, 0));
-    var antB = new Ant(2, new Tour(nodes.slice()), new Position(nodeB, nodeC, edgeBC, 0));
-    var antC = new Ant(3, new Tour(nodes.slice()), new Position(nodeC, nodeD, edgeCD, 0));
+    var antA = new Ant(1, new Tour(nodes.slice()), new Position());
+    var antB = new Ant(2, new Tour(nodes.slice()), new Position());
+    var antC = new Ant(3, new Tour(nodes.slice()), new Position());
     ants.push(antA, antB, antC);
 
     /* Test the constructor */
     var colony = new Colony(ants);
     assert.equal(colony.ants.length, 3);
     assert.equal(colony.ants[0], antA);
+
+
+    /* Testing the disperseAnts() function */
+    assert.equal(colony.ants[0].position.fromNode, undefined);
+    assert.equal(colony.ants[0].position.toNode, undefined);
+    colony.disperseAnts();
+    assert.notEqual(colony.ants[0].position.fromNode, undefined);
+    assert.notEqual(colony.ants[0].position.toNode, undefined);
+    assert.equal(colony.ants[0].position.distance, 0);
 
     /* Test the updateAnts() function */
     colony.updateAnts();

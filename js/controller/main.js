@@ -14,9 +14,9 @@ params.maximumIterations      = 1;
 
 var controller = new Controller(params);
 controller.setupGraph();
-controller.createColony();
-controller.disperseAnts();
-
-for (var i = 0; i < controller.maximumIterations; i++) {
-    //controller.performACOIteration();
-}
+//controller.createColony();
+//controller.colony.disperseAnts();
+//
+//for (var i = 0; i < controller.maximumIterations; i++) {
+//    //controller.performACOIteration();
+//}

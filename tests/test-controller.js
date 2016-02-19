@@ -4,18 +4,18 @@
 
 QUnit.test("Testing the Controller", function( assert ) {
     /* Setup */
-    var params = {
-        pheromoneImportance: 0.7,      // Alpha
-        distanceImportance: 5,         // Beta
-        pheromoneDecayRate: 0.1,       // Rho
-        pheromoneDepositRate: 1,
-        initialPheromoneLevel: 1,
-        colonySize: 4,
-        maximumIterations: 3
-    };
-
-    /* Test the constructor */
-    var controller = new Controller(params);
+    //var params = {
+    //    pheromoneImportance: 0.7,      // Alpha
+    //    distanceImportance: 5,         // Beta
+    //    pheromoneDecayRate: 0.1,       // Rho
+    //    pheromoneDepositRate: 1,
+    //    initialPheromoneLevel: 1,
+    //    colonySize: 4,
+    //    maximumIterations: 3
+    //};
+    //
+    ///* Test the constructor */
+    //var controller = new Controller(params);
     assert.equal(controller.pheromoneImportance, params.pheromoneImportance);
     assert.equal(controller.distanceImportance, params.distanceImportance);
     assert.equal(controller.pheromoneDecayRate, params.pheromoneDecayRate);
@@ -59,15 +59,6 @@ QUnit.test("Testing the Controller", function( assert ) {
     assert.equal(colony[0].id, 1);
     assert.notEqual(colony[0].tour.unvisitedNodes, controller.graph.nodes);
     assert.equal(colony[0].tour.unvisitedNodes.length, controller.graph.nodes.length);
-
-
-    /* Testing the disperseAnts() function */
-    assert.equal(colony[0].position.fromNode, undefined);
-    assert.equal(colony[0].position.toNode, undefined);
-    controller.disperseAnts();
-    assert.notEqual(colony[0].position.fromNode, undefined);
-    assert.notEqual(colony[0].position.toNode, undefined);
-    assert.equal(colony[0].position.distance, 0);
 
 
     /* Testing the performACOIteration() function */
