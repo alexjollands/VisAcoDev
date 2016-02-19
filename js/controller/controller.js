@@ -55,17 +55,17 @@ var Controller = Class({
         for (var i = 0; i < this.colonySize; i++){
             ants.push(new Ant(i+1, new Tour(this.graph.nodes.slice()), new Position())); // Tour needs nodes
         }
-        this.colony = ants;
+        this.colony = new Colony(ants);
         return ants;
     },
     disperseAnts: function(){
-        for (var i = 0; i < this.colony.length; i++){
+        for (var i = 0; i < this.colony.ants.length; i++){
             var originNode = this.graph.nodes[random(0, this.graph.nodes.length - 1)];
             var destinationNode = this.graph.nodes[random(0, this.graph.nodes.length - 1)];
             var alongEdge = this.graph.findEdge(originNode, destinationNode);
-            this.colony[i].position = new Position(originNode, destinationNode, alongEdge, 0);
-            this.colony[i].tour.nodeVisited(originNode);
-            this.colony[i].tour.nodeVisited(destinationNode);
+            this.colony.ants[i].position = new Position(originNode, destinationNode, alongEdge, 0);
+            this.colony.ants[i].tour.nodeVisited(originNode);
+            this.colony.ants[i].tour.nodeVisited(destinationNode);
         }
     },
     performACOIteration: function(){
@@ -73,10 +73,10 @@ var Controller = Class({
         this.currentIteration++;
 
         // Update pheromone level
-        this.graph.applyPheromoneDecay();
+        this.graph.applyPheromoneDecay(this.pheromoneDecayRate);
 
         // Update ants
-        // ---------------------------------- Do I need a colony class? ------------------------------------ //
+        this.colony.updateAnts();
 
         // Save shortest route
 

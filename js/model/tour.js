@@ -17,6 +17,14 @@ var Tour = Class({
                 this.unvisitedNodes.splice(i,1);
             }
         }
+        if (this.unvisitedNodes.length == 0){
+            this.isComplete = true;
+        }
+    },
+    beginNewTour: function(){
+        // Calculate tour length + save result (if shorter)
+        this.unvisitedNodes = this.visitedNodes;
+        this.visitedNodes = [];
     },
     toDetailedString: function() {
         return "This tour starts at: " + this.originNode + ", has visited " + this.visitedNodes.length +

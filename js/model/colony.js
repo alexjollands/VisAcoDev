@@ -10,12 +10,33 @@ var Colony = Class({
     updateAnts: function(){
         for (var i = 0; i < this.ants.length; i++){
 
-            /* Whilst the ant still has distance left to run (antMovementPerUpdate), move along the edges */
-            /* Calculate how much distance the ant has left to move, pass it to moveTo() */
-            var nextNode = this.ants[i].chooseNextNode();
-            this.ants[i].moveTo(nextNode, 50);
-            //this.ants[i].layPheromone();
-            //this.ants[i].checkTourComplete();
+            var ant = this.ants[i];
+            var movementRemaining = controller.antMovementPerUpdate;
+            var antMoving = true;
+            while (antMoving){
+                console.log("=============================");
+                console.log("Ant moving ID:" + ant.id);
+                console.log(ant.toDetailedString());
+                console.log(ant.position.toDetailedString());
+                var edgeLengthRemaining = ant.position.alongEdge.distance - ant.position.distance;
+                if (edgeLengthRemaining < movementRemaining){
+                    //ant.layPheromone();
+                    ant.moveTo(ant.chooseNextNode(), 0);
+                    movementRemaining -= edgeLengthRemaining;
+                    console.log("Ant now at node: " + ant.position.fromNode.id);
+                }
+                else {
+                    ant.position.distance += movementRemaining;
+                    movementRemaining = 0;
+                    console.log("Ant now at node: " + ant.position.fromNode.id + " at distance: " + ant.position.distance);
+                }
+                if (ant.tour.isComplete){
+                    ant.tour.beginNewTour();
+                }
+                if (movementRemaining <= 0){
+                    antMoving = false;
+                }
+            }
         }
     },
     toDetailedString: function() {

@@ -26,4 +26,17 @@ QUnit.test("Testing the Tour class", function( assert ) {
     assert.equal(tour.visitedNodes.length, 1);
     assert.equal(tour.visitedNodes[0].id, nodeA.id);
 
+    /* Test the checkComplete function */
+    assert.equal(tour.isComplete, false);
+    tour.nodeVisited(nodeB);
+    assert.equal(tour.isComplete, false);
+    tour.nodeVisited(nodeC);
+    assert.equal(tour.isComplete, true);
+
+    /* Test the beginNewTour function */
+    assert.equal(tour.unvisitedNodes.length, 0);
+    tour.beginNewTour();
+    assert.equal(tour.unvisitedNodes.length, 3);
+
+
 });

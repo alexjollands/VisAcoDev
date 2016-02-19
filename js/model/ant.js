@@ -29,6 +29,7 @@ var Ant = Class({
                 return this.tour.unvisitedNodes[j];
             }
         }
+        return "No next node found";
     },
     moveTo: function(targetNode, distanceMoved){
         this.position.fromNode = this.position.toNode;
