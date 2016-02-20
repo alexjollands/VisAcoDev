@@ -10,6 +10,6 @@ var Position = Class({
         this.distance = distance;
     },
     toDetailedString: function() {
-        return "This position is " + this.distance + " along edge " + this.alongEdge + "going from node " + this.fromNode.id + " to " + this.toNode.id + ".";
+        return "This position is " + this.distance + " along edge " + this.alongEdge.nodeA.id + "-" + this.alongEdge.nodeB.id + " going from node " + this.fromNode.id + " to " + this.toNode.id + ".";
     }
 });

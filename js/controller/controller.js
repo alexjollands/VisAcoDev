@@ -15,6 +15,8 @@ var Controller = Class({
         this.currentIteration = 0;
         this.graph = null;
         this.colony = null;
+        this.shortestRoute = new Tour();
+        this.shortestRoute.totalLength = Number.MAX_VALUE;
     },
     loadNodes: function(){
         var nodes = [];

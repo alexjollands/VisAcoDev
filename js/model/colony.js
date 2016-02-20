@@ -19,22 +19,24 @@ var Colony = Class({
             this.ants[i].tour.nodeVisited(originNode);
             this.ants[i].tour.nodeVisited(destinationNode);
             this.ants[i].tour.originNode = originNode;
+            this.ants[i].tour.totalLength += alongEdge.distance;
         }
     },
     updateAnts: function(){
         for (var i = 0; i < this.ants.length; i++){
-
             var ant = this.ants[i];
+            console.log("=====================================")
+            console.log("Ant ID: " + ant.id + ", originNode: " + ant.tour.originNode.id);
             var movementRemaining = controller.antMovementPerUpdate;
             var antMoving = true;
             while (antMoving){
-                //console.log("=============================");
-                //console.log("Ant moving ID:" + ant.id);
-                //console.log(ant.toDetailedString());
-                //console.log(ant.position.toDetailedString());
+                console.log("Iteration: " + controller.currentIteration + ", Ant is moving (ID:" + ant.id + ")");
+                console.log("Movement remaining: " + movementRemaining);
+                console.log(ant.position.toDetailedString());
+
                 var edgeLengthRemaining = ant.position.alongEdge.distance - ant.position.distance;
                 if (edgeLengthRemaining < movementRemaining){
-                    //ant.layPheromone();
+                    ant.layPheromone();
                     ant.moveTo(ant.chooseNextNode(), 0);
                     movementRemaining -= edgeLengthRemaining;
                     console.log("Ant now at node: " + ant.position.fromNode.id);
@@ -45,7 +47,13 @@ var Colony = Class({
                     console.log("Ant now at node: " + ant.position.fromNode.id + " at distance: " + ant.position.distance);
                 }
                 if (ant.tour.isComplete){
-                    ant.tour.beginNewTour();
+                    console.log("Ant moved from node:" + ant.position.fromNode.id + " to node: " + ant.position.toNode.id + ".");
+                    console.log("--------- TOUR COMPLETE -----------");
+                    ant.tour.totalLength += ant.position.alongEdge.distance;
+                    ant.tour.checkShortestRoute();
+                    ant.tour.resetTour();
+                    ant.resetPosition();
+                    movementRemaining = 0;
                 }
                 if (movementRemaining <= 0){
                     antMoving = false;

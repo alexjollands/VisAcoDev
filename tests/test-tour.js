@@ -14,6 +14,7 @@ QUnit.test("Testing the Tour class", function( assert ) {
 
     /* Test the constructor */
     var tour = new Tour(nodes.slice());
+
     assert.equal(tour.unvisitedNodes.length, 3);
     assert.notEqual(tour.unvisitedNodes, nodes);
     assert.equal(tour.visitedNodes.length, 0);
@@ -28,17 +29,16 @@ QUnit.test("Testing the Tour class", function( assert ) {
     assert.equal(tour.visitedNodes.length, 1);
     assert.equal(tour.visitedNodes[0].id, nodeA.id);
 
-    /* Test the checkComplete function */
-    assert.equal(tour.isComplete, false);
-    tour.nodeVisited(nodeB);
-    assert.equal(tour.isComplete, false);
-    tour.nodeVisited(nodeC);
-    assert.equal(tour.isComplete, true);
 
     /* Test the beginNewTour function */
+    tour.originNode = nodeA;
+    tour.nodeVisited(nodeB);
+    tour.nodeVisited(nodeC);
+    tour.visitedNodes.push(tour.originNode);
+    assert.equal(tour.visitedNodes.length, 4);
     assert.equal(tour.unvisitedNodes.length, 0);
-    tour.beginNewTour();
-    assert.equal(tour.unvisitedNodes.length, 3);
+    tour.resetTour();
+    assert.equal(tour.unvisitedNodes.length, 2);
 
 
 });

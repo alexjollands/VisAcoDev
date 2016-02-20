@@ -17,14 +17,24 @@ var Tour = Class({
                 this.unvisitedNodes.splice(i,1);
             }
         }
-        if (this.unvisitedNodes.length == 0){
-            this.isComplete = true;
+        //if (this.unvisitedNodes.length == 0){
+        //    this.isComplete = true;
+        //}
+    },
+    checkShortestRoute: function(){
+        if (this.totalLength < controller.shortestRoute.totalLength){
+            controller.shortestRoute.visitedNodes = this.visitedNodes.slice();
+            controller.shortestRoute.totalLength = this.totalLength;
+            console.log("Shortest route found! " + this.totalLength);
         }
     },
-    beginNewTour: function(){
-        // Calculate tour length + save result (if shorter)
+   resetTour: function(){
         this.unvisitedNodes = this.visitedNodes;
+        this.unvisitedNodes.pop(); // Remove duplicate origin node
         this.visitedNodes = [];
+        this.nodeVisited(this.originNode);
+        this.totalLength = 0;
+        this.isComplete = false;
     },
     toDetailedString: function() {
         return "This tour starts at: " + this.originNode + ", has visited " + this.visitedNodes.length +

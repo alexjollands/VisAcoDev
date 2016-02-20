@@ -29,13 +29,45 @@ var Ant = Class({
                 return this.tour.unvisitedNodes[j];
             }
         }
-        return "No next node found";
+        // If end of the tour and no node found, return to origin.
+        this.tour.isComplete = true;
+        return this.tour.originNode;
+    },
+    resetPosition: function(){
+
+        this.position.fromNode = this.tour.originNode;
+        this.position.toNode = this.chooseNextNode();
+        this.position.alongEdge = controller.graph.findEdge(this.position.fromNode, this.position.toNode);
+        this.position.distance = 0;
+        this.tour.nodeVisited(this.position.toNode);
+        this.tour.totalLength += this.position.alongEdge.distance;
+
+
+
+
+
+        //// Add remaining edge length to total
+        //this.tour.totalLength += this.position.alongEdge.distance;
+        //
+        //// Add final to-home edge length to total
+        //this.tour.visitedNodes.push(this.tour.originNode);
+        //this.tour.totalLength += controller.graph.findEdge(this.position.toNode, this.tour.originNode).distance;
+        //
+        //// Save tour if shorter
+        //if (this.tour.totalLength > controller.shortestRoute.totalLength){
+        //    controller.shortestRoute = this.tour;
+        //}
+    },
+    layPheromone: function(){
+        this.position.alongEdge.pheromoneLevel += controller.pheromoneDepositRate;
     },
     moveTo: function(targetNode, distanceMoved){
         this.position.fromNode = this.position.toNode;
         this.position.toNode = targetNode;
         this.tour.nodeVisited(targetNode);
+        this.position.alongEdge = controller.graph.findEdge(this.position.fromNode, this.position.toNode);
         this.position.distance = distanceMoved;
+        this.tour.totalLength += this.position.alongEdge.distance;
     },
     toDetailedString: function() {
         return "Ant #" + this.id + " is at position: " + this.position + ", on tour: " + this.tour + ".";
