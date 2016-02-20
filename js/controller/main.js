@@ -16,8 +16,10 @@ var controller = new Controller(params);
 controller.setupGraph();
 controller.createColony();
 controller.colony.disperseAnts();
-controller.view = new View();
-//controller.view.animate();
+
+
+initialiseView();
+animate();
 
 
 //

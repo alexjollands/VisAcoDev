@@ -4,37 +4,7 @@
 
 var View = Class({
     initialize: function() {
-        this.canvas = document.getElementById("canvas");
-        this.scene = new THREE.Scene();
-        this.birdseye_cam = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000);
-        this.scene.add(this.birdseye_cam);
-        this.camera = this.birdseye_cam;
-        this.birdseye_cam.position.x = 0;
-        this.birdseye_cam.rotation.x = -Math.PI / 2;
-        this.birdseye_cam.position.y = 0;
-        this.birdseye_cam.position.z = 250;
-        this.birdseye_cam.up = new THREE.Vector3(0,0,1);
-        this.controls = new THREE.FlyControls( this.camera );
-        this.controls.movementSpeed = 500;
-        this.controls.domElement = this.canvas;
-        this.controls.rollSpeed = Math.PI / 24;
-        this.controls.autoForward = false;
-        this.controls.dragToLook = true;
-        this.ambientLight = new THREE.AmbientLight( 0x303030 );
-        this.scene.add(this.ambientLight);
-        this.renderer = new THREE.WebGLRenderer({alpha: true});
-        this.renderer.setSize( window.innerWidth, window.innerHeight);
-        this.renderer.shadowMapEnabled = true;
-        this.renderer.setClearColor( 0xffffff, 0);
-        this.canvas.appendChild( this.renderer.domElement );
-        window.addEventListener( 'resize', this.onWindowResize, false );
-        this.vNodes = [];
-        this.vEdges = [];
-        //this.setup();
-        this.vGraph = this.representModel();
-        this.scene.add(this.vGraph);
-        this.birdseye_cam.lookAt(this.vGraph.position);
-        this.render();
+
     },
     setup: function(){
         this.canvas = document.getElementById("canvas");
