@@ -17,6 +17,7 @@ var Controller = Class({
         this.colony = null;
         this.shortestRoute = new Tour();
         this.shortestRoute.totalLength = Number.MAX_VALUE;
+        this.view = null;
     },
     loadNodes: function(){
         var nodes = [];
@@ -64,6 +65,9 @@ var Controller = Class({
         this.currentIteration++;
         this.graph.applyPheromoneDecay(this.pheromoneDecayRate);
         this.colony.updateAnts();
+    },
+    initialiseView: function(){
+
     }
 });
 

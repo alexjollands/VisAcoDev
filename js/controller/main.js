@@ -16,10 +16,14 @@ var controller = new Controller(params);
 controller.setupGraph();
 controller.createColony();
 controller.colony.disperseAnts();
+controller.view = new View();
+//controller.view.animate();
 
-for (var i = 0; i < controller.maximumIterations; i++) {
-    controller.performACOIteration();
-}
 
-manualCheckOfRoute(controller.graph.nodes);
+//
+//for (var i = 0; i < controller.maximumIterations; i++) {
+//    controller.view.animate(); // controller.performACOIteration();
+//}
+//
+//manualCheckOfRoute(controller.graph.nodes);
 
