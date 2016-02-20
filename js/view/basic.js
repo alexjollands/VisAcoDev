@@ -1,18 +1,16 @@
 /**
  * Created by Alex on 07/02/2016.
  */
-var camera,birdseye_cam,scene,renderer,controls,canvas,gui,ambientLight;
+var camera,birdseye_cam,scene,renderer,controls,canvas,ambientLight;
 var clock = new THREE.Clock();
 var v_graph;
 var v_nodes = [];
 var v_edges = [];
 
-var waitASec = false;
-
 function initialiseView(){
 
     /* Scene, camera, light and renderer setup */
-    setupSceneCameraLighting();
+    setupView();
     setupRenderer();
 
     /* Initial object setup */
@@ -34,29 +32,18 @@ function onWindowResize() {
 }
 
 function animate() {
-
     console.log("Updating ants");
-    //updatePheromoneLevels();
-    //updateAnts();
-    //updateEdges();
-    //displayShortestRoute();
-
-    //console.log("Wait a sec... " + waitASec);
-    //if (waitASec){
-    //    sleep(2);
-    //    console.log("Waitin': " + waitASec);
-    //}
-
+    if (controller.currentIteration < controller.maximumIterations) {
+        controller.performACOIteration();
+    }
     var delta = clock.getDelta();
     controls.update( delta );
-
+    updateEdges();
     render();
-
-
     requestAnimationFrame( animate );
 }
 
-function setupSceneCameraLighting(){
+function setupView(){
     canvas = document.getElementById("canvas");
     scene = new THREE.Scene();
     birdseye_cam = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000);
@@ -117,20 +104,6 @@ function setupModel(){
     return graphMesh;
 }
 
-//function calculateColourFromPheromoneLevel(pheromoneLevel){
-//    var scaled = pheromoneLevel * 5;
-//    if (scaled > 255) { scaled = 255; }
-//
-//    var colour = Math.floor(scaled).toString(16);
-//    if (colour.length == 1) {
-//        colour = "0x" + colour + "00000";
-//    }
-//    else {
-//        colour = "0x" + colour + "0000";
-//    }
-//    return Number(colour);
-//}
-
 function calculateColourFromPheromoneLevel(pheromoneLevel){
     var red = "ff";
     var scaled = pheromoneLevel * 20;
@@ -140,7 +113,6 @@ function calculateColourFromPheromoneLevel(pheromoneLevel){
     if (hex.length == 1) { hex = "0" + hex; }
     var colour = "0x" + red + hex + hex;
     return Number(colour);
-    //return Number("0xffffff");
 }
 
 
@@ -181,8 +153,16 @@ function createEdge(nodeA, nodeB, pheromoneLevel){
 
 function updateEdges(){
     for (var i in v_edges){
-        v_edges[i].material.color.setHex(calculateColourFromPheromoneLevel(edges[i].pheromoneLevel));
-        v_edges[i].position.z = 0;
+        if (controller.graph.edges[i].pheromoneLevel < 0.5){
+            v_edges[i].visible = false;
+        }
+        else {
+            v_edges[i].visible = true;
+            v_edges[i].material.color.setHex(calculateColourFromPheromoneLevel(controller.graph.edges[i].pheromoneLevel));
+            v_edges[i].position.z = controller.graph.edges[i].pheromoneLevel / 100;
+        }
+
+
     }
 }
 

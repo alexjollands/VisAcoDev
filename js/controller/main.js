@@ -10,7 +10,7 @@ params.pheromoneDepositRate   = 1;
 params.initialPheromoneLevel  = 1;
 params.colonySize             = 30;
 params.antMovementPerUpdate   = 50;
-params.maximumIterations      = 50000;
+params.maximumIterations      = 500;
 
 var controller = new Controller(params);
 controller.setupGraph();
