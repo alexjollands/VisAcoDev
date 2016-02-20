@@ -65,9 +65,6 @@ var Controller = Class({
         this.currentIteration++;
         this.graph.applyPheromoneDecay(this.pheromoneDecayRate);
         this.colony.updateAnts();
-    },
-    initialiseView: function(){
-
     }
 });
 

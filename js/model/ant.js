@@ -34,7 +34,7 @@ var Ant = Class({
         return this.tour.originNode;
     },
     resetPosition: function(){
-
+        this.layPheromone();
         this.position.fromNode = this.tour.originNode;
         this.position.toNode = this.chooseNextNode();
         this.position.alongEdge = controller.graph.findEdge(this.position.fromNode, this.position.toNode);

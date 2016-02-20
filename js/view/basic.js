@@ -16,7 +16,7 @@ function initialiseView(){
     /* Initial object setup */
     v_graph = setupModel();
     scene.add(v_graph);
-    birdseye_cam.lookAt(v_graph.position);
+    birdseye_cam.lookAt(v_nodes[2].position);
     render();
 }
 
@@ -116,17 +116,6 @@ function calculateColourFromPheromoneLevel(pheromoneLevel){
 }
 
 
-function calculateEdgeWidthFromDistance(nodeA, nodeB){
-    /* Would be nice to have a dynamic range - using max and min lengths of the edges */
-    var maxWidth = 3;
-    var minWidth = 0.1;
-    var scaledDistance = findRouteDistance(nodeA, nodeB);
-    scaledDistance = (1 / scaledDistance) * 20;
-    if (scaledDistance > maxWidth){scaledDistance = maxWidth;}
-    if (scaledDistance < minWidth){scaledDistance = minWidth;}
-    return scaledDistance;
-}
-
 /* Calculations of the vectors for variable-width rectangles inspired by
  * http://stackoverflow.com/questions/7854043/drawing-rectangle-between-two-points-with-arbitrary-width
  */
@@ -136,17 +125,13 @@ function createEdge(nodeA, nodeB, pheromoneLevel){
     var length = Math.sqrt(p.x * p.x + p.y * p.y);
     var n = new THREE.Vector3(p.x / length, p.y / length, 0);
     var colourStrength = calculateColourFromPheromoneLevel(pheromoneLevel);
-    //var width = calculateEdgeWidthFromDistance(nodeA, nodeB);
-    //var colourStrength = 0xA0A0A0;
-    var width = 0.5;
+    var width = 0.8;
     var rectShape = new THREE.Shape();
-
     rectShape.moveTo( nodeB.x + n.x * width / 2, nodeB.y + n.y * width / 2 ); // m3
     rectShape.lineTo( nodeA.x - n.x * width / 2, nodeA.y - n.y * width / 2 ); // X2
     rectShape.lineTo( nodeB.x + n.x * width / 2, nodeB.y + n.y * width / 2 ); // X3
     rectShape.lineTo( nodeB.x - n.x * width / 2, nodeB.y - n.y * width / 2 ); // X4
     rectShape.lineTo( nodeA.x + n.x * width / 2, nodeA.y + n.y * width / 2 ); // X1
-
     var rectGeom = new THREE.ShapeGeometry( rectShape );
     return new THREE.Mesh( rectGeom, new THREE.MeshBasicMaterial( { color: colourStrength } ) ) ;
 }
@@ -161,47 +146,5 @@ function updateEdges(){
             v_edges[i].material.color.setHex(calculateColourFromPheromoneLevel(controller.graph.edges[i].pheromoneLevel));
             v_edges[i].position.z = controller.graph.edges[i].pheromoneLevel / 100;
         }
-
-
     }
-}
-
-// Edges should have an ID or index number - each node should have the edges connected to it
-// As in my improved design, with each edge appearing multiple times in a linear array based on index of a node ID
-function displayShortestRoute(){
-    if (shortestRoute != null) {
-        for (var i = 0; i < shortestRoute.visitedNodes.length; i++) {
-            var nodeA = shortestRoute.visitedNodes[i];
-            var nodeB;
-            if (i + 1 == shortestRoute.visitedNodes.length) {
-                nodeB = shortestRoute.visitedNodes[0];
-            }
-            else {
-                nodeB = shortestRoute.visitedNodes[i + 1];
-            }
-            var edge = findRoute(nodeA, nodeB);
-            var v_edge = findViewEdge(edge);
-            if (v_edge == undefined){
-                var stopHere = 21 * 21;
-            }
-            v_edge.material.color.setHex(0x00FF00);
-            v_edge.position.z = 1;
-        }
-    }
-}
-
-// Temporary (terrible) function
-function findViewEdge(edge){
-    for (var i in edges){
-        if (edge == edges[i]){
-            return v_edges[i];
-        }
-    }
-}
-
-// Slow the damn thing down a second
-function sleep(seconds)
-{
-    var e = new Date().getTime() + (seconds * 1000);
-    while (new Date().getTime() <= e) {}
 }
