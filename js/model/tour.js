@@ -24,11 +24,10 @@ var Tour = Class({
             controller.shortestRoute.totalLength = this.totalLength;
 
             console.log("----------------------------------------------");
-            console.log("Shortest route found! " + this.totalLength);
+            console.log("Shortest route found! Length: " + this.totalLength +", found at iteration: " +controller.currentIteration);
             for (var i = 0; i < this.visitedNodes.length; i++){
-                console.log("Node: " + this.visitedNodes[i].id);
+                //console.log("Node: " + this.visitedNodes[i].id);
             }
-            console.log("Iteration: " + controller.currentIteration);
 
         }
     },
