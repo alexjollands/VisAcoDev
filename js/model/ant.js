@@ -17,7 +17,7 @@ var Ant = Class({
             var targetNode = this.tour.unvisitedNodes[i];
             var edge = currentNode.getEdgeTo(targetNode);
             var p = Math.pow(edge.pheromoneLevel, controller.pheromoneImportance);
-            var d = Math.pow(edge.distance, controller.distanceImportance);
+            var d = Math.pow((1.0 / edge.distance), controller.distanceImportance);
             nodeProbabilities[i] = p * d;
             rouletteWheel += nodeProbabilities[i];
         }
@@ -41,22 +41,6 @@ var Ant = Class({
         this.position.distance = 0;
         this.tour.nodeVisited(this.position.toNode);
         this.tour.totalLength += this.position.alongEdge.distance;
-
-
-
-
-
-        //// Add remaining edge length to total
-        //this.tour.totalLength += this.position.alongEdge.distance;
-        //
-        //// Add final to-home edge length to total
-        //this.tour.visitedNodes.push(this.tour.originNode);
-        //this.tour.totalLength += controller.graph.findEdge(this.position.toNode, this.tour.originNode).distance;
-        //
-        //// Save tour if shorter
-        //if (this.tour.totalLength > controller.shortestRoute.totalLength){
-        //    controller.shortestRoute = this.tour;
-        //}
     },
     layPheromone: function(){
         this.position.alongEdge.pheromoneLevel += controller.pheromoneDepositRate;

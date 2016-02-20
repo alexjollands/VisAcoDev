@@ -4,13 +4,13 @@
 
 var params = {};
 params.pheromoneImportance    = 1;      // Alpha
-params.distanceImportance     = 5;      // Beta
+params.distanceImportance     = 1;      // Beta
 params.pheromoneDecayRate     = 0.1;    // Rho
 params.pheromoneDepositRate   = 1;
 params.initialPheromoneLevel  = 1;
 params.colonySize             = 30;
-params.antMovementPerUpdate   = 1500;
-params.maximumIterations      = 1;
+params.antMovementPerUpdate   = 50;
+params.maximumIterations      = 50000;
 
 var controller = new Controller(params);
 controller.setupGraph();
@@ -20,3 +20,6 @@ controller.colony.disperseAnts();
 for (var i = 0; i < controller.maximumIterations; i++) {
     controller.performACOIteration();
 }
+
+manualCheckOfRoute(controller.graph.nodes);
+

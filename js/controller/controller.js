@@ -61,17 +61,9 @@ var Controller = Class({
         return ants;
     },
     performACOIteration: function(){
-
         this.currentIteration++;
-
-        // Update pheromone level
         this.graph.applyPheromoneDecay(this.pheromoneDecayRate);
-
-        // Update ants
         this.colony.updateAnts();
-
-        // Save shortest route
-
     }
 });
 

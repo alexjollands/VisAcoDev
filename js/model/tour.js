@@ -17,15 +17,19 @@ var Tour = Class({
                 this.unvisitedNodes.splice(i,1);
             }
         }
-        //if (this.unvisitedNodes.length == 0){
-        //    this.isComplete = true;
-        //}
     },
     checkShortestRoute: function(){
         if (this.totalLength < controller.shortestRoute.totalLength){
             controller.shortestRoute.visitedNodes = this.visitedNodes.slice();
             controller.shortestRoute.totalLength = this.totalLength;
+
+            console.log("----------------------------------------------");
             console.log("Shortest route found! " + this.totalLength);
+            for (var i = 0; i < this.visitedNodes.length; i++){
+                console.log("Node: " + this.visitedNodes[i].id);
+            }
+            console.log("Iteration: " + controller.currentIteration);
+
         }
     },
    resetTour: function(){
