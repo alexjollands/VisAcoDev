@@ -17,5 +17,5 @@ controller.setupGraph();
 controller.createColony();
 controller.colony.disperseAnts();
 
-initialiseView();
+view = new BasicView();
 animate();

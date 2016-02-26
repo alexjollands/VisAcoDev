@@ -22,13 +22,9 @@ var Tour = Class({
         if (this.totalLength < controller.shortestRoute.totalLength){
             controller.shortestRoute.visitedNodes = this.visitedNodes.slice();
             controller.shortestRoute.totalLength = this.totalLength;
-
+            controller.updateUI();
             console.log("----------------------------------------------");
             console.log("Shortest route found! Length: " + this.totalLength +", found at iteration: " +controller.currentIteration);
-            for (var i = 0; i < this.visitedNodes.length; i++){
-                //console.log("Node: " + this.visitedNodes[i].id);
-            }
-
         }
     },
    resetTour: function(){

@@ -103,6 +103,10 @@ var Controller = Class({
         console.log("Deposit rate: " + this.pheromoneDepositRate);
         console.log("Initial pheromone: " + this.initialPheromoneLevel);
 
+    },
+    updateUI: function(){
+        document.getElementById("distance").innerHTML = " " + this.shortestRoute.totalLength;
+        document.getElementById("iteration-number").innerHTML = " " + this.currentIteration;
     }
 });
 
