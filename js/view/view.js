@@ -9,17 +9,15 @@ var v_nodes = [];
 var v_edges = [];
 var canvasScale = 1.7;
 
-var view;
-
 function render() {
     renderer.render( scene, camera );
 }
 
 function animate() {
     view.updateModel();
+    view.updateEdges();
     var delta = clock.getDelta();
     controls.update( delta );
-    view.updateEdges();
     render();
     requestAnimationFrame(animate);
 }

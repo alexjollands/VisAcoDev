@@ -53,3 +53,8 @@ function manualCheckOfRoute(nodes){
     }
     console.log("Manual check route length: " + routeLength);
 }
+
+function sleep(delay) {
+    var start = new Date().getTime();
+    while (new Date().getTime() < start + delay);
+}

@@ -3,7 +3,8 @@
  */
 
 var Controller = Class({
-    initialize: function(params){
+    initialize: function(){
+        var params = scenario.getParams();
         this.pheromoneImportance = params.pheromoneImportance;      // Alpha
         this.distanceImportance = params.distanceImportance;        // Beta
         this.pheromoneDecayRate = params.pheromoneDecayRate;        // Rho
@@ -18,10 +19,12 @@ var Controller = Class({
         this.shortestRoute = new Tour();
         this.shortestRoute.totalLength = Number.MAX_VALUE;
         this.mouseWithinCanvas = false;
+
+
     },
     loadNodes: function(){
         var nodes = [];
-        var dataURL = "js/model/nodes.json";
+        var dataURL = "js/model/data/" + scenario.getNodeSet();
         $.ajax({
             url: dataURL,
             dataType: 'json',
