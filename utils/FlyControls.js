@@ -1,6 +1,9 @@
 // https://github.com/mrdoob/three.js/blob/master/examples/js/controls/FlyControls.js
 /**
+ * Almost all code by: *
  * @author James Baicoianu / http://www.baicoianu.com/
+ *
+ * Some custom code added by Alex Jollands as part of project work.
  */
 
 THREE.FlyControls = function ( object, domElement ) {
@@ -18,9 +21,12 @@ THREE.FlyControls = function ( object, domElement ) {
     this.dragToLook = false;
     this.autoForward = false;
 
-    // disable default target object behavior
+    //$("page-container").mouseenter(function(){
+    //    controller.mouseWithinCanvas = true;
+    //}).mouseleave(function(){
+    //    controller.mouseWithinCanvas = false;
+    //});
 
-    // internals
 
     this.tmpQuaternion = new THREE.Quaternion();
 
@@ -118,25 +124,32 @@ THREE.FlyControls = function ( object, domElement ) {
 
         }
 
-        //event.preventDefault();
-        //event.stopPropagation();
 
-        if ( this.dragToLook ) {
+            if (this.dragToLook) {
 
-            this.mouseStatus ++;
+                if ($('#canvas:hover').length > 0) {
+                    console.log("Inside!");
+                    this.mouseStatus++;
+                }else{
+                    console.log("Not inside!");
+                }
 
-        } else {
+            } else {
 
-            switch ( event.button ) {
+                switch (event.button) {
 
-                case 0: this.moveState.forward = 1; break;
-                case 2: this.moveState.back = 1; break;
+                    case 0:
+                        this.moveState.forward = 1;
+                        break;
+                    case 2:
+                        this.moveState.back = 1;
+                        break;
+
+                }
+
+                this.updateMovementVector();
 
             }
-
-            this.updateMovementVector();
-
-        }
 
     };
 
@@ -165,10 +178,11 @@ THREE.FlyControls = function ( object, domElement ) {
 
         if ( this.dragToLook ) {
 
-            this.mouseStatus --;
 
-            this.moveState.yawLeft = this.moveState.pitchDown = 0;
-
+            if ($('#canvas:hover').length > 0) {
+                this.mouseStatus--;
+                this.moveState.yawLeft = this.moveState.pitchDown = 0;
+            }
         } else {
 
             switch ( event.button ) {

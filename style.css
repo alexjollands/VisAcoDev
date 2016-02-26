@@ -1,1 +1,18 @@
 /* Stylesheet - may use bootstrap or similar if needed */
+
+#page-container {
+    margin: 25px;
+}
+
+#canvas-container {
+    margin: auto;
+    vertical-align: middle;
+}
+
+#canvas:nth-child(1) {
+    border: 1px solid blue;
+}
+
+th, td {
+    padding: 5px;
+}

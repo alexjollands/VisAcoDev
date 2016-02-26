@@ -6,6 +6,7 @@ var clock = new THREE.Clock();
 var v_graph;
 var v_nodes = [];
 var v_edges = [];
+var canvasScale = 1.7;
 
 function initialiseView(){
 
@@ -16,7 +17,7 @@ function initialiseView(){
     /* Initial object setup */
     v_graph = setupModel();
     scene.add(v_graph);
-    birdseye_cam.lookAt(v_nodes[2].position);
+    birdseye_cam.lookAt(new THREE.Vector3(80,60,0));
     render();
 }
 
@@ -27,7 +28,7 @@ function render() {
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(window.innerWidth / canvasScale, window.innerHeight / canvasScale);
     render();
 }
 
@@ -67,7 +68,7 @@ function setupView(){
 
 function setupRenderer(){
     renderer = new THREE.WebGLRenderer({alpha: true});
-    renderer.setSize( window.innerWidth, window.innerHeight);
+    renderer.setSize( window.innerWidth / canvasScale, window.innerHeight / canvasScale);
     renderer.shadowMapEnabled = true;
     renderer.setClearColor( 0xffffff, 0);
     canvas.appendChild( renderer.domElement );

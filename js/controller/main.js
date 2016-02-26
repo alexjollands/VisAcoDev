@@ -3,9 +3,9 @@
  */
 
 var params = {};
-params.pheromoneImportance    = 1.5;    // Alpha
+params.pheromoneImportance    = 1.25;    // Alpha
 params.distanceImportance     = 3;      // Beta
-params.pheromoneDecayRate     = 0.2;    // Rho
+params.pheromoneDecayRate     = 0.25;    // Rho
 params.pheromoneDepositRate   = 1;
 params.initialPheromoneLevel  = 1;
 params.colonySize             = 30;

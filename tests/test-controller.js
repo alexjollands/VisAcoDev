@@ -16,18 +16,18 @@ QUnit.test("Testing the Controller", function( assert ) {
 
     /* Test the loadNodes() function */
     var nodes = controller.loadNodes();
-    assert.equal(nodes.length, 4);
+    assert.equal(nodes.length, 33);
     assert.equal(nodes[0].id, 1);
-    assert.equal(nodes[0].x, 10);
-    assert.equal(nodes[0].y, 20);
+    assert.equal(nodes[0].x, 25);
+    assert.equal(nodes[0].y, 25);
     assert.equal(nodes[3].id, 4);
-    assert.equal(nodes[3].x, 5);
-    assert.equal(nodes[3].y, 90);
+    assert.equal(nodes[3].x, 100);
+    assert.equal(nodes[3].y, 25);
 
     /* Test the createEdges() function */
     var edges = controller.createEdges(nodes);
-    assert.equal(edges.length, 6); // (20 nodes) 1 + 2 + 3 +...+ 17 + 18 + 19 = 190 edges --//-- (4 nodes) 1 + 2 + 3 = 6 edges
-    assert.equal(edges[0].distance, 50);
+    assert.equal(edges.length, 528); // (4 nodes) 1 + 2 + 3 = 6 edges
+    assert.equal(edges[0].distance, 25);
     assert.equal(edges[0].pheromoneLevel, controller.initialPheromoneLevel);
 
 
