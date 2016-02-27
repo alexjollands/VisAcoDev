@@ -5,16 +5,18 @@ var BasicView = Class({
     initialize: function() {
         setupView();
         setupRenderer();
-        v_graph = this.setupModel();
+        v_graph = this.representModel();
         scene.add(v_graph);
         birdseye_cam.lookAt(new THREE.Vector3(80,60,0));
         render();
     },
-    setupModel: function(){
+    representModel: function(){
+
         /* Container graph */
         var graphGeometry = new THREE.Geometry();
         var graphMaterial = new THREE.MeshBasicMaterial({color: 0xff9900});
         var graphMesh = new THREE.Mesh(graphGeometry, graphMaterial);
+
         /* Nodes */
         var nodeMaterial = new THREE.MeshBasicMaterial({color: 0x0000ff});
         var nodeRadius = 2;
@@ -27,6 +29,7 @@ var BasicView = Class({
             v_nodes.push(nodeMesh);
             graphMesh.add(nodeMesh);
         }
+
         /* Edges */
         var edges = controller.graph.edges;
         for (var j in edges){
@@ -34,6 +37,7 @@ var BasicView = Class({
             v_edges.push(edge);
             graphMesh.add(edge);
         }
+
         return graphMesh;
     },
     updateModel: function(){

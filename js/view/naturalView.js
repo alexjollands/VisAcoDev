@@ -6,27 +6,36 @@ var NaturalView = Class({
     initialize: function() {
         setupView();
         setupRenderer();
-        v_graph = this.setupModel();
+        v_graph = this.representModel();
         scene.add(v_graph);
-        birdseye_cam.lookAt(new THREE.Vector3(100,50,0));
+        birdseye_cam.lookAt(new THREE.Vector3(150,150,0));
         render();
     },
-    setupModel: function(){
-
-
-        /*
-         var map = new THREE.TextureLoader().load( "sprite.png" );
-         var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff, fog: true } );
-         var sprite = new THREE.Sprite( material );
-         scene.add( sprite );
-         */
-
+    representModel: function(){
 
         /* Container graph */
         var graphGeometry = new THREE.Geometry();
         var graphMaterial = new THREE.MeshBasicMaterial({color: 0xff9900});
         var graphMesh = new THREE.Mesh(graphGeometry, graphMaterial);
-        /* Nodes */
+
+        /* Main elements */
+        // Nest
+        var nestImage = THREE.ImageUtils.loadTexture(url + 'images/ant-nest.png');
+        var nestMaterial = new THREE.SpriteMaterial( { map: nestImage, color: 0xffffff, fog: true } );
+        var nestSprite = new THREE.Sprite( nestMaterial );
+        nestSprite.position.set(50,50,10);
+        nestSprite.scale.set(50,50,0);
+        graphMesh.add(nestSprite);
+
+        // Food
+        var foodImage = THREE.ImageUtils.loadTexture(url + 'images/ant-food.png');
+        var foodMaterial = new THREE.SpriteMaterial( { map: foodImage, color: 0xffffff, fog: true } );
+        var foodSprite = new THREE.Sprite( foodMaterial );
+        foodSprite.position.set(250,250,10);
+        foodSprite.scale.set(50,50,0);
+        graphMesh.add(foodSprite);
+
+        /* Path Nodes */
         var nodeMaterial = new THREE.MeshBasicMaterial({color: 0x0000ff});
         var nodeRadius = 2;
         var nodeSegments = 32;
@@ -38,13 +47,14 @@ var NaturalView = Class({
             v_nodes.push(nodeMesh);
             graphMesh.add(nodeMesh);
         }
-        /* Edges */
+        /* Connecting Edges */
         var edges = controller.graph.edges;
         for (var j in edges){
             var edge = this.createEdge(edges[j].nodeA, edges[j].nodeB, edges[j].pheromoneLevel);
             v_edges.push(edge);
             graphMesh.add(edge);
         }
+
         return graphMesh;
     },
     updateModel: function(){
@@ -62,6 +72,7 @@ var NaturalView = Class({
                 v_edges[i].visible = true;
                 v_edges[i].material.color.setHex(calculateColourFromPheromoneLevel(controller.graph.edges[i].pheromoneLevel));
                 v_edges[i].position.z = controller.graph.edges[i].pheromoneLevel / 100;
+                if (v_edges[i].position.z > 5) { v_edges[i].position.z = 5; }
             }
         }
     },

@@ -29,11 +29,11 @@ function setupView(){
     birdseye_cam = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000);
     scene.add(birdseye_cam);
     camera = birdseye_cam;
-    birdseye_cam.position.x = 0;
-    birdseye_cam.rotation.x = -Math.PI / 2;
-    birdseye_cam.position.y = 0;
-    birdseye_cam.position.z = 250;
-    birdseye_cam.up = new THREE.Vector3(0,0,1);
+    birdseye_cam.position.x = 150;
+    //birdseye_cam.rotation.x = -Math.PI / 2;
+    birdseye_cam.position.y = 150;
+    birdseye_cam.position.z = 350;
+    //birdseye_cam.up = new THREE.Vector3(0,0,1);
 
     controls = new THREE.FlyControls( camera );
     controls.movementSpeed = 500;
