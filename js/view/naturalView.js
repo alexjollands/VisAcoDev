@@ -12,6 +12,16 @@ var NaturalView = Class({
         render();
     },
     setupModel: function(){
+
+
+        /*
+         var map = new THREE.TextureLoader().load( "sprite.png" );
+         var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff, fog: true } );
+         var sprite = new THREE.Sprite( material );
+         scene.add( sprite );
+         */
+
+
         /* Container graph */
         var graphGeometry = new THREE.Geometry();
         var graphMaterial = new THREE.MeshBasicMaterial({color: 0xff9900});

@@ -96,7 +96,10 @@ var Controller = Class({
             this.initialPheromoneLevel = initialPheromone;
         }
         if (restartDemo){
-            console.log("Restarting demonstration");
+            this.setupGraph();
+            this.createColony();
+            this.colony.disperseAnts();
+            this.currentIteration = 0;
         }
 
         console.log("Colony Size: " + this.colonySize);
