@@ -1,11 +1,11 @@
 /**
- * Created by Alex on 15/02/2016.
+ * Created by Alex on 28/02/2016.
  */
 
-var Ant = Class({
-    initialize: function(id, tour, position) {
+var TouringAnt = Class({
+    initialize: function(id, task, position) {
         this.id = id;
-        this.tour = tour;
+        this.task = task;
         this.position = position;
     },
     chooseNextNode: function(){
@@ -13,8 +13,8 @@ var Ant = Class({
         var rouletteWheel = 0.0;
         var nodeProbabilities = [];
         var currentNode = this.position.toNode;
-        for (var i = 0; i < this.tour.unvisitedNodes.length; i++){
-            var targetNode = this.tour.unvisitedNodes[i];
+        for (var i = 0; i < this.task.unvisitedNodes.length; i++){
+            var targetNode = this.task.unvisitedNodes[i];
             var edge = currentNode.getEdgeTo(targetNode);
             var p = Math.pow(edge.pheromoneLevel, controller.pheromoneImportance);
             var d = Math.pow((1.0 / edge.distance), controller.distanceImportance);
@@ -23,24 +23,24 @@ var Ant = Class({
         }
         var wheelTarget = rouletteWheel * Math.random();
         var wheelPosition = 0.0;
-        for (var j = 0; j < this.tour.unvisitedNodes.length; j++) {
+        for (var j = 0; j < this.task.unvisitedNodes.length; j++) {
             wheelPosition += nodeProbabilities[j];
             if (wheelPosition >= wheelTarget) {
-                return this.tour.unvisitedNodes[j];
+                return this.task.unvisitedNodes[j];
             }
         }
         // If end of the tour and no node found, return to origin.
-        this.tour.isComplete = true;
-        return this.tour.originNode;
+        this.task.isComplete = true;
+        return this.task.originNode;
     },
     resetPosition: function(){
         this.layPheromone();
-        this.position.fromNode = this.tour.originNode;
+        this.position.fromNode = this.task.originNode;
         this.position.toNode = this.chooseNextNode();
         this.position.alongEdge = controller.graph.findEdge(this.position.fromNode, this.position.toNode);
         this.position.distance = 0;
-        this.tour.nodeVisited(this.position.toNode);
-        this.tour.totalLength += this.position.alongEdge.distance;
+        this.task.nodeVisited(this.position.toNode);
+        this.task.totalLength += this.position.alongEdge.distance;
     },
     layPheromone: function(){
         this.position.alongEdge.pheromoneLevel += controller.pheromoneDepositRate;
@@ -48,12 +48,12 @@ var Ant = Class({
     moveTo: function(targetNode, distanceMoved){
         this.position.fromNode = this.position.toNode;
         this.position.toNode = targetNode;
-        this.tour.nodeVisited(targetNode);
+        this.task.nodeVisited(targetNode);
         this.position.alongEdge = controller.graph.findEdge(this.position.fromNode, this.position.toNode);
         this.position.distance = distanceMoved;
-        this.tour.totalLength += this.position.alongEdge.distance;
+        this.task.totalLength += this.position.alongEdge.distance;
     },
     toDetailedString: function() {
-        return "Ant #" + this.id + " is at position: " + this.position + ", on tour: " + this.tour + ".";
+        return "Touring Ant #" + this.id + " is at position: " + this.position + ", on tour: " + this.task + ".";
     }
 });

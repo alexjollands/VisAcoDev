@@ -15,7 +15,7 @@ var Node = Class({
                 return this.edges[i];
             }
         }
-        return null; // Raise exception
+        return null;
     },
     toDetailedString: function() {
         return "Node #" + this.id + " is at X:" + this.x + ", Y:" + this.y + " with " + this.edges.length + " edges.";

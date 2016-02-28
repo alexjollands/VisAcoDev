@@ -7,9 +7,7 @@ var scenario = new NaturalScenario();
 var controller = new Controller();
 controller.setupGraph();
 controller.createColony();
-controller.colony.disperseAnts();
+scenario.setup();
 
 var view = scenario.getView();
-
 animate();
-

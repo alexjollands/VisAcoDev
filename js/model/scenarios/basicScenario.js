@@ -4,6 +4,7 @@
 var BasicScenario = Class({
     initialize: function() {
         this.maxEdgeLength = Number.MAX_VALUE;
+        this.taskType = "Tour";
     },
     getParams: function(){
         var params = {};
@@ -22,5 +23,25 @@ var BasicScenario = Class({
     },
     getNodeSet: function(){
         return "basic.json";
+    },
+    setup: function(){
+        controller.colony.disperseAnts();
+    },
+    createNewAnt: function(i){
+        return new TouringAnt(i+1, new Tour(controller.graph.nodes.slice()), new Position()); // Mission or Task, not Tour
+    },
+    getOriginNode: function(){
+        return controller.graph.nodes[random(0, controller.graph.nodes.length - 1)];
+    },
+    beginAntTask: function(ant, originNode, destinationNode, alongEdge){
+        ant.task.nodeVisited(originNode);
+        ant.task.nodeVisited(destinationNode);
+        ant.task.originNode = originNode;
+        ant.task.totalLength += alongEdge.distance;
+    },
+    completeAntTask: function(ant){
+        ant.task.checkShortestRoute();
+        ant.task.resetTour();
+        ant.resetPosition();
     }
 });

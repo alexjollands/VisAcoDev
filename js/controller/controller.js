@@ -41,10 +41,14 @@ var Controller = Class({
         for (var i = 0; i < nodes.length; i++){
             for (var ii = i; ii < nodes.length; ii++){
                 if (nodes[i] != nodes[ii]) {
-                    edges.push(new Edge(nodes[i], nodes[ii], this.initialPheromoneLevel));
+                    var edgeLength = findRouteDistance(nodes[i], nodes[ii]);
+                    if (edgeLength < scenario.maxEdgeLength){
+                        edges.push(new Edge(nodes[i], nodes[ii], this.initialPheromoneLevel, edgeLength));
+                    }
                 }
             }
         }
+        // Link nodes and edges here, rather than do another O(n2) process
         return edges;
     },
     setupGraph: function(){
@@ -57,7 +61,7 @@ var Controller = Class({
     createColony: function(){
         var ants = [];
         for (var i = 0; i < this.colonySize; i++){
-            ants.push(new Ant(i+1, new Tour(this.graph.nodes.slice()), new Position())); // Tour needs nodes
+            ants.push(scenario.createNewAnt(i));
         }
         this.colony = new Colony(ants);
         return ants;

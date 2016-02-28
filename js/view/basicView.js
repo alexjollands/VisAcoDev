@@ -7,6 +7,9 @@ var BasicView = Class({
         setupRenderer();
         v_graph = this.representModel();
         scene.add(v_graph);
+        birdseye_cam.position.x = 75;
+        birdseye_cam.position.y = 150;
+        birdseye_cam.position.z = 250;
         birdseye_cam.lookAt(new THREE.Vector3(80,60,0));
         render();
     },
@@ -25,7 +28,7 @@ var BasicView = Class({
         var nodes = controller.graph.nodes;
         for (var i in nodes){
             var nodeMesh = new THREE.Mesh(nodeGeometry, nodeMaterial);
-            nodeMesh.position.set(nodes[i].x, nodes[i].y, 6);
+            nodeMesh.position.set(nodes[i].x, nodes[i].y, 3.1);
             v_nodes.push(nodeMesh);
             graphMesh.add(nodeMesh);
         }
@@ -55,7 +58,7 @@ var BasicView = Class({
                 v_edges[i].visible = true;
                 v_edges[i].material.color.setHex(calculateColourFromPheromoneLevel(controller.graph.edges[i].pheromoneLevel));
                 v_edges[i].position.z = controller.graph.edges[i].pheromoneLevel / 100;
-                if (v_edges[i].position.z > 5) { v_edges[i].position.z = 5; }
+                if (v_edges[i].position.z > 3) { v_edges[i].position.z = 3; }
             }
         }
     },
