@@ -41,9 +41,7 @@ var Controller = Class({
         for (var i = 0; i < nodes.length; i++){
             for (var ii = i; ii < nodes.length; ii++){
                 if (nodes[i] != nodes[ii]) {
-                    if (findRouteDistance(nodes[i], nodes[ii]) < scenario.maxEdgeLength){
-                        edges.push(new Edge(nodes[i], nodes[ii], this.initialPheromoneLevel));
-                    }
+                    edges.push(new Edge(nodes[i], nodes[ii], this.initialPheromoneLevel));
                 }
             }
         }
