@@ -19,8 +19,6 @@ var Controller = Class({
         this.shortestRoute = new Tour();
         this.shortestRoute.totalLength = Number.MAX_VALUE;
         this.mouseWithinCanvas = false;
-
-
     },
     loadNodes: function(){
         var nodes = [];
@@ -43,7 +41,9 @@ var Controller = Class({
         for (var i = 0; i < nodes.length; i++){
             for (var ii = i; ii < nodes.length; ii++){
                 if (nodes[i] != nodes[ii]) {
-                    edges.push(new Edge(nodes[i], nodes[ii], this.initialPheromoneLevel));
+                    if (findRouteDistance(nodes[i], nodes[ii]) < scenario.maxEdgeLength){
+                        edges.push(new Edge(nodes[i], nodes[ii], this.initialPheromoneLevel));
+                    }
                 }
             }
         }
@@ -100,6 +100,8 @@ var Controller = Class({
             this.createColony();
             this.colony.disperseAnts();
             this.currentIteration = 0;
+            this.shortestRoute = new Tour();
+            this.shortestRoute.totalLength = Number.MAX_VALUE;
         }
 
         console.log("Colony Size: " + this.colonySize);

@@ -4,7 +4,7 @@
 
 var NaturalScenario = Class({
     initialize: function() {
-
+        this.maxEdgeLength = 175;
     },
     getParams: function(){
         var params = {};

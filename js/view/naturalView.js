@@ -43,7 +43,7 @@ var NaturalView = Class({
         var nodes = controller.graph.nodes;
         for (var i in nodes){
             var nodeMesh = new THREE.Mesh(nodeGeometry, nodeMaterial);
-            nodeMesh.position.set(nodes[i].x, nodes[i].y, 0);
+            nodeMesh.position.set(nodes[i].x, nodes[i].y, 6);
             v_nodes.push(nodeMesh);
             graphMesh.add(nodeMesh);
         }

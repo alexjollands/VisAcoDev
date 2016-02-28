@@ -3,7 +3,7 @@
  */
 var BasicScenario = Class({
     initialize: function() {
-
+        this.maxEdgeLength = Number.MAX_VALUE;
     },
     getParams: function(){
         var params = {};
