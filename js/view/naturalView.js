@@ -8,7 +8,10 @@ var NaturalView = Class({
         setupRenderer();
         v_graph = this.representModel();
         scene.add(v_graph);
-        birdseye_cam.lookAt(new THREE.Vector3(150,150,0));
+        birdseye_cam.position.x = 75;
+        birdseye_cam.position.y = 150;
+        birdseye_cam.position.z = 350;
+        birdseye_cam.lookAt(new THREE.Vector3(125,150,0));
         render();
     },
     representModel: function(){
@@ -35,6 +38,10 @@ var NaturalView = Class({
         foodSprite.scale.set(50,50,0);
         graphMesh.add(foodSprite);
 
+        // Pheromone particles
+        var particles = new THREE.Geometry();
+        var pMaterial = new THREE.ParticleBasicMaterial({color: 0xff0000, size: 0.1});
+
         /* Path Nodes */
         var nodeMaterial = new THREE.MeshBasicMaterial({color: 0x0000ff});
         var nodeRadius = 2;
@@ -47,13 +54,14 @@ var NaturalView = Class({
             v_nodes.push(nodeMesh);
             graphMesh.add(nodeMesh);
         }
-        /* Connecting Edges */
+        /* Connecting Edges with pheromone particles*/
         var edges = controller.graph.edges;
         for (var j in edges){
-            var edge = this.createEdge(edges[j].nodeA, edges[j].nodeB, edges[j].pheromoneLevel);
+            var edge = this.createEdge(edges[j].nodeA, edges[j].nodeB, edges[j].pheromoneLevel, particles);
             v_edges.push(edge);
-            graphMesh.add(edge);
         }
+        var particleSystem = new THREE.ParticleSystem(particles, pMaterial);
+        scene.add(particleSystem);
 
         return graphMesh;
     },
@@ -64,36 +72,37 @@ var NaturalView = Class({
         }
     },
     updateEdges: function(){
-        for (var i in v_edges){
-            if (controller.graph.edges[i].pheromoneLevel < 0.5){
-                v_edges[i].visible = false;
-            }
-            else {
-                v_edges[i].visible = true;
-                v_edges[i].material.color.setHex(calculateColourFromPheromoneLevel(controller.graph.edges[i].pheromoneLevel));
-                v_edges[i].position.z = controller.graph.edges[i].pheromoneLevel / 100;
-                if (v_edges[i].position.z > 5) { v_edges[i].position.z = 5; }
-            }
-        }
+
+        // Calculate how many dots there should be, depending in how much pheromone there is
+        // Add or remove some as appropriate - or just set visible (?!)
+
+        // Add more by switching some random ones visible - add all visible ones to an array
+        // Remove them by removing some from the array (containing their index)
+
     },
-    /* Calculations of the vectors for variable-width rectangles inspired by
-     * http://stackoverflow.com/questions/7854043/drawing-rectangle-between-two-points-with-arbitrary-width
-     */
-    createEdge: function(nodeA, nodeB, pheromoneLevel){
-        var vector = new THREE.Vector3(nodeB.x - nodeA.x, nodeB.y - nodeA.y, 0);
-        var p = new THREE.Vector3(vector.y, -vector.x, 0);
-        var length = Math.sqrt(p.x * p.x + p.y * p.y);
-        var n = new THREE.Vector3(p.x / length, p.y / length, 0);
-        var colourStrength = calculateColourFromPheromoneLevel(pheromoneLevel);
-        var width = 0.8;
-        var rectShape = new THREE.Shape();
-        rectShape.moveTo( nodeB.x + n.x * width / 2, nodeB.y + n.y * width / 2 ); // m3
-        rectShape.lineTo( nodeA.x - n.x * width / 2, nodeA.y - n.y * width / 2 ); // X2
-        rectShape.lineTo( nodeB.x + n.x * width / 2, nodeB.y + n.y * width / 2 ); // X3
-        rectShape.lineTo( nodeB.x - n.x * width / 2, nodeB.y - n.y * width / 2 ); // X4
-        rectShape.lineTo( nodeA.x + n.x * width / 2, nodeA.y + n.y * width / 2 ); // X1
-        var rectGeom = new THREE.ShapeGeometry( rectShape );
-        return new THREE.Mesh(rectGeom, new THREE.MeshBasicMaterial({color: colourStrength}));
+    createEdge: function(nodeA, nodeB, pheromoneLevel, particles){
+
+        var edgeParticleArray = [];
+        var maxDots = 250;
+        var p1 = new THREE.Vector3(nodeA.x, nodeA.y, 0);
+        var p2 = new THREE.Vector3(nodeB.x, nodeB.y, 0);
+        var distance = p1.clone().sub(p2).length();
+        var dotGap = distance / maxDots;
+
+        for (var i = 0; i < maxDots; i++) {
+            var nextDot = getPointInBetweenByLength(p1, p2, (dotGap * i) + 1);
+            //var pX = randomDecimal(0.9, 1.1) * nextDot.x;
+            //var pY = randomDecimal(0.9, 1.1) * nextDot.y;
+
+            var pX = nextDot.x;
+            var pY = nextDot.y;
+
+            var pZ = nextDot.z;
+            var particle = new THREE.Vector3(pX, pY, pZ);
+            particles.vertices.push(particle);
+            edgeParticleArray.push(particle);
+        }
+        return edgeParticleArray;
     }
 
 });

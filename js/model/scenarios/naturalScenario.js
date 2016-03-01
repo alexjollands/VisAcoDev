@@ -4,18 +4,18 @@
 
 var NaturalScenario = Class({
     initialize: function() {
-        this.maxEdgeLength = Number.MAX_VALUE;
+        this.maxEdgeLength = 125;
         this.nestNode;
         this.taskType = "Mission";
     },
     getParams: function(){
         var params = {};
         params.pheromoneImportance    = 1;   // Alpha
-        params.distanceImportance     = 3;      // Beta
-        params.pheromoneDecayRate     = 0.15;   // Rho
+        params.distanceImportance     = 0.25;      // Beta
+        params.pheromoneDecayRate     = 0.2;   // Rho
         params.pheromoneDepositRate   = 0.4;
         params.initialPheromoneLevel  = 1;
-        params.colonySize             = 30;
+        params.colonySize             = 50;
         params.antMovementPerUpdate   = 50;
         params.maximumIterations      = 50000;
         return params;

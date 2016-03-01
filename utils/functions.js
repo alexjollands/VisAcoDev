@@ -8,6 +8,10 @@ function random(min, max){
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function randomDecimal(min, max){
+    return (Math.random() * (max - min + 1)) + min;
+}
+
 function findRouteDistance(nodeA, nodeB){
     var xDist = Math.pow(nodeA.x - nodeB.x, 2);
     var yDist = Math.pow(nodeA.y - nodeB.y, 2);
@@ -54,6 +58,12 @@ function manualCheckOfRoute(nodes){
         routeLength += controller.graph.findEdge(nodes[i], nodes[i+1]).distance;
     }
     console.log("Manual check route length: " + routeLength);
+}
+
+/* This function sourced from http://bit.ly/1UupBOi */
+function getPointInBetweenByLength(pointA, pointB, length) {
+    var dir = pointB.clone().sub(pointA).normalize().multiplyScalar(length);
+    return pointA.clone().add(dir);
 }
 
 function sleep(delay) {
