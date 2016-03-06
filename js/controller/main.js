@@ -10,4 +10,7 @@ controller.createColony();
 scenario.setup();
 
 var view = scenario.getView();
+
+//createNodeGridJSON(50, 50, 8, 8, 25);
+
 animate();

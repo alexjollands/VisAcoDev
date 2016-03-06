@@ -9,7 +9,7 @@ function random(min, max){
 }
 
 function randomDecimal(min, max){
-    return (Math.random() * (max - min + 1)) + min;
+    return (Math.random() * (max - min)) + min;
 }
 
 function findRouteDistance(nodeA, nodeB){
@@ -70,3 +70,33 @@ function sleep(delay) {
     var start = new Date().getTime();
     while (new Date().getTime() < start + delay);
 }
+
+
+function createNodeGridJSON(x, y, width, height, space){
+    var jsonOutput = [];
+    var startX = x;
+    var startY = y;
+    jsonOutput.push('{"nodes":[');
+    var nodeID = 1;
+    for (var i = 0; i < height; i++){
+        for (var j = 0; j < width; j++){
+            jsonOutput.push('{"nid":"' + nodeID + '", "x":"' + (x+(j*space)) + '", "y":"' + y + '"},');
+            nodeID++;
+        }
+        y += space;
+        x = startX;
+    }
+    jsonOutput[jsonOutput.length - 1].slice(0, -1);
+    jsonOutput.push("]}");
+    var htmlOutput = "";
+    htmlOutput += jsonOutput[0] + " <br />";
+    for (var output = 1; output < jsonOutput.length; output++){
+        htmlOutput += jsonOutput[output] + " <br />";
+    }
+    document.getElementById("footer").innerHTML = htmlOutput;
+    return jsonOutput;
+}
+
+
+
+
