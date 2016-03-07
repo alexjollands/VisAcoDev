@@ -4,7 +4,8 @@
 
 QUnit.test("Testing the Controller", function( assert ) {
     /* Setup */
-    controller = new Controller(params);
+    var scenario = new NaturalScenario();
+    controller = new Controller();
 
     assert.equal(controller.pheromoneImportance, params.pheromoneImportance);
     assert.equal(controller.distanceImportance, params.distanceImportance);
@@ -47,8 +48,8 @@ QUnit.test("Testing the Controller", function( assert ) {
     var colony = controller.createColony();
     assert.equal(colony.length, controller.colonySize);
     assert.equal(colony[0].id, 1);
-    assert.notEqual(colony[0].tour.unvisitedNodes, controller.graph.nodes);
-    assert.equal(colony[0].tour.unvisitedNodes.length, controller.graph.nodes.length);
+    assert.notEqual(colony[0].task.unvisitedNodes, controller.graph.nodes);
+    assert.equal(colony[0].task.unvisitedNodes.length, controller.graph.nodes.length);
 
 
     /* Testing the performACOIteration() function */

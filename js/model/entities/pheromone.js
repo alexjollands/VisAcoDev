@@ -20,11 +20,6 @@ var Pheromone = Class({
         this.particle.x = 50;
         this.particle.y = 50;
         this.particle.z = -1;
-        ////this.particle.y = -250;
-        //this.particle.z = 25;
-        //this.particle.x = birdseye_cam.position.x - 1;
-        //this.particle.y = birdseye_cam.position.y - 1;
-        //this.particle.z = birdseye_cam.position.z - 1;
     },
     showParticle: function(){
         // Return to original position

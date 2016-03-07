@@ -12,11 +12,11 @@ var NaturalScenario = Class({
         var params = {};
         params.pheromoneImportance    = 1;   // Alpha
         params.distanceImportance     = 0;   // Beta
-        params.pheromoneDecayRate     = 0.01; // Rho
+        params.pheromoneDecayRate     = 0.5; // Rho
         params.pheromoneDepositRate   = 0.6;
-        params.initialPheromoneLevel  = 0;
-        params.colonySize             = 1;
-        params.antMovementPerUpdate   = 10;
+        params.initialPheromoneLevel  = 1;
+        params.colonySize             = 500;
+        params.antMovementPerUpdate   = 5;
         params.maximumIterations      = 50000;
         return params;
     },
@@ -24,7 +24,7 @@ var NaturalScenario = Class({
         return new NaturalView();
     },
     getNodeSet: function(){
-        return "natural.json";
+        return "threepaths.json";
     },
     setup: function(){
         this.nestNode = controller.graph.nodes[0];

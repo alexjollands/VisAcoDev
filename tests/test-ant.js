@@ -25,9 +25,9 @@ QUnit.test("Testing the Ant class", function( assert ) {
     tour.originNode = fromNode;
 
     /* Test the constructor */
-    var ant = new Ant(id, tour, position);
+    var ant = new TouringAnt(id, tour, position);
     assert.equal(ant.id, 1);
-    assert.equal(ant.tour, tour);
+    assert.equal(ant.task, tour);
     assert.equal(ant.position, position);
 
     /* Test the chooseNextNode() function */
@@ -48,9 +48,9 @@ QUnit.test("Testing the Ant class", function( assert ) {
     assert.equal(ant.position.alongEdge.pheromoneLevel, startingPheromoneLevel + controller.pheromoneDepositRate);
 
     /* Test the resetPosition() function */
-    assert.notEqual(ant.position.fromNode, ant.tour.originNode);
-    assert.notEqual(ant.position.toNode, ant.tour.originNode);
+    assert.notEqual(ant.position.fromNode, ant.task.originNode);
+    assert.notEqual(ant.position.toNode, ant.task.originNode);
     ant.resetPosition();
-    assert.equal(ant.position.fromNode, ant.tour.originNode);
+    assert.equal(ant.position.fromNode, ant.task.originNode);
 
 });

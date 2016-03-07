@@ -38,4 +38,10 @@ var Mission = Class({
         this.visitedNodes = [];
         this.isComplete = false;
     }
+
+    /* Have the concept of a path - the ant selects a path rather than visited and unvisited nodes */
+    /* It then traverses along the nodes on the path to the targetNode as standard - it chooses the
+    /* path based on the average pheromone level of all the edges in that path */
+
+
 });
