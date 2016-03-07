@@ -8,10 +8,10 @@ var NaturalView = Class({
         setupRenderer();
         v_graph = this.representModel();
         scene.add(v_graph);
-        birdseye_cam.position.x = 275;
-        birdseye_cam.position.y = 150;
-        birdseye_cam.position.z = 325;
-        birdseye_cam.lookAt(new THREE.Vector3(125,150,0));
+        birdseye_cam.position.x = 243;
+        birdseye_cam.position.y = 133;
+        birdseye_cam.position.z = 275;
+        //birdseye_cam.lookAt(new THREE.Vector3(150,125,0));
         render();
     },
     representModel: function(){
@@ -40,6 +40,18 @@ var NaturalView = Class({
         // Pheromone particles
         particles = new THREE.Geometry();
         var pMaterial = new THREE.ParticleBasicMaterial({color: 0xff0000, size: 0.2, transparent: true});
+
+        var nodeMaterial = new THREE.MeshBasicMaterial({color: 0xBCBCBC});
+        var nodeRadius = 2;
+        var nodeSegments = 32;
+        var nodeGeometry = new THREE.CircleGeometry( nodeRadius, nodeSegments );
+        var nodes = controller.graph.nodes;
+        for (var i in nodes){
+            var nodeMesh = new THREE.Mesh(nodeGeometry, nodeMaterial);
+            nodeMesh.position.set(nodes[i].x, nodes[i].y, 3.1);
+            v_nodes.push(nodeMesh);
+            graphMesh.add(nodeMesh);
+        }
 
         // Edges
         var edges = controller.graph.edges;

@@ -2,12 +2,13 @@
  * Created by Alex on 20/02/2016.
  */
 
-var camera,birdseye_cam,scene,renderer,controls,canvas,ambientLight,particleSystem,particles;
+var camera,birdseye_cam,scene,renderer,controls,canvas,ambientLight,particleSystem,particles,cameraPosition;
 var clock = new THREE.Clock();
 var v_graph;
 var v_nodes = [];
 var v_edges = [];
 var canvasScale = 1.7;
+var feedback = true;
 
 function render() {
     renderer.render( scene, camera );
@@ -18,6 +19,7 @@ function animate() {
     view.updateEdges();
     var delta = clock.getDelta();
     controls.update( delta );
+    feedbackInformation();
     render();
     requestAnimationFrame(animate);
 }
@@ -72,3 +74,11 @@ function calculateColourFromPheromoneLevel(pheromoneLevel){
     return Number(colour);
 }
 
+function feedbackInformation(){
+    if (cameraPosition == undefined){
+        cameraPosition = document.getElementById("cameraPosition");
+    }
+    if (feedback){
+        cameraPosition.innerHTML = "x: " + birdseye_cam.position.x + " y: " + birdseye_cam.position.y + " z: " + birdseye_cam.position.z;
+    }
+}
