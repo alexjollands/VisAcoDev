@@ -19,8 +19,8 @@ var Graph = Class({
     findEdge: function(nodeA, nodeB){
         for (var i = 0; i < nodeA.edges.length; i++){
             var edge = nodeA.edges[i];
-            if (edge.nodeA.id == nodeA.id && edge.nodeB.id == nodeB.id ||
-                edge.nodeA.id == nodeB.id && edge.nodeB.id == nodeA.id){
+            if ((edge.nodeA.id == nodeA.id && edge.nodeB.id == nodeB.id) ||
+                (edge.nodeA.id == nodeB.id && edge.nodeB.id == nodeA.id)){
                 return edge;
             }
         }
@@ -28,6 +28,13 @@ var Graph = Class({
     applyPheromoneDecay: function(decayRate){
         for (var i = 0; i < this.edges.length; i++){
             this.edges[i].pheromoneLevel *= (1 - decayRate);
+        }
+    },
+    getNodeByID: function(id){
+        for (var i = 0; i < this.nodes.length; i++){
+            if (this.nodes[i].id == id){
+                return this.nodes[i];
+            }
         }
     },
     toDetailedString: function() {

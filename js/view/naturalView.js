@@ -78,16 +78,17 @@ var NaturalView = Class({
             if (v_edges[i].particles.length < numPheromoneDots){
                 numPheromoneDots = v_edges[i].particles.length;
             }
-            if (v_edges[i].visibleParticles.length < numPheromoneDots){
-                for (var addDots = 0; addDots < numPheromoneDots; addDots++){
+            var diff = numPheromoneDots - v_edges[i].visibleParticles.length;
+            if (diff > 1){
+                for (var addDots = 0; addDots < diff; addDots++){
                     var newParticleNum = random(0, v_edges[i].particles.length - 1);
                     var newParticle = v_edges[i].particles.splice(newParticleNum, 1);
                     v_edges[i].visibleParticles.push(newParticle[0]);
                     newParticle[0].showParticle();
                 }
             }
-            else {
-                var diff = v_edges[i].visibleParticles.length - numPheromoneDots;
+            else if (diff < -1) {
+                diff = Math.abs(diff);
                 for (var removeDots = 0; removeDots < diff; removeDots++){
                     var remParticleNum = random(0, v_edges[i].visibleParticles.length - 1);
                     var remParticle = v_edges[i].visibleParticles.splice(remParticleNum, 1);
@@ -103,7 +104,7 @@ var NaturalView = Class({
         var particleEdge = {};
         particleEdge.particles = [];
         particleEdge.visibleParticles = [];
-        var maxDots = 500;
+        var maxDots = 250;
         var p1 = new THREE.Vector3(nodeA.x, nodeA.y, 0);
         var p2 = new THREE.Vector3(nodeB.x, nodeB.y, 0);
         var distance = p1.clone().sub(p2).length();

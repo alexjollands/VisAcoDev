@@ -9,43 +9,40 @@ var GatheringAnt = Class({
         this.position = position;
     },
     chooseNextNode: function(){
-        var rouletteWheel = 0.0;
-        var nodeProbabilities = [];
-        var nodeCandidates = [];
-        var nodeCandidateNum = 0;
-        var currentNode = this.position.toNode;
-        // Add all possible connected nodes as candidates, only if they haven't been visited
-        for (var i = 0; i < currentNode.edges.length; i++){
-            var potentialNode = currentNode.edges[i].getOppositeNode(currentNode);
-            if (!this.task.haveVisited(potentialNode)){
-                nodeCandidates.push(potentialNode);
-                var p = Math.pow(currentNode.edges[i].pheromoneLevel, controller.pheromoneImportance);
-                var d = Math.pow((1.0 / currentNode.edges[i].distance), controller.distanceImportance);
-                nodeProbabilities[nodeCandidateNum] = p * d;
-                rouletteWheel += nodeProbabilities[nodeCandidateNum];
-                nodeCandidateNum++;
-            }
+
+        // Get next node along path (mission knows about paths in unvisited and visited nodes).
+        if (this.task.targetNode.id == this.task.foodNode.id){
+            return this.task.unvisitedNodes[0];
         }
-        // If all potential nodes have been visited, move to a random one.
-        if (rouletteWheel == 0.0){
-            return currentNode.edges[random(0, currentNode.edges.length - 1)].getOppositeNode(currentNode);
+        else {
+            return this.task.unvisitedNodes[this.task.unvisitedNodes.length - 1];
         }
-        // Select one of the candidate nodes.
-        var wheelTarget = rouletteWheel * Math.random();
-        var wheelPosition = 0.0;
-        for (var j = 0; j < nodeCandidates.length; j++) {
-            wheelPosition += nodeProbabilities[j];
-            if (wheelPosition >= wheelTarget) {
-                if (nodeCandidates[j].id == this.task.targetNode.id){
-                    this.task.isComplete = true;
-                }
-                return nodeCandidates[j];
-            }
-        }
+
     },
     resetPosition: function(){
         this.layPheromone();
         this.position.fromNode = this.position.toNode;
+
+        // Update the visited and unvisited nodes appropriately - chooseNextNode gets the last element (or first) so it
+        // can't be 64 or 1.
+
+        // e.g. fromNode is now 64. We've chosen a path.
+
+        // Setup the position so that the ant is at the start (forward or back)
+        // and going to the next element in the path.
+        // For that, the visited and unvisited nodes need to be updated.
+
+        if (this.task.travellingForwardsAlongPath()){
+            this.task.visitedNodes.push(this.task.unvisitedNodes[0]);
+            this.task.unvisitedNodes.splice(0,1);
+        }
+        else {
+            this.task.visitedNodes.push(this.task.unvisitedNodes[this.task.unvisitedNodes.length - 1]);
+            this.task.unvisitedNodes.pop();
+        }
+
+
+
         this.position.toNode = this.chooseNextNode();
         this.position.alongEdge = controller.graph.findEdge(this.position.fromNode, this.position.toNode);
         this.position.distance = 0;
