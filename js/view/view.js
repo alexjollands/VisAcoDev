@@ -2,11 +2,12 @@
  * Created by Alex on 20/02/2016.
  */
 
-var camera,birdseye_cam,scene,renderer,controls,canvas,ambientLight,particleSystem,particles,cameraPosition;
+var camera,birdseye_cam,scene,renderer,controls,canvas,ambientLight,particleSystem,particles,cameraPosition,antSprite;
 var clock = new THREE.Clock();
 var v_graph;
 var v_nodes = [];
 var v_edges = [];
+var v_ants = [];
 var canvasScale = 1.7;
 var feedback = true;
 
@@ -17,6 +18,7 @@ function render() {
 function animate() {
     view.updateModel();
     view.updateEdges();
+    view.updateAnts();
     var delta = clock.getDelta();
     controls.update( delta );
     feedbackInformation();

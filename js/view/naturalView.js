@@ -11,7 +11,6 @@ var NaturalView = Class({
         birdseye_cam.position.x = 243;
         birdseye_cam.position.y = 133;
         birdseye_cam.position.z = 275;
-        //birdseye_cam.lookAt(new THREE.Vector3(150,125,0));
         render();
     },
     representModel: function(){
@@ -36,6 +35,40 @@ var NaturalView = Class({
         foodSprite.position.set(225,225,10);
         foodSprite.scale.set(15,15,0);
         graphMesh.add(foodSprite);
+
+        // Ant
+        var antImage = THREE.ImageUtils.loadTexture(url + 'images/ant-pci.png');
+        var antMaterial = new THREE.SpriteMaterial( { map: antImage, color: 0xffffff, fog: true } );
+        antSprite = new THREE.Sprite( antMaterial );
+        antSprite.position.set(0,0,10);
+        antSprite.scale.set(8,8,0);
+        graphMesh.add(antSprite);
+
+        // Scenery
+        var rockImage = THREE.ImageUtils.loadTexture(url + 'images/rock.png');
+        var rockMaterial = new THREE.SpriteMaterial( { map: rockImage, color: 0xffffff, fog: true } );
+        var rockSprite = new THREE.Sprite( rockMaterial );
+        var rock1 = rockSprite.clone();
+        rock1.position.set(215,90,10);
+        rock1.scale.set(17,17,0);
+        var rock2 = rockSprite.clone();
+        rock2.position.set(215,115,10);
+        rock2.scale.set(15,15,0);
+        var rock3 = rockSprite.clone();
+        rock3.position.set(215,140,10);
+        rock3.scale.set(15,15,0);
+        graphMesh.add(rock1);
+        graphMesh.add(rock2);
+        graphMesh.add(rock3);
+
+        // Log
+        var logImage = THREE.ImageUtils.loadTexture(url + 'images/log.jpg');
+        var logMaterial = new THREE.SpriteMaterial( { map: logImage, color: 0xffffff, fog: true, rotation: Math.PI / 4} );
+        var logSprite = new THREE.Sprite( logMaterial );
+        logSprite.position.set(70,217,10);
+        logSprite.scale.set(50,20,0);
+        graphMesh.add(logSprite);
+
 
         // Pheromone particles
         particles = new THREE.Geometry();
@@ -98,6 +131,29 @@ var NaturalView = Class({
             }
         }
         particleSystem.geometry.verticesNeedUpdate = true;
+    },
+    updateAnts: function(){
+        if (scenario.displayAnts){
+            for (var i = 0; i < controller.colony.ants.length; i++){
+                var ant = controller.colony.ants[i];
+                if (v_ants.length < i+1){
+                    var vAntMaterial = antSprite.material.clone();
+                    vAntMaterial.needsUpdate = true;
+                    var vAnt = antSprite.clone();
+                    vAnt.material = vAntMaterial;
+                    v_ants.push(vAnt);
+                    v_graph.add(vAnt);
+                }
+                // Update position
+                var antPos = ant.getXYCoordinates();
+                v_ants[i].position.set(antPos.x, antPos.y, antPos.z);
+
+                // Update orientation
+                var facePoint = new THREE.Vector3(ant.position.toNode.x, ant.position.toNode.y, ant.position.toNode.z);
+                var antFaceDirection = getAngleBetweenTwoPoints(antPos, facePoint);
+                v_ants[i].material.rotation = antFaceDirection - 1.5708;
+            }
+        }
     },
     createEdge: function(nodeA, nodeB, pheromoneLevel, particles){
 

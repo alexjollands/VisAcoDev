@@ -66,6 +66,15 @@ function getPointInBetweenByLength(pointA, pointB, length) {
     return pointA.clone().add(dir);
 }
 
+function getAngleBetweenTwoPoints(pointA, pointB){
+    // Three dimensional angle-finding is not supported yet :)
+    return Math.atan2(pointB.y - pointA.y, pointB.x - pointA.x);
+}
+
+function convertDegreesToRadians(degrees){
+    return degrees * (Math.PI/180);
+}
+
 function sleep(delay) {
     var start = new Date().getTime();
     while (new Date().getTime() < start + delay);

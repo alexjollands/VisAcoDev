@@ -13,16 +13,17 @@ var NaturalScenario = Class({
         paths.push([1,2,3,4,5,6,7,8,16,15,23,24,32,31,39,40,48,56,64]);
         this.paths = paths;
         this.pathCounter = 0;
+        this.displayAnts = true;
     },
     getParams: function(){
         var params = {};
         params.pheromoneImportance    = 1;   // Alpha
         params.distanceImportance     = 0;   // Beta
         params.pheromoneDecayRate     = 0.05; // Rho
-        params.pheromoneDepositRate   = 0.6;
-        params.initialPheromoneLevel  = 1;
-        params.colonySize             = 6;
-        params.antMovementPerUpdate   = 5;
+        params.pheromoneDepositRate   = 0.8;
+        params.initialPheromoneLevel  = 0;
+        params.colonySize             = 3;
+        params.antMovementPerUpdate   = 1;
         params.maximumIterations      = 50000;
         return params;
     },

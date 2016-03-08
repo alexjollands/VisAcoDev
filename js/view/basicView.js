@@ -62,6 +62,11 @@ var BasicView = Class({
             }
         }
     },
+    updateAnts: function(){
+        if (scenario.displayAnts){
+            // Update ant position and orientation.
+        }
+    },
     /* Calculations of the vectors for variable-width rectangles inspired by
      * http://stackoverflow.com/questions/7854043/drawing-rectangle-between-two-points-with-arbitrary-width
      */
