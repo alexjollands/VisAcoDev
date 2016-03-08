@@ -43,5 +43,16 @@ var BasicScenario = Class({
         ant.task.checkShortestRoute();
         ant.task.resetTour();
         ant.resetPosition();
+    },
+    chooseFirstStep: function(ant, originNode){
+        var destinationNode = originNode;
+        while (originNode.id == destinationNode.id){
+            var edgeNum = random(0, originNode.edges.length - 1);
+            destinationNode = originNode.edges[edgeNum].nodeA;
+            if (destinationNode.id == originNode.id){
+                destinationNode = originNode.edges[edgeNum].nodeB;
+            }
+        }
+        return destinationNode;
     }
 });

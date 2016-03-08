@@ -10,14 +10,7 @@ var Colony = Class({
     disperseAnts: function(){
         for (var i = 0; i < this.ants.length; i++){
             var originNode = scenario.getOriginNode();
-            var destinationNode = originNode;
-            while (originNode.id == destinationNode.id){
-                var edgeNum = random(0, originNode.edges.length - 1);
-                destinationNode = originNode.edges[edgeNum].nodeA;
-                if (destinationNode.id == originNode.id){
-                    destinationNode = originNode.edges[edgeNum].nodeB;
-                }
-            }
+            var destinationNode = scenario.chooseFirstStep(this.ants[i], originNode);
             var alongEdge = controller.graph.findEdge(originNode, destinationNode);
             this.ants[i].position = new Position(originNode, destinationNode, alongEdge, 0);
             scenario.beginAntTask(this.ants[i], originNode, destinationNode, alongEdge);

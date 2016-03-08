@@ -19,7 +19,7 @@ var NaturalScenario = Class({
         var params = {};
         params.pheromoneImportance    = 1;   // Alpha
         params.distanceImportance     = 0;   // Beta
-        params.pheromoneDecayRate     = 0.05; // Rho
+        params.pheromoneDecayRate     = 0.01; // Rho
         params.pheromoneDepositRate   = 0.8;
         params.initialPheromoneLevel  = 0;
         params.colonySize             = 3;
@@ -45,14 +45,7 @@ var NaturalScenario = Class({
         return this.nestNode;
     },
     beginAntTask: function(ant, originNode, destinationNode, alongEdge){
-        // Evenly split the ants up along the available paths
-        // Evenly split the ants up along the available paths
-        ant.task.setPath(this.paths[this.pathCounter].slice());
-        this.pathCounter++;
-        if (this.pathCounter == this.paths.length){
-            this.pathCounter = 0;
-        }
-        //ant.task.setPath(this.paths[random(0,(this.paths.length - 1))].slice());
+        // Perform any setup as needed.
     },
     completeAntTask: function(ant){
         ant.task.reverseMission();
@@ -66,5 +59,17 @@ var NaturalScenario = Class({
                 this.paths[i][j] = controller.graph.getNodeByID(this.paths[i][j]);
             }
         }
+    },
+    chooseFirstStep: function(ant, originNode){
+
+        if (ant.task.path.length == 0){
+            // Evenly split the ants up along the available paths
+            ant.task.setPath(this.paths[this.pathCounter].slice());
+            this.pathCounter++;
+            if (this.pathCounter == this.paths.length){
+                this.pathCounter = 0;
+            }
+        }
+        return ant.task.path[1];
     }
 });
