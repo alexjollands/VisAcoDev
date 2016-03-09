@@ -9,7 +9,11 @@
     vertical-align: middle;
 }
 
-#canvas:nth-child(1) {
+#tabSection {
+    border: 1px solid blue;
+}
+
+#displaySection:nth-child(1) {
     border: 1px solid blue;
 }
 

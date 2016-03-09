@@ -6,9 +6,10 @@ var NaturalView = Class({
     initialize: function() {
         setupView();
         setupRenderer();
+        setupTabs();
         v_graph = this.representModel();
         scene.add(v_graph);
-        birdseye_cam.position.x = 243;
+        birdseye_cam.position.x = 150;
         birdseye_cam.position.y = 133;
         birdseye_cam.position.z = 275;
         render();
