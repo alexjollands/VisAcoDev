@@ -65,13 +65,16 @@ function setupTabs(){
     tabSection.width = width;
     tabSection.height = height / 10;
     ctx2D = tabSection.getContext('2d');
-    tabs.push(new Tab(0, 0, 100, 50, 'blue'));
-    tabs.push(new Tab(100, 0, 100, 50, 'red'));
-    tabs.push(new Tab(200, 0, 100, 50, 'yellow'));
-    tabs.push(new Tab(300, 0, 100, 50, 'orange'));
+    var tabSize = width / 4;
+    var tabSpacing = tabSize;
+    tabs.push(new Tab(0, 0, tabSize, height / 10, 'blue'));
+    tabs.push(new Tab(tabSpacing, 0, tabSize, height / 10, 'red'));
+    tabSpacing += tabSize;
+    tabs.push(new Tab(tabSpacing, 0, tabSize, height / 10, 'yellow'));
+    tabSpacing += tabSize;
+    tabs.push(new Tab(tabSpacing, 0, tabSize, height / 10, 'orange'));
 
     tabSection.onclick = function(e) {
-
         var r = tabSection.getBoundingClientRect(),
             x = e.clientX - r.left,
             y = e.clientY - r.top;
@@ -80,13 +83,15 @@ function setupTabs(){
             tab.getPath(ctx2D);
 
             if (ctx2D.isPointInPath(x, y)) {
-                // got a hit, update content
-                ctx2D.fillStyle = tab.color;
-                ctx2D.fillRect(0, tab.height + 1, ctx2D.canvas.width, 400);
+                window.alert("The " + tab.colour + " tab was clicked.");
                 return;
             }
         }
     };
+
+    for(var i = 0, tab; tab = tabs[i++];){
+        tab.render(ctx2D);
+    }
 }
 
 function onWindowResize() {
