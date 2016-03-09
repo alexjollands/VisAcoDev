@@ -8,7 +8,7 @@ var v_graph;
 var v_nodes = [];
 var v_edges = [];
 var v_ants = [];
-var canvasScale = 1.7;
+var canvasScale = 1.1;
 var feedback = true;
 
 function render() {

@@ -72,7 +72,7 @@ var NaturalView = Class({
 
         // Pheromone particles
         particles = new THREE.Geometry();
-        var pMaterial = new THREE.ParticleBasicMaterial({color: 0xff0000, size: 0.2, transparent: true});
+        var pMaterial = new THREE.ParticleBasicMaterial({color: 0xff0000, size: 1.2, transparent: true});
 
         var nodeMaterial = new THREE.MeshBasicMaterial({color: 0xBCBCBC});
         var nodeRadius = 2;
