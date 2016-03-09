@@ -24,7 +24,7 @@ var NaturalView = Class({
         var nestImage = THREE.ImageUtils.loadTexture(url + 'images/ant-nest.png');
         var nestMaterial = new THREE.SpriteMaterial( { map: nestImage, color: 0xffffff, fog: true } );
         var nestSprite = new THREE.Sprite( nestMaterial );
-        nestSprite.position.set(50,50,10);
+        nestSprite.position.set(57,53,10);
         nestSprite.scale.set(15,15,0);
         graphMesh.add(nestSprite);
 
@@ -103,6 +103,21 @@ var NaturalView = Class({
         if (controller.currentIteration < controller.maximumIterations) {
             controller.performACOIteration();
         }
+        if (controller.colony.deployingAnts){
+            if (random(1,9) % 3 == 0){
+                controller.colony.numActiveAnts += scenario.antReleaseSpeed;
+                var numActiveAnts = Math.floor(controller.colony.numActiveAnts);
+                if (controller.colonySize >= numActiveAnts){
+                    for (var i = 0; i < numActiveAnts; i++){
+                        controller.colony.ants[numActiveAnts-1].isActive = true;
+                        if (controller.colonySize == numActiveAnts) {
+                            controller.colony.deployingAnts = false;
+                        }
+                    }
+                }
+            }
+
+        }
     },
     updateEdges: function(){
         for (var i = 0; i < v_edges.length; i++){
@@ -165,11 +180,12 @@ var NaturalView = Class({
         var p2 = new THREE.Vector3(nodeB.x, nodeB.y, 0);
         var distance = p1.clone().sub(p2).length();
         var dotGap = distance / maxDots;
+        var pheromoneSpread = 5;
 
         for (var i = 0; i < maxDots; i++) {
             var nextDot = getPointInBetweenByLength(p1, p2, (dotGap * i) + 1);
-            var pX = Math.random() < 0.5 ? ( 1 + randomDecimal(0, 0.025)) * nextDot.x : ( 1 - randomDecimal(0, 0.025)) * nextDot.x;
-            var pY = Math.random() < 0.5 ? ( 1 + randomDecimal(0, 0.025)) * nextDot.y : ( 1 - randomDecimal(0, 0.025)) * nextDot.y;
+            var pX = Math.random() < 0.5 ? ( nextDot.x + (randomDecimal(0 , pheromoneSpread))) : ( nextDot.x - (randomDecimal(0, pheromoneSpread)));
+            var pY = Math.random() < 0.5 ? ( nextDot.y + (randomDecimal(0 , pheromoneSpread))) : ( nextDot.y - (randomDecimal(0, pheromoneSpread)));
             var pZ = nextDot.z;
             var particle = new THREE.Vector3(pX, pY, pZ);
             var pheromone = new Pheromone(pX, pY, pZ, particle);

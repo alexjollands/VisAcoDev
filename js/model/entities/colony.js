@@ -6,6 +6,8 @@
 var Colony = Class({
     initialize: function(ants) {
         this.ants = ants;
+        this.numActiveAnts = 0;
+        this.deployingAnts = true;
     },
     disperseAnts: function(){
         for (var i = 0; i < this.ants.length; i++){
@@ -18,7 +20,9 @@ var Colony = Class({
     },
     updateAnts: function(){
         for (var i = 0; i < this.ants.length; i++){
-            this.updateAnt(this.ants[i]);
+            if (this.ants[i].isActive){
+                this.updateAnt(this.ants[i]);
+            }
         }
     },
     updateAnt: function(ant) {
@@ -26,6 +30,12 @@ var Colony = Class({
         var antMoving = true;
         while (antMoving) {
             var edgeLengthRemaining = ant.position.alongEdge.distance - ant.position.distance;
+            if (ant.task.isComplete) {
+                if (edgeLengthRemaining < movementRemaining){
+                    scenario.completeAntTask(ant);
+                    movementRemaining = 0;
+                }
+            }
             if (edgeLengthRemaining < movementRemaining) {
                 ant.layPheromone();
                 ant.moveTo(ant.chooseNextNode(), 0);
@@ -33,10 +43,6 @@ var Colony = Class({
             }
             else {
                 ant.position.distance += movementRemaining;
-                movementRemaining = 0;
-            }
-            if (ant.task.isComplete) {
-                scenario.completeAntTask(ant);
                 movementRemaining = 0;
             }
             if (movementRemaining <= 0) {

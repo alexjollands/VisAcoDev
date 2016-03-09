@@ -7,6 +7,7 @@ var GatheringAnt = Class({
         this.id = id;
         this.task = task;
         this.position = position;
+        this.isActive = false;
     },
     chooseNextNode: function(){
         if (this.task.targetNode.id == this.task.foodNode.id){

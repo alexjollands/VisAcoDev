@@ -14,15 +14,16 @@ var NaturalScenario = Class({
         this.paths = paths;
         this.pathCounter = 0;
         this.displayAnts = true;
+        this.antReleaseSpeed = 0.15;
     },
     getParams: function(){
         var params = {};
         params.pheromoneImportance    = 1;   // Alpha
         params.distanceImportance     = 0;   // Beta
         params.pheromoneDecayRate     = 0.01; // Rho
-        params.pheromoneDepositRate   = 0.8;
+        params.pheromoneDepositRate   = 0.2;
         params.initialPheromoneLevel  = 0;
-        params.colonySize             = 3;
+        params.colonySize             = 25;
         params.antMovementPerUpdate   = 1;
         params.maximumIterations      = 50000;
         return params;
@@ -69,7 +70,10 @@ var NaturalScenario = Class({
             if (this.pathCounter == this.paths.length){
                 this.pathCounter = 0;
             }
+            ant.task.visitedNodes.push(ant.task.unvisitedNodes[0]);
+            ant.task.visitedNodes.push(ant.task.unvisitedNodes[1]);
+            ant.task.unvisitedNodes.splice(0,2);
         }
-        return ant.task.path[1];
+        return ant.task.visitedNodes[1];
     }
 });
