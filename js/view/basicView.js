@@ -64,7 +64,7 @@ var BasicView = Class({
     },
     updateAnts: function(){
         if (scenario.displayAnts){
-            // Update ant position and orientation.
+            // Update individual ant position, orientation, graphics etc if appropriate.
         }
     },
     /* Calculations of the vectors for variable-width rectangles inspired by

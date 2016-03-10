@@ -5,6 +5,8 @@ var BasicScenario = Class({
     initialize: function() {
         this.maxEdgeLength = Number.MAX_VALUE;
         this.taskType = "Tour";
+        this.displayAnts = true;
+        this.antReleaseSpeed = 100;
     },
     getParams: function(){
         var params = {};
@@ -26,6 +28,9 @@ var BasicScenario = Class({
     },
     setup: function(){
         controller.colony.disperseAnts();
+        for (var i = 0; i < controller.colony.ants.length; i++) {
+            controller.colony.ants[i].isActive = true;
+        }
     },
     createNewAnt: function(i){
         return new TouringAnt(i+1, new Tour(controller.graph.nodes.slice()), new Position()); // Mission or Task, not Tour

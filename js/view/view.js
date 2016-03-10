@@ -12,25 +12,28 @@ var canvasScale = 1.5;
 var feedback = true;
 var tabs = [];
 var ctx2D;
-
 var width;
 var height;
 var displaySectionMaxWidth = 1000;
 var displaySectionMaxHeight = 1000;
+var currentlyAnimating = true;
 
 function render() {
+    renderMenu();
     renderer.render( scene, camera );
 }
 
 function animate() {
-    view.updateModel();
-    view.updateEdges();
-    view.updateAnts();
-    var delta = clock.getDelta();
-    controls.update( delta );
-    feedbackInformation();
-    render();
-    requestAnimationFrame(animate);
+    if (currentlyAnimating) {
+        view.updateModel();
+        view.updateEdges();
+        view.updateAnts();
+        var delta = clock.getDelta();
+        controls.update(delta);
+        feedbackInformation();
+        render();
+        requestAnimationFrame(animate);
+    }
 }
 
 /* Basic setup - custom changes done in view packages */
@@ -65,14 +68,14 @@ function setupTabs(){
     tabSection.width = width;
     tabSection.height = height / 10;
     ctx2D = tabSection.getContext('2d');
-    var tabSize = width / 4;
+
+    var tabSize = width / 5;
     var tabSpacing = tabSize;
-    tabs.push(new Tab(0, 0, tabSize, height / 10, 'blue'));
-    tabs.push(new Tab(tabSpacing, 0, tabSize, height / 10, 'red'));
-    tabSpacing += tabSize;
-    tabs.push(new Tab(tabSpacing, 0, tabSize, height / 10, 'yellow'));
-    tabSpacing += tabSize;
-    tabs.push(new Tab(tabSpacing, 0, tabSize, height / 10, 'orange'));
+    tabs.push(new Tab("Nest-Food Scenario", 0, 0, tabSize, height / 10, 'black', 'b-nest-food2.png'));
+    tabs.push(new Tab("TSP (Basic)", tabSpacing, 0, tabSize, height / 10, 'black', 'b-tsp-basic2.png'));
+    tabs.push(new Tab("TSP (Advanced)", (tabSpacing += tabSize), 0, tabSize, height / 10, 'black', 'b-tsp-advanced2.png'));
+    tabs.push(new Tab("Network (Real World)", (tabSpacing += tabSize), 0, tabSize, height / 10, 'black', 'b-network.png'));
+    tabs.push(new Tab("Google Maps (Real World)", (tabSpacing += tabSize), 0, tabSize, height / 10, 'black', 'b-google-maps2.png'));
 
     tabSection.onclick = function(e) {
         var r = tabSection.getBoundingClientRect(),
@@ -83,14 +86,18 @@ function setupTabs(){
             tab.getPath(ctx2D);
 
             if (ctx2D.isPointInPath(x, y)) {
-                window.alert("The " + tab.colour + " tab was clicked.");
+                //window.alert("The " + tab.viewType + " tab was clicked.");
+                tab.performAction();
                 return;
             }
         }
     };
+}
 
+function renderMenu(){
     for(var i = 0, tab; tab = tabs[i++];){
         tab.render(ctx2D);
+        tab.renderBorder(ctx2D);
     }
 }
 
@@ -104,6 +111,8 @@ function onWindowResize() {
     renderer.setSize(width, height);
     tabSection.width = width;
     tabSection.height = height / 10;
+    setTabSizes();
+    renderMenu();
     render();
 }
 
@@ -112,6 +121,7 @@ function setupRenderer(){
     renderer.setSize( width, height);
     renderer.shadowMapEnabled = true;
     renderer.setClearColor( 0xffffff, 0);
+    removeExistingCanvas(displaySection);
     displaySection.appendChild( renderer.domElement );
     window.addEventListener( 'resize', onWindowResize, false );
 }
@@ -133,5 +143,28 @@ function feedbackInformation(){
     }
     if (feedback){
         cameraPosition.innerHTML = "x: " + birdseye_cam.position.x + " y: " + birdseye_cam.position.y + " z: " + birdseye_cam.position.z;
+    }
+}
+
+function resetViewData(){
+    v_graph = null;
+    v_nodes = [];
+    v_edges = [];
+    v_ants = [];
+}
+
+function removeExistingCanvas(displaySection){
+    var numNodes = displaySection.childNodes.length;
+    for (var i = 0; i < numNodes; i++){
+        displaySection.removeChild(displaySection.childNodes[i]);
+    }
+}
+
+function setTabSizes(){
+    var tabSize = width / 5;
+    var tabSpacing = tabSize;
+    tabs[0].setDimensions(0,0,tabSize, height / 10);
+    for (var i = 0; i < tabs.length - 1; i++){
+        tabs[i+1].setDimensions(tabSpacing + (i * tabSize), 0, tabSize, height / 10);
     }
 }
