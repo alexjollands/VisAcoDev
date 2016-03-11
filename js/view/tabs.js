@@ -15,7 +15,7 @@ var Tab = function(viewType, x, y, width, height, colour, imagePath) {
     this.colour = colour;
     this.lineWidth = 3;
     var image = new Image();
-    image.src = "images/" + imagePath;
+    image.src = "images/buttons/" + imagePath;
     this.image = image;
 
 
@@ -51,8 +51,8 @@ var Tab = function(viewType, x, y, width, height, colour, imagePath) {
         switch (this.viewType){
             case "Nest-Food Scenario":          return new NaturalScenario();   break;
             case "TSP (Basic)":                 return new BasicScenario();     break;
-            case "TSP (Advanced)":              return new NaturalScenario();   break;
-            case "Network (Real World)":        return new BasicScenario();     break;
+            case "TSP (Advanced)":              return new AdvancedScenario();  break;
+            case "Network (Real World)":        return new NaturalScenario();   break;
             case "Google Maps (Real World)":    return new NaturalScenario();   break;
         }
     };

@@ -2,7 +2,7 @@
  * Created by Alex on 20/02/2016.
  */
 
-var camera,birdseye_cam,scene,renderer,controls,displaySection,tabSection,tabSection,ambientLight,particleSystem,particles,cameraPosition,antSprite;
+var camera,birdseye_cam,scene,renderer,controls,displaySection,tabSection,ambientLight,particleSystem,particles,cameraPosition,antSprite;
 var clock = new THREE.Clock();
 var v_graph;
 var v_nodes = [];
