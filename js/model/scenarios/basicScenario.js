@@ -3,10 +3,14 @@
  */
 var BasicScenario = Class({
     initialize: function() {
+        this.menuName = "basicMenu";
+        this.viewType = "TSP (Basic)";
+        loadMenu("basicMenu");
         this.maxEdgeLength = Number.MAX_VALUE;
         this.taskType = "Tour";
         this.displayAnts = true;
         this.antReleaseSpeed = 100;
+        this.showShortestRoute = true;
     },
     getParams: function(){
         var params = {};
@@ -17,7 +21,7 @@ var BasicScenario = Class({
         params.initialPheromoneLevel  = 1;
         params.colonySize             = 30;
         params.antMovementPerUpdate   = 50;
-        params.maximumIterations      = 50000;
+        params.maximumIterations      = 1000000;
         return params;
     },
     getView: function(){

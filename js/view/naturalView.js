@@ -25,7 +25,7 @@ var NaturalView = Class({
         var nestImage = THREE.ImageUtils.loadTexture(url + 'images/ant-nest.png');
         var nestMaterial = new THREE.SpriteMaterial( { map: nestImage, color: 0xffffff, fog: true } );
         var nestSprite = new THREE.Sprite( nestMaterial );
-        nestSprite.position.set(57,53,10);
+        nestSprite.position.set(55,53,10);
         nestSprite.scale.set(15,15,0);
         graphMesh.add(nestSprite);
 
@@ -41,7 +41,7 @@ var NaturalView = Class({
         var antImage = THREE.ImageUtils.loadTexture(url + 'images/ant-pci.png');
         var antMaterial = new THREE.SpriteMaterial( { map: antImage, color: 0xffffff, fog: true } );
         antSprite = new THREE.Sprite( antMaterial );
-        antSprite.position.set(0,0,10);
+        antSprite.position.set(55,53,10);
         antSprite.scale.set(8,8,0);
         graphMesh.add(antSprite);
 

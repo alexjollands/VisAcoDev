@@ -71,52 +71,19 @@ var Controller = Class({
         this.graph.applyPheromoneDecay(this.pheromoneDecayRate);
         this.colony.updateAnts();
     },
-    editParameters: function(restartDemo){
-        var colonySize          = Number(document.getElementById("colonySize").value);
-        var alpha               = Number(document.getElementById("alpha").value);
-        var beta                = Number(document.getElementById("beta").value);
-        var rho                 = Number(document.getElementById("rho").value);
-        var depositRate         = Number(document.getElementById("depositRate").value);
-        var initialPheromone    = Number(document.getElementById("initialPheromone").value);
-
-        if (colonySize >= 1 && colonySize <= 100){
-            this.colonySize = colonySize;
-        }
-        if (alpha >= 0.01 && alpha <= 100){
-            this.pheromoneImportance = alpha;
-        }
-        if (beta >= 0.01 && beta <= 100){
-            this.distanceImportance = beta;
-        }
-        if (rho >= 0.001 && rho <= 1){
-            this.pheromoneDecayRate = rho;
-        }
-        if (depositRate >= 0 && depositRate <= 100){
-            this.pheromoneDepositRate = depositRate;
-        }
-        if (initialPheromone >= 0 && initialPheromone <= 100){
-            this.initialPheromoneLevel = initialPheromone;
-        }
+    editParameters: function(viewType, restartDemo){
+        userSettings = retrieveMenuParameters(scenario.menuName);
         if (restartDemo){
-            this.setupGraph();
-            this.createColony();
-            this.colony.disperseAnts();
-            this.currentIteration = 0;
-            this.shortestRoute = new Tour();
-            this.shortestRoute.totalLength = Number.MAX_VALUE;
+            restartScenario(viewType);
         }
-
-        console.log("Colony Size: " + this.colonySize);
-        console.log("Alpha: " + this.pheromoneImportance);
-        console.log("Beta: " + this.distanceImportance);
-        console.log("Rho: " + this.pheromoneDecayRate);
-        console.log("Deposit rate: " + this.pheromoneDepositRate);
-        console.log("Initial pheromone: " + this.initialPheromoneLevel);
-
     },
     updateUI: function(){
-        document.getElementById("distance").innerHTML = " " + this.shortestRoute.totalLength;
-        document.getElementById("iteration-number").innerHTML = " " + this.currentIteration;
+        if (scenario.showShortestRoute){
+            if (this.shortestRoute.totalLength != Number.MAX_VALUE){
+                document.getElementById("distance").innerHTML = " " + parseFloat(this.shortestRoute.totalLength).toFixed(2);
+                document.getElementById("iteration-number").innerHTML = " " + this.currentIteration;
+            }
+        }
     }
 });
 

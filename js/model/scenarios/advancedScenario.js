@@ -3,10 +3,14 @@
  */
 var AdvancedScenario = Class({
     initialize: function() {
+        this.menuName = "advancedMenu";
+        this.viewType = "TSP (Advanced)";
+        loadMenu("advancedMenu");
         this.maxEdgeLength = Number.MAX_VALUE;
         this.taskType = "Tour";
         this.displayAnts = true;
         this.antReleaseSpeed = 100;
+        this.showShortestRoute = true;
     },
     getParams: function(){
         var params = {};
@@ -17,7 +21,7 @@ var AdvancedScenario = Class({
         params.initialPheromoneLevel  = 1;
         params.colonySize             = 30;
         params.antMovementPerUpdate   = 50;
-        params.maximumIterations      = 50000;
+        params.maximumIterations      = 1000000;
         return params;
     },
     getView: function(){
@@ -27,6 +31,7 @@ var AdvancedScenario = Class({
         return "advanced.json";
     },
     setup: function(){
+        populateMenuParameters(this.menuName);
         controller.colony.disperseAnts();
         for (var i = 0; i < controller.colony.ants.length; i++) {
             controller.colony.ants[i].isActive = true;

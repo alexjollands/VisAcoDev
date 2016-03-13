@@ -1,0 +1,49 @@
+<div class="tab-content">
+    <div id="uit-controls" class="tab-pane fade in active">
+        <p>Speed</p>
+        <p>Colony size</p>
+        <div id="shortest-route">
+            <p>Shortest route: <span id="distance">____</span> found in iteration number <span id="iteration-number">____.</span></p>
+        </div>
+    </div>
+    <div id="uit-advanced" class="tab-pane fade">
+        <p>This tab contains the whole gamut of editable parameters.</p>
+        <div id="parameters">
+            <form id="parameter-form">
+                <table border="1">
+                    <tr>
+                        <td>Number of ants (between 1 and 100):</td>
+                        <td><input type="number" name="colonySize" id="colonySize" min="1" max="100"> </td>
+                    </tr>
+                    <tr>
+                        <td>Alpha (pheromone importance):</td>
+                        <td><input type="number" name="alpha" id="alpha" min="0.01" max="100"> </td>
+                    <tr>
+                        <td>Beta (distance importance):</td>
+                        <td><input type="number" name="beta" id="beta" min="0.01" max="100"> </td>
+                    </tr>
+                    <tr>
+                        <td>Rho (pheromone evaporation rate):</td>
+                        <td><input type="number" name="rho" id="rho" value="" min="0.001" max="1"></td>
+                    </tr>
+                    <tr>
+                        <td>Pheromone deposit rate:</td>
+                        <td><input type="number" name="depositRate" id="depositRate" value="" min="0" max="100"></td>
+                    </tr>
+                    <tr>
+                        <td>Initial pheromone level:</td>
+                        <td><input type="number" name="initialPheromone" id="initialPheromone" value="" min="0" max="100"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="button" value="Change Parameters and Restart" onclick="controller.editParameters('TSP (Advanced)', true)"></td>
+                        <td><input type="button" value="Change Parameters Live" onclick="controller.editParameters('TSP (Advanced)', false)"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+    <div id="uit-info" class="tab-pane fade">
+        <p>This is the advanced scenario information section. </p>
+        <p> I could include info on the concept, any credits and attributions etc here.</p>
+    </div>
+</div>

@@ -38,23 +38,14 @@ var Tab = function(viewType, x, y, width, height, colour, imagePath) {
     this.performAction = function(){
         currentlyAnimating = false;
         resetViewData();
-        scenario = this.createNewScenario();
+        scenario = createNewScenario(this.viewType);
         controller = new Controller();
+        loadSavedSettings(userSettings);
         controller.setupGraph();
         controller.createColony();
         scenario.setup();
         view = scenario.getView();
         currentlyAnimating = true;
-    };
-
-    this.createNewScenario = function(){
-        switch (this.viewType){
-            case "Nest-Food Scenario":          return new NaturalScenario();   break;
-            case "TSP (Basic)":                 return new BasicScenario();     break;
-            case "TSP (Advanced)":              return new AdvancedScenario();  break;
-            case "Network (Real World)":        return new NaturalScenario();   break;
-            case "Google Maps (Real World)":    return new NaturalScenario();   break;
-        }
     };
 
     this.setDimensions = function(x, y, w, h){

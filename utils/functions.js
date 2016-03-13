@@ -106,6 +106,126 @@ function createNodeGridJSON(x, y, width, height, space){
     return jsonOutput;
 }
 
+function loadMenu(menuName){
+    var link = document.querySelector('link[id=' + menuName + ']');
+    var menuImport = link.import;
+    var menu = menuImport.querySelector('.tab-content');
+    document.getElementById("control-menu-content").innerHTML = menu.innerHTML;
+    resetMenu();
+}
+
+function resetMenu(){
+    document.getElementById("control-menu").innerHTML = '' +
+                    '<ul id="control-menu" class="nav nav-tabs" id="uiTabs">' +
+                    '<li class="active"><a data-toggle="tab" href="#uit-controls">Controls</a></li>' +
+                    '<li><a data-toggle="tab" href="#uit-advanced">Advanced</a></li>' +
+                    '<li><a data-toggle="tab" href="#uit-info">Information</a></li></ul>';
+}
+
+function populateMenuParameters(menuName) {
+    if (menuName == "naturalMenu"){
+        document.forms['parameter-form'].elements['colonySize'].value = controller.colonySize;
+        document.forms['parameter-form'].elements['antReleaseSpeed'].value = scenario.antReleaseSpeed;
+        document.forms['parameter-form'].elements['pathRandomness'].value = scenario.pathRandomness;
+        document.forms['parameter-form'].elements['depositRate'].value = controller.pheromoneDepositRate;
+        document.forms['parameter-form'].elements['initialPheromone'].value = controller.initialPheromoneLevel;
+    }
+    else if (menuName == "basicMenu"){
+        // Populate basic menu params
+    }
+    else if (menuName == "advancedMenu"){
+        document.forms['parameter-form'].elements['colonySize'].value = controller.colonySize;
+        document.forms['parameter-form'].elements['alpha'].value = controller.pheromoneImportance;
+        document.forms['parameter-form'].elements['beta'].value = controller.distanceImportance;
+        document.forms['parameter-form'].elements['rho'].value = controller.pheromoneDecayRate;
+        document.forms['parameter-form'].elements['depositRate'].value = controller.pheromoneDepositRate;
+        document.forms['parameter-form'].elements['initialPheromone'].value = controller.initialPheromoneLevel;
+    }
+}
+
+function retrieveMenuParameters(menuName) {
+    userSettings = {};
+    if (menuName == "naturalMenu"){
+        userSettings.viewType = "naturalMenu";
+        userSettings.colonySize = Number(document.forms['parameter-form'].elements['colonySize'].value);
+        userSettings.antReleaseSpeed = Number(document.forms['parameter-form'].elements['antReleaseSpeed'].value);
+        userSettings.pathRandomness = Number(document.forms['parameter-form'].elements['pathRandomness'].value);
+        userSettings.pheromoneDepositRate = Number(document.forms['parameter-form'].elements['depositRate'].value);
+        userSettings.initialPheromoneLevel = Number(document.forms['parameter-form'].elements['initialPheromone'].value);
+        return userSettings;
+    }
+    else if (menuName == "basicMenu"){
+        // Populate basic menu params
+    }
+    else if (menuName == "advancedMenu"){
+        userSettings.viewType = "advancedMenu";
+        userSettings.colonySize = Number(document.forms['parameter-form'].elements['colonySize'].value);
+        userSettings.pheromoneImportance = Number(document.forms['parameter-form'].elements['alpha'].value);
+        userSettings.distanceImportance = Number(document.forms['parameter-form'].elements['beta'].value);
+        userSettings.pheromoneDecayRate = Number(document.forms['parameter-form'].elements['rho'].value);
+        userSettings.pheromoneDepositRate = Number(document.forms['parameter-form'].elements['depositRate'].value);
+        userSettings.initialPheromoneLevel = Number(document.forms['parameter-form'].elements['initialPheromone'].value);
+        return userSettings;
+    }
+}
+
+function createNewScenario(viewType){
+    switch (viewType){
+        case "Nest-Food Scenario":          return new NaturalScenario();   break;
+        case "TSP (Basic)":                 return new BasicScenario();     break;
+        case "TSP (Advanced)":              return new AdvancedScenario();  break;
+        case "Network (Real World)":        return new NaturalScenario();   break;
+        case "Google Maps (Real World)":    return new NaturalScenario();   break;
+    }
+}
+
+function restartScenario(viewType){
+    for (var i = 0; i < tabs.length; i++){
+        if (tabs[i].viewType == viewType){
+            tabs[i].performAction();
+            break;
+        }
+    }
+}
+
+/*
+ * This menu business needs a refactor.
+ * Could use scenario.viewType here or overhaul the lot.
+ */
+function loadSavedSettings(settings){
+    if (settings == null){
+        return;
+    }
+    if (settings.viewType == "naturalMenu"){
+        controller.colonySize = settings.colonySize;
+        scenario.antReleaseSpeed = settings.antReleaseSpeed;
+        scenario.pathRandomness = settings.pathRandomness;
+        controller.pheromoneDepositRate = settings.pheromoneDepositRate;
+        controller.initialPheromoneLevel = settings.initialPheromoneLevel;
+    }
+    else if (settings.viewType == "basicMenu"){
+
+    }
+    else if (settings.viewType == "advancedMenu"){
+        controller.colonySize = settings.colonySize;
+        controller.pheromoneImportance = settings.pheromoneImportance;
+        controller.distanceImportance = settings.distanceImportance;
+        controller.pheromoneDecayRate = settings.pheromoneDecayRate;
+        controller.pheromoneDepositRate = settings.pheromoneDepositRate;
+        controller.initialPheromoneLevel = settings.initialPheromoneLevel;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

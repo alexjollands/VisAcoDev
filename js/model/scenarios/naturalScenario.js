@@ -4,6 +4,9 @@
 
 var NaturalScenario = Class({
     initialize: function() {
+        this.menuName = "naturalMenu";
+        this.viewType = "Nest-Food Scenario";
+        loadMenu(this.menuName);
         this.maxEdgeLength = 40;
         this.nestNode;
         this.taskType = "Mission";
@@ -13,8 +16,10 @@ var NaturalScenario = Class({
         paths.push([1,2,3,4,5,6,7,8,16,15,23,24,32,31,39,40,48,56,64]);
         this.paths = paths;
         this.pathCounter = 0;
+        this.pathRandomness = 20;
         this.displayAnts = true;
         this.antReleaseSpeed = 0.15;
+        this.showShortestRoute = false;
     },
     getParams: function(){
         var params = {};
@@ -25,7 +30,7 @@ var NaturalScenario = Class({
         params.initialPheromoneLevel  = 0;
         params.colonySize             = 25;
         params.antMovementPerUpdate   = 1;
-        params.maximumIterations      = 50000;
+        params.maximumIterations      = 1000000;
         return params;
     },
     getView: function(){
@@ -35,6 +40,7 @@ var NaturalScenario = Class({
         return "threepaths.json";
     },
     setup: function(){
+        populateMenuParameters(this.menuName);
         this.nestNode = controller.graph.nodes[0];
         this.populatePaths();
         controller.colony.disperseAnts();

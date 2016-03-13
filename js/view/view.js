@@ -2,14 +2,14 @@
  * Created by Alex on 20/02/2016.
  */
 
-var camera,birdseye_cam,scene,renderer,controls,displaySection,tabSection,ambientLight,particleSystem,particles,cameraPosition,antSprite;
+var camera,birdseye_cam,scene,renderer,controls,displaySection,tabSection,ambientLight,particleSystem,particles,cameraPosition,antSprite,userSettings;
 var clock = new THREE.Clock();
 var v_graph;
 var v_nodes = [];
 var v_edges = [];
 var v_ants = [];
 var canvasScale = 1.5;
-var feedback = true;
+var feedback = false;
 var tabs = [];
 var ctx2D;
 var width;
@@ -17,6 +17,7 @@ var height;
 var displaySectionMaxWidth = 1000;
 var displaySectionMaxHeight = 1000;
 var currentlyAnimating = true;
+var tabHeightScale = 12;
 
 function render() {
     renderMenu();
@@ -66,16 +67,16 @@ function setupView(){
 function setupTabs(){
     tabSection = document.getElementById("tabSection");
     tabSection.width = width;
-    tabSection.height = height / 10;
+    tabSection.height = height / 12;
     ctx2D = tabSection.getContext('2d');
 
     var tabSize = width / 5;
     var tabSpacing = tabSize;
-    tabs.push(new Tab("Nest-Food Scenario", 0, 0, tabSize, height / 10, 'black', 'b-nest-food2.png'));
-    tabs.push(new Tab("TSP (Basic)", tabSpacing, 0, tabSize, height / 10, 'black', 'b-tsp-basic2.png'));
-    tabs.push(new Tab("TSP (Advanced)", (tabSpacing += tabSize), 0, tabSize, height / 10, 'black', 'b-tsp-advanced2.png'));
-    tabs.push(new Tab("Network (Real World)", (tabSpacing += tabSize), 0, tabSize, height / 10, 'black', 'b-network.png'));
-    tabs.push(new Tab("Google Maps (Real World)", (tabSpacing += tabSize), 0, tabSize, height / 10, 'black', 'b-google-maps2.png'));
+    tabs.push(new Tab("Nest-Food Scenario", 0, 0, tabSize, height / tabHeightScale, 'black', 'b-nest-food2.png'));
+    tabs.push(new Tab("TSP (Basic)", tabSpacing, 0, tabSize, height / tabHeightScale, 'black', 'b-tsp-basic2.png'));
+    tabs.push(new Tab("TSP (Advanced)", (tabSpacing += tabSize), 0, tabSize, height / tabHeightScale, 'black', 'b-tsp-advanced2.png'));
+    tabs.push(new Tab("Network (Real World)", (tabSpacing += tabSize), 0, tabSize, height / tabHeightScale, 'black', 'b-network.png'));
+    tabs.push(new Tab("Google Maps (Real World)", (tabSpacing += tabSize), 0, tabSize, height / tabHeightScale, 'black', 'b-google-maps2.png'));
 
     tabSection.onclick = function(e) {
         var r = tabSection.getBoundingClientRect(),
@@ -86,7 +87,6 @@ function setupTabs(){
             tab.getPath(ctx2D);
 
             if (ctx2D.isPointInPath(x, y)) {
-                //window.alert("The " + tab.viewType + " tab was clicked.");
                 tab.performAction();
                 return;
             }
@@ -110,7 +110,7 @@ function onWindowResize() {
     camera.updateProjectionMatrix();
     renderer.setSize(width, height);
     tabSection.width = width;
-    tabSection.height = height / 10;
+    tabSection.height = height / tabHeightScale;
     setTabSizes();
     renderMenu();
     render();
@@ -163,8 +163,8 @@ function removeExistingCanvas(displaySection){
 function setTabSizes(){
     var tabSize = width / 5;
     var tabSpacing = tabSize;
-    tabs[0].setDimensions(0,0,tabSize, height / 10);
+    tabs[0].setDimensions(0,0,tabSize, height / tabHeightScale);
     for (var i = 0; i < tabs.length - 1; i++){
-        tabs[i+1].setDimensions(tabSpacing + (i * tabSize), 0, tabSize, height / 10);
+        tabs[i+1].setDimensions(tabSpacing + (i * tabSize), 0, tabSize, height / tabHeightScale);
     }
 }

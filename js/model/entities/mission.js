@@ -62,7 +62,7 @@ var Mission = Class({
                 bestPath.path = paths[i].slice();
             }
         }
-        if (random(1,10) % 5 == 0){
+        if (random(1,100) % scenario.pathRandomness == 0){
             bestPath.path = paths[random(0, paths.length - 1)].slice();
         }
         this.setPath(bestPath.path);

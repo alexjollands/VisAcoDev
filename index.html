@@ -35,15 +35,23 @@
     <script src="js/view/naturalView.js"></script>
     <script src="js/view/tabs.js"></script>
 
-    <!-- Stylesheet -->
+    <!-- Styling -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="utils/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="utils/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
+
+    <!-- Menus -->
+    <!-- https://www.w3.org/TR/html-imports/#link-type-import -->
+    <link rel="import" id="naturalMenu" href="menu/naturalMenu.html">
+    <link rel="import" id="basicMenu" href="menu/basicMenu.html">
+    <link rel="import" id="advancedMenu" href="menu/advancedMenu.html">
 
 </head>
 <body>
 
     <!-- Visualisation -->
     <div id="page-container">
-        <h1>Visualising Ant Colony Optimisation</h1>
         <div id="canvas-container">
             <canvas id="tabSection"></canvas>
             <div id="displaySection"></div>
@@ -51,60 +59,25 @@
         <div id="camera-position">
             <p><span id="cameraPosition"></span></p>
         </div>
-        <div id="shortest-route">
-            <p>Shortest route: <span id="distance">____</span> found in iteration number <span id="iteration-number">____.</span></p>
-        </div>
-        <div id="parameters">
-            <form id="parameter-form">
-                <table border="1">
-                    <tr>
-                        <td>Number of ants (between 1 and 100):</td>
-                        <td><input type="number" name="colonySize" id="colonySize" min="1" max="100"> </td>
-                    </tr>
-                    <tr>
-                        <td>Alpha (pheromone importance):</td>
-                        <td><input type="number" name="alpha" id="alpha" min="0.01" max="100"> </td>
-                    <tr>
-                        <td>Beta (distance importance):</td>
-                        <td><input type="number" name="beta" id="beta" min="0.01" max="100"> </td>
-                    </tr>
-                    <tr>
-                        <td>Rho (pheromone evaporation rate):</td>
-                        <td><input type="number" name="rho" id="rho" value="" min="0.001" max="1"></td>
-                    </tr>
-                    <tr>
-                        <td>Pheromone deposit rate:</td>
-                        <td><input type="number" name="depositRate" id="depositRate" value="" min="0" max="100"></td>
-                    </tr>
-                    <tr>
-                        <td>Initial pheromone level:</td>
-                        <td><input type="number" name="initialPheromone" id="initialPheromone" value="" min="0" max="100"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="button" value="Change Parameters and Restart" onclick="controller.editParameters(true)"></td>
-                        <td><input type="button" value="Change Parameters Live" onclick="controller.editParameters()"></td>
-                    </tr>
-                </table>
-            </form>
 
-            <script>
-                window.onload = function() {
-                    document.forms['parameter-form'].elements['colonySize'].value = controller.colonySize;
-                    document.forms['parameter-form'].elements['alpha'].value = controller.pheromoneImportance;
-                    document.forms['parameter-form'].elements['beta'].value = controller.distanceImportance;
-                    document.forms['parameter-form'].elements['rho'].value = controller.pheromoneDecayRate;
-                    document.forms['parameter-form'].elements['depositRate'].value = controller.pheromoneDepositRate;
-                    document.forms['parameter-form'].elements['initialPheromone'].value = controller.initialPheromoneLevel;
-                }
-            </script>
-        </div>
+        <ul id="control-menu" class="nav nav-tabs" id="uiTabs">
+            <li class="active"><a data-toggle="tab" href="#uit-controls">Controls</a></li>
+            <li><a data-toggle="tab" href="#uit-advanced">Advanced</a></li>
+            <li><a data-toggle="tab" href="#uit-info">Information</a></li>
+        </ul>
 
+        <div id="control-menu-content" class="tab-content">
+            <div id="uit-controls" class="tab-pane fade in active"></div>
+            <div id="uit-advanced" class="tab-pane fade"></div>
+            <div id="uit-info" class="tab-pane fade"></div>
+        </div>
     </div>
 
     <div id="footer"></div>
 
     <!-- Run the application -->
     <script src="js/controller/main.js"></script>
+
 
 
 </body>
