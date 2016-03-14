@@ -84,6 +84,9 @@ var Controller = Class({
                 document.getElementById("iteration-number").innerHTML = " " + this.currentIteration;
             }
         }
+    },
+    updateOptions: function(){
+        scenario.showShortestRoute = document.getElementById("showShortestRouteCheckbox").checked;
     }
 });
 

@@ -66,8 +66,8 @@ var AdvancedView = Class({
 
             }
         }
+        refreshShortestRouteDisplay();
         if (scenario.showShortestRoute){
-            refreshShortestRouteDisplay();
             if (controller.shortestRoute.visitedNodes != []){
                 var route = controller.shortestRoute.visitedNodes;
                 for (var j = 0; j < route.length; j++){
