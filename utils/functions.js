@@ -130,7 +130,7 @@ function populateMenuParameters(menuName) {
         document.forms['parameter-form'].elements['depositRate'].value = controller.pheromoneDepositRate;
         document.forms['parameter-form'].elements['initialPheromone'].value = controller.initialPheromoneLevel;
     }
-    else if (menuName == "basicMenu"){
+    else if (menuName == "agentMenu"){
         // Populate basic menu params
     }
     else if (menuName == "advancedMenu"){
@@ -154,7 +154,7 @@ function retrieveMenuParameters(menuName) {
         userSettings.initialPheromoneLevel = Number(document.forms['parameter-form'].elements['initialPheromone'].value);
         return userSettings;
     }
-    else if (menuName == "basicMenu"){
+    else if (menuName == "agentMenu"){
         // Populate basic menu params
     }
     else if (menuName == "advancedMenu"){
@@ -172,7 +172,7 @@ function retrieveMenuParameters(menuName) {
 function createNewScenario(viewType){
     switch (viewType){
         case "Nest-Food Scenario":          return new NaturalScenario();   break;
-        case "TSP (Basic)":                 return new BasicScenario();     break;
+        case "TSP (Agents)":                return new AgentScenario();     break;
         case "TSP (Advanced)":              return new AdvancedScenario();  break;
         case "Network (Real World)":        return new NaturalScenario();   break;
         case "Google Maps (Real World)":    return new NaturalScenario();   break;
@@ -203,7 +203,7 @@ function loadSavedSettings(settings){
         controller.pheromoneDepositRate = settings.pheromoneDepositRate;
         controller.initialPheromoneLevel = settings.initialPheromoneLevel;
     }
-    else if (settings.viewType == "basicMenu"){
+    else if (settings.viewType == "agentMenu"){
 
     }
     else if (settings.viewType == "advancedMenu"){
@@ -214,6 +214,10 @@ function loadSavedSettings(settings){
         controller.pheromoneDepositRate = settings.pheromoneDepositRate;
         controller.initialPheromoneLevel = settings.initialPheromoneLevel;
     }
+}
+
+function getViewEdge(modelEdge){
+
 }
 
 

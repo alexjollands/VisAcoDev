@@ -11,6 +11,7 @@ var AdvancedScenario = Class({
         this.displayAnts = true;
         this.antReleaseSpeed = 100;
         this.showShortestRoute = true;
+        this.showCitySprite = true;
     },
     getParams: function(){
         var params = {};

@@ -73,7 +73,7 @@ function setupTabs(){
     var tabSize = width / 5;
     var tabSpacing = tabSize;
     tabs.push(new Tab("Nest-Food Scenario", 0, 0, tabSize, height / tabHeightScale, 'black', 'b-nest-food2.png'));
-    tabs.push(new Tab("TSP (Basic)", tabSpacing, 0, tabSize, height / tabHeightScale, 'black', 'b-tsp-basic2.png'));
+    tabs.push(new Tab("TSP (Agents)", tabSpacing, 0, tabSize, height / tabHeightScale, 'black', 'b-tsp-agents.png'));
     tabs.push(new Tab("TSP (Advanced)", (tabSpacing += tabSize), 0, tabSize, height / tabHeightScale, 'black', 'b-tsp-advanced2.png'));
     tabs.push(new Tab("Network (Real World)", (tabSpacing += tabSize), 0, tabSize, height / tabHeightScale, 'black', 'b-network.png'));
     tabs.push(new Tab("Google Maps (Real World)", (tabSpacing += tabSize), 0, tabSize, height / tabHeightScale, 'black', 'b-google-maps2.png'));

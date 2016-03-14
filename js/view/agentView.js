@@ -1,16 +1,16 @@
 /**
- * Created by Alex on 10/03/2016.
+ * Created by Alex on 07/02/2016.
  */
-var AdvancedView = Class({
+var AgentView = Class({
     initialize: function() {
         setupView();
         setupRenderer();
         v_graph = this.representModel();
         scene.add(v_graph);
-        birdseye_cam.position.x = 85;
-        birdseye_cam.position.y = 85;
-        birdseye_cam.position.z = 175;
-        //birdseye_cam.lookAt(new THREE.Vector3(0,0,0));
+        birdseye_cam.position.x = 90;
+        birdseye_cam.position.y = 75;
+        birdseye_cam.position.z = 200;
+        //birdseye_cam.lookAt(new THREE.Vector3(80,60,0));
         render();
     },
     representModel: function(){
@@ -19,18 +19,11 @@ var AdvancedView = Class({
         var graphGeometry = new THREE.Geometry();
         var graphMaterial = new THREE.MeshBasicMaterial({color: 0xff9900});
         var graphMesh = new THREE.Mesh(graphGeometry, graphMaterial);
+        this.graphMesh = graphMesh;
 
         /* Nodes */
         this.createCitySprites();
-        var nodes = controller.graph.nodes;
-        for (var i in nodes){
-            var node = this.citySprites[random(0, this.citySprites.length - 1)].clone();
-            node.needsUpdate = true;
-            node.position.set(nodes[i].x, nodes[i].y, 3.1);
-            //node.scale.set(7.5,12.5,0);
-            v_nodes.push(node);
-            graphMesh.add(node);
-        }
+        this.createNodes();
 
         /* Edges */
         var edges = controller.graph.edges;
@@ -75,6 +68,7 @@ var AdvancedView = Class({
                 }
             }
         }
+
     },
     updateAnts: function(){
         if (scenario.displayAnts){
@@ -123,6 +117,33 @@ var AdvancedView = Class({
             var citySprite = new THREE.Sprite( cityMaterial );
             citySprite.scale.set(images[i].w,images[i].h,0);
             this.citySprites.push(citySprite);
+        }
+    },
+    createNodes: function(){
+        if (scenario.showCitySprite){
+            v_nodes = [];
+            var nodes = controller.graph.nodes;
+            for (var i in nodes){
+                var node = this.citySprites[random(0, this.citySprites.length - 1)].clone();
+                node.needsUpdate = true;
+                node.position.set(nodes[i].x, nodes[i].y, 3.1);;
+                v_nodes.push(node);
+                this.graphMesh.add(node);
+            }
+        }
+        else {
+            v_nodes = [];
+            var nodeMaterial = new THREE.MeshBasicMaterial({color: 0x0000ff});
+            var nodeRadius = 2;
+            var nodeSegments = 32;
+            var nodeGeometry = new THREE.CircleGeometry( nodeRadius, nodeSegments );
+            var nodes = controller.graph.nodes;
+            for (var i in nodes){
+                var nodeMesh = new THREE.Mesh(nodeGeometry, nodeMaterial);
+                nodeMesh.position.set(nodes[i].x, nodes[i].y, 3.1);
+                v_nodes.push(nodeMesh);
+                this.graphMesh.add(nodeMesh);
+            }
         }
     }
 });

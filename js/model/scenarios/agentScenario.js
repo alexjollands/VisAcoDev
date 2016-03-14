@@ -1,16 +1,17 @@
 /**
  * Created by Alex on 26/02/2016.
  */
-var BasicScenario = Class({
+var AgentScenario = Class({
     initialize: function() {
-        this.menuName = "basicMenu";
-        this.viewType = "TSP (Basic)";
-        loadMenu("basicMenu");
+        this.menuName = "agentMenu";
+        this.viewType = "TSP (Agents)";
+        loadMenu("agentMenu");
         this.maxEdgeLength = Number.MAX_VALUE;
         this.taskType = "Tour";
         this.displayAnts = true;
         this.antReleaseSpeed = 100;
         this.showShortestRoute = true;
+        this.showCitySprite = true;
     },
     getParams: function(){
         var params = {};
@@ -25,10 +26,10 @@ var BasicScenario = Class({
         return params;
     },
     getView: function(){
-        return new BasicView();
+        return new AgentView();
     },
     getNodeSet: function(){
-        return "basic.json";
+        return "agent.json";
     },
     setup: function(){
         controller.colony.disperseAnts();
