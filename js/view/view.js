@@ -7,6 +7,7 @@ var clock = new THREE.Clock();
 var v_graph;
 var v_nodes = [];
 var v_edges = [];
+var v_edgesSR = [];
 var v_ants = [];
 var canvasScale = 1.5;
 var feedback = false;
@@ -18,6 +19,7 @@ var displaySectionMaxWidth = 1000;
 var displaySectionMaxHeight = 1000;
 var currentlyAnimating = true;
 var tabHeightScale = 12;
+var shortestPathColour = "0x00FF00";
 
 function render() {
     renderMenu();
@@ -150,6 +152,7 @@ function resetViewData(){
     v_graph = null;
     v_nodes = [];
     v_edges = [];
+    v_edgesSR = [];
     v_ants = [];
 }
 

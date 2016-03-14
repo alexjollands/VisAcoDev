@@ -25,12 +25,12 @@ var Graph = Class({
             }
         }
     },
-    findViewEdge: function(nodeA, nodeB){
+    findSRViewEdge: function(nodeA, nodeB){
         for (var i = 0; i < this.edges.length; i++){
             var edge = this.edges[i];
             if ((edge.nodeA.id == nodeA.id && edge.nodeB.id == nodeB.id) ||
                 (edge.nodeA.id == nodeB.id && edge.nodeB.id == nodeA.id)){
-                return v_edges[i];
+                return v_edgesSR[i];
             }
         }
     },

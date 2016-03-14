@@ -216,12 +216,30 @@ function loadSavedSettings(settings){
     }
 }
 
-function getViewEdge(modelEdge){
-
+// This function originated here:
+// http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+function rgbToHex(r, g, b) {
+    return "0x" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
 
+function setupShortestRouteDisplay(graphMesh){
+    for (var i = 0; i < v_edgesSR.length; i++){
+        v_edgesSR[i].visible = false;
+        v_edgesSR[i].material.color.setHex(Number(shortestPathColour));
+        v_edgesSR[i].needsUpdate = true;
+        v_edgesSR[i].position.x += 2;
+        v_edgesSR[i].position.y += 0;
+        v_edgesSR[i].position.z += 3.05;
+        graphMesh.add(v_edgesSR[i]);
+    }
+}
 
+function refreshShortestRouteDisplay(){
+    for (var i = 0; i < v_edgesSR.length; i++){
+        v_edgesSR[i].visible = false;
+    }
+}
 
 
 

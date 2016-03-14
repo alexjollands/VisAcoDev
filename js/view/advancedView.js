@@ -6,10 +6,11 @@ var AdvancedView = Class({
         setupView();
         setupRenderer();
         v_graph = this.representModel();
+        this.v_edgesSR = [];
         scene.add(v_graph);
         birdseye_cam.position.x = 85;
         birdseye_cam.position.y = 85;
-        birdseye_cam.position.z = 175;
+        birdseye_cam.position.z = 185;
         //birdseye_cam.lookAt(new THREE.Vector3(0,0,0));
         render();
     },
@@ -27,7 +28,6 @@ var AdvancedView = Class({
             var node = this.citySprites[random(0, this.citySprites.length - 1)].clone();
             node.needsUpdate = true;
             node.position.set(nodes[i].x, nodes[i].y, 3.1);
-            //node.scale.set(7.5,12.5,0);
             v_nodes.push(node);
             graphMesh.add(node);
         }
@@ -38,7 +38,10 @@ var AdvancedView = Class({
             var edge = this.createEdge(edges[j].nodeA, edges[j].nodeB, edges[j].pheromoneLevel);
             v_edges.push(edge);
             graphMesh.add(edge);
+            var vEdgeSR = this.createEdge(edges[j].nodeA, edges[j].nodeB, edges[j].pheromoneLevel);
+            v_edgesSR.push(vEdgeSR);
         }
+        setupShortestRouteDisplay(graphMesh);
 
         return graphMesh;
     },
@@ -51,34 +54,38 @@ var AdvancedView = Class({
     updateEdges: function(){
         for (var i in v_edges){
             if (controller.graph.edges[i].pheromoneLevel < 0.5){
-                v_edges[i].visible = false;
+                if (!this.isShortestPathEdge(v_edges[i])){
+                    v_edges[i].visible = false;
+                }
             }
             else {
                 v_edges[i].visible = true;
                 v_edges[i].material.color.setHex(calculateColourFromPheromoneLevel(controller.graph.edges[i].pheromoneLevel));
                 v_edges[i].position.z = controller.graph.edges[i].pheromoneLevel / 100;
                 if (v_edges[i].position.z > 3) { v_edges[i].position.z = 3; }
+
             }
         }
         if (scenario.showShortestRoute){
+            refreshShortestRouteDisplay();
             if (controller.shortestRoute.visitedNodes != []){
                 var route = controller.shortestRoute.visitedNodes;
-                for (var i = 0; i < route.length; i++){
+                for (var j = 0; j < route.length; j++){
                     var vEdge;
-                    if (i + 1 == route.length){
-                        vEdge = controller.graph.findViewEdge(route[i], route[1]);
+                    if (j + 1 == route.length){
+                        vEdge = controller.graph.findSRViewEdge(route[j], route[1]);
                     }
                     else {
-                        vEdge = controller.graph.findViewEdge(route[i], route[i + 1]);
+                        vEdge = controller.graph.findSRViewEdge(route[j], route[j + 1]);
                     }
-                    vEdge.material.color.setHex(Number("0x00FF00"));
+                    vEdge.visible = true;
                 }
             }
         }
     },
     updateAnts: function(){
         if (scenario.displayAnts){
-            // Update individual ant position, orientation, graphics etc if appropriate.
+            // Update individual ant graphics (position, orientation etc) if appropriate.
         }
     },
     /* Calculations of the vectors for variable-width rectangles inspired by
@@ -124,5 +131,10 @@ var AdvancedView = Class({
             citySprite.scale.set(images[i].w,images[i].h,0);
             this.citySprites.push(citySprite);
         }
+    },
+    isShortestPathEdge: function(edge){
+        var edgeColour = rgbToHex(edge.material.color.r, edge.material.color.g, edge.material.color.b);
+        return edgeColour == shortestPathColour;
     }
+
 });
