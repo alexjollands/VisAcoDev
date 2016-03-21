@@ -241,8 +241,10 @@ function refreshShortestRouteDisplay(){
     }
 }
 
-
-
+function pointLiesOnPath(p, a, b){
+    // (qx - px) * (ry - py) - (qy - py) * (rx - px)
+    return (b.x - a.x) * (p.y - a.y) - (b.y - a.y) * (p.x - a.x) < 0.0001;
+}
 
 
 

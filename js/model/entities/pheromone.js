@@ -17,9 +17,10 @@ var Pheromone = Class({
     },
     hideParticle: function(){
         // Move to behind camera
-        this.particle.x = 50;
-        this.particle.y = 50;
-        this.particle.z = -1;
+        var outOfViewCoords = scenario.getParticleHideCoordinates();
+        this.particle.x = outOfViewCoords.x;
+        this.particle.y = outOfViewCoords.y;
+        this.particle.z = outOfViewCoords.z;
     },
     showParticle: function(){
         // Return to original position

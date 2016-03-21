@@ -87,6 +87,8 @@ var Controller = Class({
     },
     updateOptions: function(){
         scenario.showShortestRoute = document.getElementById("showShortestRouteCheckbox").checked;
+        scenario.showCitySprite = document.getElementById("showCitySpriteCheckbox").checked;
+        view.refreshNodeDisplay();
     }
 });
 

@@ -12,16 +12,22 @@ var AgentScenario = Class({
         this.antReleaseSpeed = 100;
         this.showShortestRoute = true;
         this.showCitySprite = true;
+        this.numRedAgents = 1;
+        var outOfViewCoords = {};
+        outOfViewCoords.x = 35;
+        outOfViewCoords.y = 15;
+        outOfViewCoords.z = 0;
+        this.outOfViewCoords = outOfViewCoords;
     },
     getParams: function(){
         var params = {};
-        params.pheromoneImportance    = 1.25;   // Alpha
-        params.distanceImportance     = 3;      // Beta
-        params.pheromoneDecayRate     = 0.05;   // Rho
-        params.pheromoneDepositRate   = 0.5;
+        params.pheromoneImportance    = 0;   // Alpha
+        params.distanceImportance     = 10;      // Beta
+        params.pheromoneDecayRate     = 0.01;   // Rho
+        params.pheromoneDepositRate   = 1;
         params.initialPheromoneLevel  = 1;
-        params.colonySize             = 30;
-        params.antMovementPerUpdate   = 50;
+        params.colonySize             = 2;
+        params.antMovementPerUpdate   = 0.75;
         params.maximumIterations      = 1000000;
         return params;
     },
@@ -32,13 +38,19 @@ var AgentScenario = Class({
         return "agent.json";
     },
     setup: function(){
+        controller.graph.redEdges = controller.graph.edges.slice();
+        controller.graph.blueEdges = controller.graph.edges.slice();
         controller.colony.disperseAnts();
         for (var i = 0; i < controller.colony.ants.length; i++) {
             controller.colony.ants[i].isActive = true;
         }
     },
     createNewAnt: function(i){
-        return new TouringAnt(i+1, new Tour(controller.graph.nodes.slice()), new Position()); // Mission or Task, not Tour
+        var newAnt = new TouringAnt(i+1, new Tour(controller.graph.nodes.slice()), new Position());
+        if (i >= this.numRedAgents){
+            newAnt.agentType = "blueAgent";
+        }
+        return newAnt;
     },
     getOriginNode: function(){
         return controller.graph.nodes[random(0, controller.graph.nodes.length - 1)];
@@ -64,5 +76,34 @@ var AgentScenario = Class({
             }
         }
         return destinationNode;
+    },
+    getParticleHideCoordinates: function(){
+        return this.outOfViewCoords;
+    },
+    layPheromoneOnEdge: function(ant, pheromone){
+        var edge = ant.position.alongEdge;
+        var edges = v_edgesRed;
+        if (ant.agentType == "blueAgent") {
+            edges = v_edgesBlue;
+        }
+        if (edges[controller.graph.findEdgeIndex(edge)].pheromoneLevel == undefined){
+            edges[controller.graph.findEdgeIndex(edge)].pheromoneLevel = 0;
+        }
+        edges[controller.graph.findEdgeIndex(edge)].pheromoneLevel += pheromone;
+    },
+    evaporatePheromoneEffects: function(decayRate){
+        var numEdges = controller.graph.edges.length;
+        for (var i = 0; i < numEdges; i++){
+            if (v_edgesRed[i].pheromoneLevel == undefined) { v_edgesRed[i].pheromoneLevel = 0; }
+            if (v_edgesBlue[i].pheromoneLevel == undefined) { v_edgesBlue[i].pheromoneLevel = 0; }
+            v_edgesRed[i].pheromoneLevel *= (1 - decayRate);
+            v_edgesBlue[i].pheromoneLevel *= (1 - decayRate);
+        }
+    },
+    calculatePheromoneDeposit: function(position){
+        return controller.pheromoneDepositRate / (position.alongEdge.distance / controller.antMovementPerUpdate);
     }
 });
+// Get the same amount of pheromone each time? So the blue and red agents look like they're depositing the same amount?
+// Who cares what the pheromone rate actually is? Its a demo.
+// These should be the controller.graph.redEdges or blueEdges (model vs view)

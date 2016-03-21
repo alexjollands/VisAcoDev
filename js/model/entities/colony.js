@@ -32,16 +32,20 @@ var Colony = Class({
             var edgeLengthRemaining = ant.position.alongEdge.distance - ant.position.distance;
             if (ant.task.isComplete) {
                 if (edgeLengthRemaining < movementRemaining){
+                    if (controller.antMovementPerUpdate > ant.position.alongEdge.distance){
+                        ant.layPartialPheromone(controller.pheromoneDepositRate);
+                    }
                     scenario.completeAntTask(ant);
                     movementRemaining = 0;
                 }
             }
             if (edgeLengthRemaining < movementRemaining) {
-                ant.layPheromone();
                 ant.moveTo(ant.chooseNextNode(), 0);
                 movementRemaining -= edgeLengthRemaining;
             }
             else {
+                var pheromoneToDeposit = scenario.calculatePheromoneDeposit(ant.position);
+                ant.layPartialPheromone(pheromoneToDeposit);
                 ant.position.distance += movementRemaining;
                 movementRemaining = 0;
             }
@@ -54,3 +58,8 @@ var Colony = Class({
         return "This ant colony has " + this.ants.length + " members.";
     }
 });
+
+
+/* layPartialPheromone() - this allows a set amount of pheromone to be laid. This is calculated as:
+        PHD = PDR / Math.floor(ED / M)
+ */

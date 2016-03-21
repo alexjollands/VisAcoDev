@@ -21,17 +21,52 @@ var AgentView = Class({
         var graphMesh = new THREE.Mesh(graphGeometry, graphMaterial);
         this.graphMesh = graphMesh;
 
+        // Agents
+        var agentRedImage = THREE.ImageUtils.loadTexture(url + 'images/agentRed.png');
+        var agentRedMaterial = new THREE.SpriteMaterial( { map: agentRedImage, color: 0xffffff, fog: true } );
+        agentRedSprite = new THREE.Sprite( agentRedMaterial );
+        agentRedSprite.position.set(55,53,10);
+        agentRedSprite.scale.set(8,8,0);
+        v_ants.push(agentRedSprite);
+        graphMesh.add(agentRedSprite);
+
+        var agentBlueImage = THREE.ImageUtils.loadTexture(url + 'images/agentBlue.png');
+        var agentBlueMaterial = new THREE.SpriteMaterial( { map: agentBlueImage, color: 0xffffff, fog: true } );
+        agentBlueSprite = new THREE.Sprite( agentBlueMaterial );
+        agentBlueSprite.position.set(0,53,10);
+        agentBlueSprite.scale.set(8,8,0);
+        v_ants.push(agentBlueSprite);
+        graphMesh.add(agentBlueSprite);
+
         /* Nodes */
         this.createCitySprites();
         this.createNodes();
 
+        // Pheromone particles
+        redParticles = new THREE.Geometry();
+        var redPMaterial = new THREE.ParticleBasicMaterial({color: 0xff0000, size: 1.2, transparent: true});
+
+        blueParticles = new THREE.Geometry();
+        var bluePMaterial = new THREE.ParticleBasicMaterial({color: 0x0000ff, size: 1.2, transparent: true});
+
+
         /* Edges */
         var edges = controller.graph.edges;
         for (var j in edges){
-            var edge = this.createEdge(edges[j].nodeA, edges[j].nodeB, edges[j].pheromoneLevel);
-            v_edges.push(edge);
-            graphMesh.add(edge);
+            var redEdge = this.createEdge(edges[j].nodeA, edges[j].nodeB, edges[j].pheromoneLevel, "red");
+            var blueEdge = this.createEdge(edges[j].nodeA, edges[j].nodeB, edges[j].pheromoneLevel, "blue");
+            v_edgesRed.push(redEdge);
+            v_edgesBlue.push(blueEdge);
+            graphMesh.add(redEdge);
+            graphMesh.add(blueEdge);
         }
+
+        redParticleSystem = new THREE.ParticleSystem(redParticles, redPMaterial);
+        redParticleSystem.geometry.__dirtyVertices = true;
+        scene.add(redParticleSystem);
+        blueParticleSystem = new THREE.ParticleSystem(blueParticles, bluePMaterial);
+        blueParticleSystem.geometry.__dirtyVertices = true;
+        scene.add(blueParticleSystem);
 
         return graphMesh;
     },
@@ -42,57 +77,95 @@ var AgentView = Class({
         }
     },
     updateEdges: function(){
-        for (var i in v_edges){
-            if (controller.graph.edges[i].pheromoneLevel < 0.5){
-                v_edges[i].visible = false;
+        this.updateColouredEdge("red");
+        this.updateColouredEdge("blue");
+        redParticleSystem.geometry.verticesNeedUpdate = true;
+        blueParticleSystem.geometry.verticesNeedUpdate = true;
+    },
+    updateColouredEdge: function(colour){
+        var vEdges = colour == "red" ? v_edgesRed : v_edgesBlue;
+        for (var i = 0; i < vEdges.length; i++){
+            var phL = vEdges[i].pheromoneLevel;
+            var numPheromoneDots = phL * 100;
+            if (vEdges[i].particles.length < numPheromoneDots){
+                numPheromoneDots = vEdges[i].particles.length;
             }
-            else {
-                v_edges[i].visible = true;
-                v_edges[i].material.color.setHex(calculateColourFromPheromoneLevel(controller.graph.edges[i].pheromoneLevel));
-                v_edges[i].position.z = controller.graph.edges[i].pheromoneLevel / 100;
-                if (v_edges[i].position.z > 3) { v_edges[i].position.z = 3; }
+            var diff = numPheromoneDots - vEdges[i].visibleParticles.length;
+            if (diff > 1){
+                for (var addDots = 0; addDots < diff; addDots++){
+                    var newParticleNum = this.choosePheromoneParticle(controller.graph.edges[i], vEdges[i]);
+                    var newParticle = vEdges[i].particles.splice(newParticleNum, 1);
+                    vEdges[i].visibleParticles.push(newParticle[0]);
+                    newParticle[0].showParticle();
+                }
             }
-        }
-        if (scenario.showShortestRoute){
-            if (controller.shortestRoute.visitedNodes != []){
-                var route = controller.shortestRoute.visitedNodes;
-                for (var i = 0; i < route.length; i++){
-                    var vEdge;
-                    if (i + 1 == route.length){
-                        vEdge = controller.graph.findViewEdge(route[i], route[1]);
-                    }
-                    else {
-                        vEdge = controller.graph.findViewEdge(route[i], route[i + 1]);
-                    }
-                    vEdge.material.color.setHex(Number("0x00FF00"));
+            else if (diff < -1) {
+                diff = Math.abs(diff);
+                for (var removeDots = 0; removeDots < diff; removeDots++){
+                    var remParticleNum = random(0, vEdges[i].visibleParticles.length - 1);
+                    var remParticle = vEdges[i].visibleParticles.splice(remParticleNum, 1);
+                    vEdges[i].particles.push(remParticle[0]);
+                    remParticle[0].hideParticle();
                 }
             }
         }
-
     },
-    updateAnts: function(){
-        if (scenario.displayAnts){
-            // Update individual ant position, orientation, graphics etc if appropriate.
+    updateAnts: function() {
+        if (scenario.displayAnts) {
+            for (var i = 0; i < controller.colony.ants.length; i++) {
+                var ant = controller.colony.ants[i];
+                if (v_ants.length < i + 1) {
+                    var sprite = agentBlueSprite;
+                    //controller.colony.ants[i].agentType = "blueAgent";
+                    if (i < scenario.numRedAgents) {
+                        sprite = agentRedSprite;
+                        //controller.colony.ants[i].agentType = "redAgent";
+                    }
+                    var vAntMaterial = sprite.material.clone();
+                    vAntMaterial.needsUpdate = true;
+                    var vAnt = sprite.clone();
+                    vAnt.material = vAntMaterial;
+                    v_ants.push(vAnt);
+                    v_graph.add(vAnt);
+                }
+                // Update position
+                var antPos = ant.getXYCoordinates();
+                v_ants[i].position.set(antPos.x, antPos.y, 3);
+            }
         }
-    },
+    }
+    ,
     /* Calculations of the vectors for variable-width rectangles inspired by
      * http://stackoverflow.com/questions/7854043/drawing-rectangle-between-two-points-with-arbitrary-width
      */
-    createEdge: function(nodeA, nodeB, pheromoneLevel){
-        var vector = new THREE.Vector3(nodeB.x - nodeA.x, nodeB.y - nodeA.y, 0);
-        var p = new THREE.Vector3(vector.y, -vector.x, 0);
-        var length = Math.sqrt(p.x * p.x + p.y * p.y);
-        var n = new THREE.Vector3(p.x / length, p.y / length, 0);
-        var colourStrength = calculateColourFromPheromoneLevel(pheromoneLevel);
-        var width = 0.8;
-        var rectShape = new THREE.Shape();
-        rectShape.moveTo( nodeB.x + n.x * width / 2, nodeB.y + n.y * width / 2 ); // m3
-        rectShape.lineTo( nodeA.x - n.x * width / 2, nodeA.y - n.y * width / 2 ); // X2
-        rectShape.lineTo( nodeB.x + n.x * width / 2, nodeB.y + n.y * width / 2 ); // X3
-        rectShape.lineTo( nodeB.x - n.x * width / 2, nodeB.y - n.y * width / 2 ); // X4
-        rectShape.lineTo( nodeA.x + n.x * width / 2, nodeA.y + n.y * width / 2 ); // X1
-        var rectGeom = new THREE.ShapeGeometry( rectShape );
-        return new THREE.Mesh(rectGeom, new THREE.MeshBasicMaterial({color: colourStrength}));
+    createEdge: function(nodeA, nodeB, pheromoneLevel, colour){
+        var particleEdge = {};
+        particleEdge.particles = [];
+        particleEdge.visibleParticles = [];
+        var maxDots = 250;
+        var p1 = new THREE.Vector3(nodeA.x, nodeA.y, 0);
+        var p2 = new THREE.Vector3(nodeB.x, nodeB.y, 0);
+        var distance = p1.clone().sub(p2).length();
+        var dotGap = distance / maxDots;
+        this.particleSpacing = dotGap;
+
+        for (var i = 0; i < maxDots; i++) {
+            var nextDot = getPointInBetweenByLength(p1, p2, (dotGap * i) + 1);
+            var pX = Math.random() < 0.5 ? ( nextDot.x + (randomDecimal(0 , pheromoneSpread))) : ( nextDot.x - (randomDecimal(0, pheromoneSpread)));
+            var pY = Math.random() < 0.5 ? ( nextDot.y + (randomDecimal(0 , pheromoneSpread))) : ( nextDot.y - (randomDecimal(0, pheromoneSpread)));
+            var pZ = nextDot.z;
+            var particle = new THREE.Vector3(pX, pY, pZ);
+            var pheromone = new Pheromone(pX, pY, pZ, particle);
+            if (colour == "red"){
+                redParticles.vertices.push(pheromone.particle);
+            }
+            else if (colour == "blue"){
+                blueParticles.vertices.push(pheromone.particle);
+            }
+            particleEdge.particles.push(pheromone);
+            pheromone.hideParticle();
+        }
+        return particleEdge;
     },
     createCitySprites: function(){
         this.citySprites = [];
@@ -120,30 +193,89 @@ var AgentView = Class({
         }
     },
     createNodes: function(){
-        if (scenario.showCitySprite){
-            v_nodes = [];
-            var nodes = controller.graph.nodes;
-            for (var i in nodes){
-                var node = this.citySprites[random(0, this.citySprites.length - 1)].clone();
-                node.needsUpdate = true;
-                node.position.set(nodes[i].x, nodes[i].y, 3.1);;
+
+        var nodes = controller.graph.nodes;
+        for (var i in nodes){
+            var node = this.citySprites[random(0, this.citySprites.length - 1)].clone();
+            node.needsUpdate = true;
+            node.position.set(nodes[i].x, nodes[i].y, 3.1);;
+            v_nodesA.push(node);
+            if (scenario.showCitySprite) {
+                node.visible = true;
                 v_nodes.push(node);
-                this.graphMesh.add(node);
             }
+            this.graphMesh.add(node);
+        }
+        var nodeMaterial = new THREE.MeshBasicMaterial({color: 0x0000ff});
+        var nodeRadius = 2;
+        var nodeSegments = 32;
+        var nodeGeometry = new THREE.CircleGeometry( nodeRadius, nodeSegments );
+        var nodes = controller.graph.nodes;
+        for (var j in nodes){
+            var nodeMesh = new THREE.Mesh(nodeGeometry, nodeMaterial);
+            nodeMesh.position.set(nodes[j].x, nodes[j].y, 3.1);
+            v_nodesB.push(nodeMesh);
+            if (scenario.showCitySprite) {
+                nodeMesh.visible = false;
+            }
+            else {
+                nodeMesh.visible = true;
+                v_nodes.push(nodeMesh);
+            }
+            this.graphMesh.add(nodeMesh);
+        }
+    },
+    refreshNodeDisplay: function(){
+        for (var i = 0; i < v_nodes.length; i++){
+            v_nodes[i].visible = false;
+        }
+        v_nodes = [];
+        if (scenario.showCitySprite){
+            for (var j = 0; j < v_nodesA.length; j++){
+                v_nodesA[j].visible = true;
+            }
+            v_nodes = v_nodesA;
         }
         else {
-            v_nodes = [];
-            var nodeMaterial = new THREE.MeshBasicMaterial({color: 0x0000ff});
-            var nodeRadius = 2;
-            var nodeSegments = 32;
-            var nodeGeometry = new THREE.CircleGeometry( nodeRadius, nodeSegments );
-            var nodes = controller.graph.nodes;
-            for (var i in nodes){
-                var nodeMesh = new THREE.Mesh(nodeGeometry, nodeMaterial);
-                nodeMesh.position.set(nodes[i].x, nodes[i].y, 3.1);
-                v_nodes.push(nodeMesh);
-                this.graphMesh.add(nodeMesh);
+            for (var k = 0; k < v_nodesB.length; k++){
+                v_nodesB[k].visible = true;
+            }
+            v_nodes = v_nodesB;
+        }
+    },
+    choosePheromoneParticle: function(edge, vEdge){
+        for (var i = 0; i < controller.colony.ants.length; i++){
+            var ant = controller.colony.ants[i];
+            if (ant.position.alongEdge.isEqual(edge)){
+                var source = ant.position.fromNode;
+                var antPos = ant.getXYCoordinates();
+                //var isMovingForwards = pointLiesOnPath(vEdge.particles[0], source, antPos);
+                var isMovingForwards = source.id == edge.nodeA.id;
+                var percent = ant.position.distance / edge.distance;
+                var arrayScale = percent * vEdge.particles.length;
+                if (isMovingForwards){
+                    return random(0, arrayScale);
+                }
+                else {
+                    return random(vEdge.particles.length - arrayScale, vEdge.particles.length - 1);
+                }
             }
         }
+        return random(0, vEdge.particles.length - 1);
+        // If there is no ant on the edge
+        // return newParticleNum = random(0, v_edges[i].particles.length - 1);
+        // If there is...
+        // Get the ants xy
+        // Get its source node xy
+        // Find a particle just behind it, return the index.
+
+        //xMax = 10;
+        //xMin = 1;
+        //
+        //yMax = 559.22;
+        //yMin = 300.77;
+        //
+        //percent = (inputY - yMin) / (yMax - yMin);
+        //outputX = percent * (xMax - xMin) + xMin;
     }
 });

@@ -65,5 +65,16 @@ var AdvancedScenario = Class({
             }
         }
         return destinationNode;
+    },
+    layPheromoneOnEdge: function(ant, pheromone){
+        var edge = ant.position.alongEdge;
+    },
+    evaporatePheromoneEffects: function(decayRate){
+        for (var i = 0; i < controller.graph.edges.length; i++){
+            controller.graph.edges[i].pheromoneLevel *= (1 - decayRate);
+        }
+    },
+    calculatePheromoneDeposit: function(position){
+        return controller.pheromoneDepositRate / (position.alongEdge.distance / controller.antMovementPerUpdate);
     }
 });

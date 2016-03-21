@@ -11,3 +11,5 @@ scenario.setup();
 
 var view = scenario.getView();
 animate();
+
+

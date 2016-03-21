@@ -20,17 +20,11 @@ var AdvancedView = Class({
         var graphGeometry = new THREE.Geometry();
         var graphMaterial = new THREE.MeshBasicMaterial({color: 0xff9900});
         var graphMesh = new THREE.Mesh(graphGeometry, graphMaterial);
+        this.graphMesh = graphMesh;
 
         /* Nodes */
         this.createCitySprites();
-        var nodes = controller.graph.nodes;
-        for (var i in nodes){
-            var node = this.citySprites[random(0, this.citySprites.length - 1)].clone();
-            node.needsUpdate = true;
-            node.position.set(nodes[i].x, nodes[i].y, 3.1);
-            v_nodes.push(node);
-            graphMesh.add(node);
-        }
+        this.createNodes();
 
         /* Edges */
         var edges = controller.graph.edges;
@@ -107,6 +101,39 @@ var AdvancedView = Class({
         var rectGeom = new THREE.ShapeGeometry( rectShape );
         return new THREE.Mesh(rectGeom, new THREE.MeshBasicMaterial({color: colourStrength}));
     },
+    createNodes: function(){
+
+        var nodes = controller.graph.nodes;
+        for (var i in nodes){
+            var node = this.citySprites[random(0, this.citySprites.length - 1)].clone();
+            node.needsUpdate = true;
+            node.position.set(nodes[i].x, nodes[i].y, 3.1);;
+            v_nodesA.push(node);
+            if (scenario.showCitySprite) {
+                node.visible = true;
+                v_nodes.push(node);
+            }
+            this.graphMesh.add(node);
+        }
+        var nodeMaterial = new THREE.MeshBasicMaterial({color: 0x0000ff});
+        var nodeRadius = 2;
+        var nodeSegments = 32;
+        var nodeGeometry = new THREE.CircleGeometry( nodeRadius, nodeSegments );
+        var nodes = controller.graph.nodes;
+        for (var j in nodes){
+            var nodeMesh = new THREE.Mesh(nodeGeometry, nodeMaterial);
+            nodeMesh.position.set(nodes[j].x, nodes[j].y, 3.1);
+            v_nodesB.push(nodeMesh);
+            if (scenario.showCitySprite) {
+                nodeMesh.visible = false;
+            }
+            else {
+                nodeMesh.visible = true;
+                v_nodes.push(nodeMesh);
+            }
+            this.graphMesh.add(nodeMesh);
+        }
+    },
     createCitySprites: function(){
         this.citySprites = [];
         var images = [];
@@ -129,12 +156,34 @@ var AdvancedView = Class({
             var cityMaterial = new THREE.SpriteMaterial( { map: cityImage, color: 0xffffff, fog: true } );
             var citySprite = new THREE.Sprite( cityMaterial );
             citySprite.scale.set(images[i].w,images[i].h,0);
+            if (!scenario.showCitySprite){
+                citySprite.visible = false;
+            }
             this.citySprites.push(citySprite);
         }
     },
     isShortestPathEdge: function(edge){
         var edgeColour = rgbToHex(edge.material.color.r, edge.material.color.g, edge.material.color.b);
         return edgeColour == shortestPathColour;
+    },
+    refreshNodeDisplay: function(){
+        for (var i = 0; i < v_nodes.length; i++){
+            v_nodes[i].visible = false;
+        }
+        v_nodes = [];
+        if (scenario.showCitySprite){
+            for (var j = 0; j < v_nodesA.length; j++){
+                v_nodesA[j].visible = true;
+            }
+            v_nodes = v_nodesA;
+        }
+        else {
+            for (var k = 0; k < v_nodesB.length; k++){
+                v_nodesB[k].visible = true;
+            }
+            v_nodes = v_nodesB;
+        }
+
     }
 
 });

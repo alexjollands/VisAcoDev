@@ -20,6 +20,11 @@ var NaturalScenario = Class({
         this.displayAnts = true;
         this.antReleaseSpeed = 0.15;
         this.showShortestRoute = false;
+        var outOfViewCoords = {};
+        outOfViewCoords.x = 50;
+        outOfViewCoords.y = 50;
+        outOfViewCoords.z = 0;
+        this.outOfViewCoords = outOfViewCoords;
     },
     getParams: function(){
         var params = {};
@@ -81,5 +86,16 @@ var NaturalScenario = Class({
             ant.task.unvisitedNodes.splice(0,2);
         }
         return ant.task.visitedNodes[1];
+    },
+    getParticleHideCoordinates: function(){
+        return this.outOfViewCoords;
+    },
+    evaporatePheromoneEffects: function(decayRate){
+        for (var i = 0; i < controller.graph.edges.length; i++){
+            controller.graph.edges[i].pheromoneLevel *= (1 - decayRate);
+        }
+    },
+    calculatePheromoneDeposit: function(position){
+        return controller.pheromoneDepositRate / (position.alongEdge.distance / controller.antMovementPerUpdate);
     }
 });

@@ -70,10 +70,9 @@ var NaturalView = Class({
         logSprite.scale.set(50,20,0);
         graphMesh.add(logSprite);
 
-
         // Pheromone particles
-        particles = new THREE.Geometry();
-        var pMaterial = new THREE.ParticleBasicMaterial({color: 0xff0000, size: 1.2, transparent: true});
+        redParticles = new THREE.Geometry();
+        var redPMaterial = new THREE.ParticleBasicMaterial({color: 0xff0000, size: 1.2, transparent: true});
 
         var nodeMaterial = new THREE.MeshBasicMaterial({color: 0xBCBCBC});
         var nodeRadius = 2;
@@ -86,16 +85,15 @@ var NaturalView = Class({
             v_nodes.push(nodeMesh);
             graphMesh.add(nodeMesh);
         }
-
         // Edges
         var edges = controller.graph.edges;
         for (var j in edges){
-            var edge = this.createEdge(edges[j].nodeA, edges[j].nodeB, edges[j].pheromoneLevel, particles);
+            var edge = this.createEdge(edges[j].nodeA, edges[j].nodeB, edges[j].pheromoneLevel, redParticles);
             v_edges.push(edge);
         }
-        particleSystem = new THREE.ParticleSystem(particles, pMaterial);
-        particleSystem.geometry.__dirtyVertices = true;
-        scene.add(particleSystem);
+        redParticleSystem = new THREE.ParticleSystem(redParticles, redPMaterial);
+        redParticleSystem.geometry.__dirtyVertices = true;
+        scene.add(redParticleSystem);
 
         return graphMesh;
     },
@@ -146,7 +144,7 @@ var NaturalView = Class({
                 }
             }
         }
-        particleSystem.geometry.verticesNeedUpdate = true;
+        redParticleSystem.geometry.verticesNeedUpdate = true;
     },
     updateAnts: function(){
         if (scenario.displayAnts){
@@ -181,7 +179,7 @@ var NaturalView = Class({
         var p2 = new THREE.Vector3(nodeB.x, nodeB.y, 0);
         var distance = p1.clone().sub(p2).length();
         var dotGap = distance / maxDots;
-        var pheromoneSpread = 5;
+        pheromoneSpread = 5;
 
         for (var i = 0; i < maxDots; i++) {
             var nextDot = getPointInBetweenByLength(p1, p2, (dotGap * i) + 1);
@@ -190,7 +188,7 @@ var NaturalView = Class({
             var pZ = nextDot.z;
             var particle = new THREE.Vector3(pX, pY, pZ);
             var pheromone = new Pheromone(pX, pY, pZ, particle);
-            particles.vertices.push(pheromone.particle);
+            redParticles.vertices.push(pheromone.particle);
             particleEdge.particles.push(pheromone);
             pheromone.hideParticle();
         }

@@ -2,14 +2,19 @@
  * Created by Alex on 20/02/2016.
  */
 
-var camera,birdseye_cam,scene,renderer,controls,displaySection,tabSection,ambientLight,particleSystem,particles,cameraPosition,antSprite,userSettings;
+var camera,birdseye_cam,scene,renderer,controls,displaySection,tabSection,ambientLight;
+var redParticleSystem,blueParticleSystem,redParticles,blueParticles,cameraPosition,antSprite,userSettings,agentRedSprite,agentBlueSprite;
 var clock = new THREE.Clock();
 var v_graph;
 var v_nodes = [];
+var v_nodesA = [];
+var v_nodesB = [];
 var v_edges = [];
 var v_edgesSR = [];
+var v_edgesRed = [];
+var v_edgesBlue = [];
 var v_ants = [];
-var canvasScale = 1.5;
+var canvasScale = 1.1;
 var feedback = false;
 var tabs = [];
 var ctx2D;
@@ -20,6 +25,7 @@ var displaySectionMaxHeight = 1000;
 var currentlyAnimating = true;
 var tabHeightScale = 12;
 var shortestPathColour = "0x00FF00";
+var pheromoneSpread = 2.5;
 
 function render() {
     renderMenu();
@@ -152,6 +158,8 @@ function resetViewData(){
     v_graph = null;
     v_nodes = [];
     v_edges = [];
+    v_edgesRed = [];
+    v_edgesBlue = [];
     v_edgesSR = [];
     v_ants = [];
 }

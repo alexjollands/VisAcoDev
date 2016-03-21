@@ -25,6 +25,13 @@ var Edge = Class({
             return this.nodeA;
         }
     },
+    isEqual: function(edge){
+        if ((edge.nodeA.id == this.nodeA.id && edge.nodeB.id == this.nodeB.id) ||
+            (edge.nodeA.id == this.nodeB.id && edge.nodeB.id == this.nodeA.id)){
+            return true;
+        }
+        return false;
+    },
     toDetailedString: function() {
         return "This edge goes from node: " + this.nodeA.id + " to node: " +
             this.nodeB.id + ". Distance is: " + this.distance +

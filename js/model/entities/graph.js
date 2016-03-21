@@ -25,6 +25,16 @@ var Graph = Class({
             }
         }
     },
+    findEdgeIndex: function(edge){
+        var nodeA = edge.nodeA;
+        var nodeB = edge.nodeB;
+        for (var i = 0; i < this.edges.length; i++){
+            if ((edge.nodeA.id == this.edges[i].nodeA.id && edge.nodeB.id == this.edges[i].nodeB.id) ||
+                (edge.nodeA.id == this.edges[i].nodeB.id && edge.nodeB.id == this.edges[i].nodeA.id)){
+                return i;
+            }
+        }
+    },
     findSRViewEdge: function(nodeA, nodeB){
         for (var i = 0; i < this.edges.length; i++){
             var edge = this.edges[i];
@@ -35,9 +45,7 @@ var Graph = Class({
         }
     },
     applyPheromoneDecay: function(decayRate){
-        for (var i = 0; i < this.edges.length; i++){
-            this.edges[i].pheromoneLevel *= (1 - decayRate);
-        }
+        scenario.evaporatePheromoneEffects(decayRate);
     },
     getNodeByID: function(id){
         for (var i = 0; i < this.nodes.length; i++){
