@@ -1,24 +1,150 @@
-/* Stylesheet - may use bootstrap or similar if needed */
+/*
+* Credits:
+* Overall CSS assistance: Joe Jollands
+* Tab style: http://tympanus.net/codrops/2014/09/02/tab-styles-inspiration/
+* Checkbox style: http://callmenick.com/post/css-toggle-switch-examples
+*
+*/
+
+@import url('menu.css');
+
 
 #page-container {
-    margin: 25px;
+    margin: 0 25px;
 }
 
 #canvas-container {
-    margin: auto;
     vertical-align: middle;
+    max-width: 98%;
+    margin: 0 auto;
+    background: #FFFFFF;
+    border: 12px solid #6CC5D9;
+    border-radius: 8px;
+    margin-top: -1px;
+    height: auto;
+    overflow:hidden;
 }
 
-#tabSection {
-    border: 1px solid blue;
+#displaySection {
+    width: 67%;
+    display: block;
+    float:left;
 }
-
-#displaySection:nth-child(1) {
-    border: 1px solid blue;
+#infoSection {
+    width: 32%;
+    float: right;
+    background: #F9F9F6;
+    min-height: 640px;
+    border-left: 3px solid #CFD1C9;
+    color: #5F7679;
 }
+#infoSection input[type="text"],
+#infoSection input[type="number"],
+#infoSection input[type="decimal"],
+#infoSection input[type="range"]
+{
+    padding: 3px 6px;
+    border-radius: 4px;
+    border: 1px solid #CFD1C9:
+}
+#infoSection h3 {
+    font-size: 21px;
+    color: #9FA6A9;
+    text-align: center;
+    text-transform: lowercase;
+    letter-spacing: 2px;
+    margin: 0;
+    padding: 8px;
 
+}
+#infoSection>div {
+    padding: 10px;
+    background: #F9F9F6;
+}
+#displaySection canvas {
+    display: block;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+
+}
 th, td {
     padding: 5px;
 }
 
+body {
+    background: #CFD1C9;
+}
 
+#control-menu-content {
+    background: #fff;
+    padding: 8px;
+    border: 1px solid #CFD1C9 !important;
+    border-top:0px !important;
+}
+
+footer {
+    text-align: center;
+    color: #777;
+    font-size: 14px;
+}
+footer a {
+    color: #555;
+}
+
+
+
+
+
+
+
+
+
+
+.toggle {
+    position: absolute;
+    margin-left: -9999px;
+    visibility: hidden;
+}
+.toggle + label {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+}
+input.toggle-round + label {
+    padding: 2px;
+    width: 40px;
+    height: 16px;
+    background-color: #dddddd;
+    border-radius: 60px;
+}
+input.toggle-round + label:before,
+input.toggle-round + label:after {
+    display: block;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    bottom: 1px;
+    content: "";
+}
+input.toggle-round + label:before {
+    right: 1px;
+    background-color: #f1f1f1;
+    border-radius: 80px;
+    transition: background 0.4s;
+}
+input.toggle-round + label:after {
+    width: 16px;
+    background-color: #fff;
+    border-radius: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: margin 0.4s;
+}
+input.toggle-round:checked + label:before {
+    background-color: #8ce196;
+}
+input.toggle-round:checked + label:after {
+    margin-left: 20px;
+}

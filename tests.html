@@ -24,7 +24,7 @@
     <script src="js/model/entities/ants/gatheringAnt.js"></script>
     <script src="js/model/entities/colony.js"></script>
     <script src="js/model/entities/pheromone.js"></script>
-    <script src="js/model/scenarios/basicScenario.js"></script>
+    <script src="js/model/scenarios/agentScenario.js"></script>
     <script src="js/model/scenarios/naturalScenario.js"></script>
     <script src="js/controller/controller.js"></script>
 
@@ -41,12 +41,43 @@
     <script src="tests/test-colony.js"></script>
     <script src="tests/test-pheromone.js"></script>
 
+    <!-- Menus -->
+    <link rel="import" id="naturalMenu" href="menu/naturalMenu.html">
+    <link rel="import" id="basicMenu" href="menu/agentMenu.html">
+    <link rel="import" id="advancedMenu" href="menu/advancedMenu.html">
+
 </head>
 <body>
 
 <!-- Testing framework results -->
 <div id="qunit"></div>
 <div id="qunit-fixture"></div>
+
+
+<!-- Visualisation -->
+<div id="page-container">
+    <div id="canvas-container">
+        <canvas id="tabSection"></canvas>
+        <div id="displaySection"></div>
+    </div>
+    <div id="camera-position">
+        <p><span id="cameraPosition"></span></p>
+    </div>
+
+    <ul id="control-menu" class="nav nav-tabs" id="uiTabs">
+        <li class="active"><a data-toggle="tab" href="#uit-controls">Controls</a></li>
+        <li><a data-toggle="tab" href="#uit-advanced">Advanced</a></li>
+        <li><a data-toggle="tab" href="#uit-info">Information</a></li>
+    </ul>
+
+    <div id="control-menu-content" class="tab-content">
+        <div id="uit-controls" class="tab-pane fade in active"></div>
+        <div id="uit-advanced" class="tab-pane fade"></div>
+        <div id="uit-info" class="tab-pane fade"></div>
+    </div>
+</div>
+
+<div id="footer"></div>
 
 </body>
 </html>

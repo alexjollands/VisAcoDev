@@ -14,7 +14,7 @@ var v_edgesSR = [];
 var v_edgesRed = [];
 var v_edgesBlue = [];
 var v_ants = [];
-var canvasScale = 1.1;
+var canvasScale = 1.2;
 var feedback = false;
 var tabs = [];
 var ctx2D;
@@ -26,6 +26,7 @@ var currentlyAnimating = true;
 var tabHeightScale = 12;
 var shortestPathColour = "0x00FF00";
 var pheromoneSpread = 2.5;
+var tabgroup = {};
 
 function render() {
     renderMenu();
@@ -38,7 +39,7 @@ function animate() {
         view.updateEdges();
         view.updateAnts();
         var delta = clock.getDelta();
-        controls.update(delta);
+        //controls.update(delta);
         feedbackInformation();
         render();
         requestAnimationFrame(animate);
@@ -62,44 +63,49 @@ function setupView(){
     birdseye_cam.position.z = 350;
     //birdseye_cam.up = new THREE.Vector3(0,0,1);
 
-    controls = new THREE.FlyControls( camera );
-    controls.movementSpeed = 500;
-    controls.domElement = displaySection;
-    controls.rollSpeed = Math.PI / 24;
-    controls.autoForward = false;
-    controls.dragToLook = true;
+    //controls = new THREE.FlyControls( camera );
+    //controls.movementSpeed = 500;
+    //controls.domElement = displaySection;
+    //controls.rollSpeed = Math.PI / 24;
+    //controls.autoForward = false;
+    //controls.dragToLook = true;
     ambientLight = new THREE.AmbientLight( 0x303030 );
     scene.add(ambientLight);
 }
 
 function setupTabs(){
-    tabSection = document.getElementById("tabSection");
-    tabSection.width = width;
-    tabSection.height = height / 12;
-    ctx2D = tabSection.getContext('2d');
-
+    //tabSection = document.getElementById("tabSection");
+    //tabSection.width = width;
+    //tabSection.height = height / 12;
+    //ctx2D = tabSection.getContext('2d');
+    //
     var tabSize = width / 5;
     var tabSpacing = tabSize;
-    tabs.push(new Tab("Nest-Food Scenario", 0, 0, tabSize, height / tabHeightScale, 'black', 'b-nest-food2.png'));
-    tabs.push(new Tab("TSP (Agents)", tabSpacing, 0, tabSize, height / tabHeightScale, 'black', 'b-tsp-agents.png'));
-    tabs.push(new Tab("TSP (Advanced)", (tabSpacing += tabSize), 0, tabSize, height / tabHeightScale, 'black', 'b-tsp-advanced2.png'));
-    tabs.push(new Tab("Network (Real World)", (tabSpacing += tabSize), 0, tabSize, height / tabHeightScale, 'black', 'b-network.png'));
-    tabs.push(new Tab("Google Maps (Real World)", (tabSpacing += tabSize), 0, tabSize, height / tabHeightScale, 'black', 'b-google-maps2.png'));
 
-    tabSection.onclick = function(e) {
-        var r = tabSection.getBoundingClientRect(),
-            x = e.clientX - r.left,
-            y = e.clientY - r.top;
+    tabgroup.nest = new Tab("Nest-Food Scenario", 0, 0, tabSize, height / tabHeightScale, 'black', 'b-nest-food2.png');
+    tabgroup.agents = new Tab("TSP (Agents)", tabSpacing, 0, tabSize, height / tabHeightScale, 'black', 'b-tsp-agents.png');
+    tabgroup.advanced = new Tab("TSP (Advanced)", (tabSpacing += tabSize), 0, tabSize, height / tabHeightScale, 'black', 'b-tsp-advanced2.png');
 
-        for(var i = 0, tab; tab = tabs[i++];) {
-            tab.getPath(ctx2D);
-
-            if (ctx2D.isPointInPath(x, y)) {
-                tab.performAction();
-                return;
-            }
-        }
-    };
+    //tabs.push(new Tab("Nest-Food Scenario", 0, 0, tabSize, height / tabHeightScale, 'black', 'b-nest-food2.png'));
+    //tabs.push(new Tab("TSP (Agents)", tabSpacing, 0, tabSize, height / tabHeightScale, 'black', 'b-tsp-agents.png'));
+    //tabs.push(new Tab("TSP (Advanced)", (tabSpacing += tabSize), 0, tabSize, height / tabHeightScale, 'black', 'b-tsp-advanced2.png'));
+    //tabs.push(new Tab("Network (Real World)", (tabSpacing += tabSize), 0, tabSize, height / tabHeightScale, 'black', 'b-network.png'));
+    //tabs.push(new Tab("Google Maps (Real World)", (tabSpacing += tabSize), 0, tabSize, height / tabHeightScale, 'black', 'b-google-maps2.png'));
+    //
+    //tabSection.onclick = function(e) {
+    //    var r = tabSection.getBoundingClientRect(),
+    //        x = e.clientX - r.left,
+    //        y = e.clientY - r.top;
+    //
+    //    for(var i = 0, tab; tab = tabs[i++];) {
+    //        tab.getPath(ctx2D);
+    //
+    //        if (ctx2D.isPointInPath(x, y)) {
+    //            tab.performAction();
+    //            return;
+    //        }
+    //    }
+    //};
 }
 
 function renderMenu(){
@@ -117,9 +123,9 @@ function onWindowResize() {
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
     renderer.setSize(width, height);
-    tabSection.width = width;
-    tabSection.height = height / tabHeightScale;
-    setTabSizes();
+   // tabSection.width = width;
+   // tabSection.height = height / tabHeightScale;
+  //  setTabSizes();
     renderMenu();
     render();
 }
@@ -171,11 +177,11 @@ function removeExistingCanvas(displaySection){
     }
 }
 
-function setTabSizes(){
-    var tabSize = width / 5;
-    var tabSpacing = tabSize;
-    tabs[0].setDimensions(0,0,tabSize, height / tabHeightScale);
-    for (var i = 0; i < tabs.length - 1; i++){
-        tabs[i+1].setDimensions(tabSpacing + (i * tabSize), 0, tabSize, height / tabHeightScale);
-    }
-}
+//function setTabSizes(){
+//    var tabSize = width / 5;
+//    var tabSpacing = tabSize;
+//    tabs[0].setDimensions(0,0,tabSize, height / tabHeightScale);
+//    for (var i = 0; i < tabs.length - 1; i++){
+//        tabs[i+1].setDimensions(tabSpacing + (i * tabSize), 0, tabSize, height / tabHeightScale);
+//    }
+//}

@@ -2,9 +2,24 @@
     <div id="uit-controls" class="tab-pane fade in active">
         <p>Speed</p>
         <p>Colony size</p>
-        <p>Display city graphics? <input id="showCitySpriteCheckbox" type="checkbox" checked="checked" onclick="controller.updateOptions()"></p>
+        <p>Display city graphics?
+            <span class="switch">
+                <input id="showCitySpriteCheckbox" class="toggle toggle-round" type="checkbox" checked="checked" onclick="controller.updateOptions()">
+                <label for="showCitySpriteCheckbox"></label>
+            </span>
+            <!--<input id="showCitySpriteCheckbox" type="checkbox" checked="checked" onclick="controller.updateOptions()">-->
+
+
+        </p>
         <div id="shortest-route">
-            <p>Display shortest route? <input id="showShortestRouteCheckbox" type="checkbox" checked="checked" onclick="controller.updateOptions()"></p>
+            <p>Display shortest route?
+            <span class="switch">
+                <input id="showShortestRouteCheckbox" class="toggle toggle-round" type="checkbox" checked="checked" onclick="controller.updateOptions()">
+                <label for="showShortestRouteCheckbox"></label>
+            </span>
+
+                <!--<input id="showShortestRouteCheckbox" type="checkbox" checked="checked" onclick="controller.updateOptions()">-->
+            </p>
             <p>Shortest route found so far: <span id="distance">____</span> found in iteration number <span id="iteration-number">____.</span></p>
         </div>
     </div>

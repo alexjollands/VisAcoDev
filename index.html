@@ -11,7 +11,7 @@
     <script src="utils/combinatorics.js"></script>
     <script src="utils/functions.js"></script>
     <script src="utils/three.min.js"></script>
-    <script src="utils/FlyControls.js"></script>
+
     <script src="utils/Projector.js"></script>
 
     <!-- Application code -->
@@ -50,34 +50,50 @@
 </head>
 <body>
 
+    <div class="menutabs">
+        <nav>
+            <ul id="menulst">
+                <li class="tab-current"><a href="#" id="nest"><span>Nest Food</span></a></li>
+                <li><a href="#" id="agents"><span>TSP Agents</span></a></li>
+                <li><a href="#" id="advanced"><span>TSP Advanced</span></a></li>
+
+            </ul>
+        </nav>
+    </div><!-- /tabs -->
+
+
     <!-- Visualisation -->
     <div id="page-container">
         <div id="canvas-container">
-            <canvas id="tabSection"></canvas>
             <div id="displaySection"></div>
+            <div id="infoSection">
+                <div>
+                    <h3>Controls</h3>
+                    <ul id="control-menu" class="nav nav-tabs" id="uiTabs">
+                        <li class="active"><a data-toggle="tab" href="#uit-controls">Controls</a></li>
+                        <li><a data-toggle="tab" href="#uit-advanced">Advanced</a></li>
+                        <li><a data-toggle="tab" href="#uit-info">Information</a></li>
+                    </ul>
+                    <div id="control-menu-content" class="tab-content">
+                        <div id="uit-controls" class="tab-pane fade in active"></div>
+                        <div id="uit-advanced" class="tab-pane fade"></div>
+                        <div id="uit-info" class="tab-pane fade"></div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="camera-position">
             <p><span id="cameraPosition"></span></p>
         </div>
 
-        <ul id="control-menu" class="nav nav-tabs" id="uiTabs">
-        <li class="active"><a data-toggle="tab" href="#uit-controls">Controls</a></li>
-        <li><a data-toggle="tab" href="#uit-advanced">Advanced</a></li>
-        <li><a data-toggle="tab" href="#uit-info">Information</a></li>
-        </ul>
-
-        <div id="control-menu-content" class="tab-content">
-            <div id="uit-controls" class="tab-pane fade in active"></div>
-            <div id="uit-advanced" class="tab-pane fade"></div>
-            <div id="uit-info" class="tab-pane fade"></div>
-        </div>
-    </div>
-
-    <div id="footer">
-
-        <a href="#" id="testbutton1">Test Me</a>
 
     </div>
+
+    <footer>
+
+        &copy: Mr. Smelly Al 2016
+
+    </footer>
 
     <!-- Run the application -->
     <script src="js/controller/main.js"></script>

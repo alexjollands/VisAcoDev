@@ -7,9 +7,9 @@
     <div id="uit-advanced" class="tab-pane fade">
             <div id="parameters">
                 <form id="parameter-form">
-                    <table border="1">
+                    <table border="0">
                         <tr>
-                            <td>Number of ants (between 1 and 100):</td>
+                            <td width="200">Number of ants (between 1 and 100):</td>
                             <td><input type="number" name="colonySize" id="colonySize" min="1" max="100"> </td>
                         </tr>
                         <tr>
@@ -28,11 +28,12 @@
                             <td>Path choosing randomness factor:</td>
                             <td><input type="number" name="pathRandomness" id="pathRandomness" min="0.01" max="100"> </td>
                         </tr>
-                        <tr>
-                            <td><input type="button" value="Change Parameters and Restart" onclick="controller.editParameters('Nest-Food Scenario', true)"></td>
-                            <td><input type="button" value="Change Parameters Live" onclick="controller.editParameters('Nest-Food Scenario', false)"></td>
-                        </tr>
+
+
                     </table>
+                    <input type="button" class="btn btn-primary" value="Change Parameters and Restart" onclick="controller.editParameters('Nest-Food Scenario', true)">
+                    <br><br>
+                    <input type="button" class="btn btn-primary" value="Change Parameters Live" onclick="controller.editParameters('Nest-Food Scenario', false)">
                 </form>
             </div>
 

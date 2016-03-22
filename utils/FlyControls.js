@@ -117,39 +117,39 @@ THREE.FlyControls = function ( object, domElement ) {
     };
 
     this.mousedown = function( event ) {
-
-        if ( this.domElement !== document ) {
-
-            this.domElement.focus();
-
-        }
-
-
-            if (this.dragToLook) {
-
-                if ($('#canvas:hover').length > 0) {
-                    console.log("Inside!");
-                    this.mouseStatus++;
-                }else{
-                    console.log("Not inside!");
-                }
-
-            } else {
-
-                switch (event.button) {
-
-                    case 0:
-                        this.moveState.forward = 1;
-                        break;
-                    case 2:
-                        this.moveState.back = 1;
-                        break;
-
-                }
-
-                this.updateMovementVector();
-
-            }
+        //
+        //if ( this.domElement !== document ) {
+        //
+        //    this.domElement.focus();
+        //
+        //}
+        //
+        //
+        //    if (this.dragToLook) {
+        //
+        //        if ($('#canvas:hover').length > 0) {
+        //            console.log("Inside!");
+        //            this.mouseStatus++;
+        //        }else{
+        //            console.log("Not inside!");
+        //        }
+        //
+        //    } else {
+        //
+        //        switch (event.button) {
+        //
+        //            case 0:
+        //                this.moveState.forward = 1;
+        //                break;
+        //            case 2:
+        //                this.moveState.back = 1;
+        //                break;
+        //
+        //        }
+        //
+        //        this.updateMovementVector();
+        //
+        //    }
 
     };
 
