@@ -179,7 +179,7 @@ var NaturalView = Class({
         var p2 = new THREE.Vector3(nodeB.x, nodeB.y, 0);
         var distance = p1.clone().sub(p2).length();
         var dotGap = distance / maxDots;
-        pheromoneSpread = 5;
+        var pheromoneSpread = 5;
 
         for (var i = 0; i < maxDots; i++) {
             var nextDot = getPointInBetweenByLength(p1, p2, (dotGap * i) + 1);

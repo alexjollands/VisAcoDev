@@ -39,7 +39,7 @@ var AdvancedScenario = Class({
         }
     },
     createNewAnt: function(i){
-        return new TouringAnt(i+1, new Tour(controller.graph.nodes.slice()), new Position()); // Mission or Task, not Tour
+        return new TouringAnt(i+1, new Tour(controller.graph.nodes.slice()), new Position());
     },
     getOriginNode: function(){
         return controller.graph.nodes[random(0, controller.graph.nodes.length - 1)];
@@ -67,7 +67,7 @@ var AdvancedScenario = Class({
         return destinationNode;
     },
     layPheromoneOnEdge: function(ant, pheromone){
-        var edge = ant.position.alongEdge;
+        ant.position.alongEdge.pheromoneLevel += pheromone;
     },
     evaporatePheromoneEffects: function(decayRate){
         for (var i = 0; i < controller.graph.edges.length; i++){

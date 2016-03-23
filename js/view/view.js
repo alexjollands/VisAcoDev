@@ -25,7 +25,6 @@ var displaySectionMaxHeight = 1000;
 var currentlyAnimating = true;
 var tabHeightScale = 12;
 var shortestPathColour = "0x00FF00";
-var pheromoneSpread = 2.5;
 var tabgroup = {};
 
 function render() {

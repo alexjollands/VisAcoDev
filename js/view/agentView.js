@@ -10,11 +10,9 @@ var AgentView = Class({
         birdseye_cam.position.x = 90;
         birdseye_cam.position.y = 75;
         birdseye_cam.position.z = 200;
-        //birdseye_cam.lookAt(new THREE.Vector3(80,60,0));
         render();
     },
     representModel: function(){
-
         /* Container graph */
         var graphGeometry = new THREE.Geometry();
         var graphMaterial = new THREE.MeshBasicMaterial({color: 0xff9900});
@@ -45,10 +43,8 @@ var AgentView = Class({
         // Pheromone particles
         redParticles = new THREE.Geometry();
         var redPMaterial = new THREE.ParticleBasicMaterial({color: 0xff0000, size: 1.2, transparent: true});
-
         blueParticles = new THREE.Geometry();
         var bluePMaterial = new THREE.ParticleBasicMaterial({color: 0x0000ff, size: 1.2, transparent: true});
-
 
         /* Edges */
         var edges = controller.graph.edges;
@@ -95,8 +91,10 @@ var AgentView = Class({
                 for (var addDots = 0; addDots < diff; addDots++){
                     var newParticleNum = this.choosePheromoneParticle(controller.graph.edges[i], vEdges[i]);
                     var newParticle = vEdges[i].particles.splice(newParticleNum, 1);
-                    vEdges[i].visibleParticles.push(newParticle[0]);
-                    newParticle[0].showParticle();
+                    if (newParticle[0] != undefined) {
+                        vEdges[i].visibleParticles.push(newParticle[0]);
+                        newParticle[0].showParticle();
+                    }
                 }
             }
             else if (diff < -1) {
@@ -116,10 +114,8 @@ var AgentView = Class({
                 var ant = controller.colony.ants[i];
                 if (v_ants.length < i + 1) {
                     var sprite = agentBlueSprite;
-                    //controller.colony.ants[i].agentType = "blueAgent";
                     if (i < scenario.numRedAgents) {
                         sprite = agentRedSprite;
-                        //controller.colony.ants[i].agentType = "redAgent";
                     }
                     var vAntMaterial = sprite.material.clone();
                     vAntMaterial.needsUpdate = true;
@@ -133,8 +129,7 @@ var AgentView = Class({
                 v_ants[i].position.set(antPos.x, antPos.y, 3);
             }
         }
-    }
-    ,
+    },
     /* Calculations of the vectors for variable-width rectangles inspired by
      * http://stackoverflow.com/questions/7854043/drawing-rectangle-between-two-points-with-arbitrary-width
      */
@@ -148,6 +143,7 @@ var AgentView = Class({
         var distance = p1.clone().sub(p2).length();
         var dotGap = distance / maxDots;
         this.particleSpacing = dotGap;
+        var pheromoneSpread = 1.5;
 
         for (var i = 0; i < maxDots; i++) {
             var nextDot = getPointInBetweenByLength(p1, p2, (dotGap * i) + 1);
@@ -193,7 +189,6 @@ var AgentView = Class({
         }
     },
     createNodes: function(){
-
         var nodes = controller.graph.nodes;
         for (var i in nodes){
             var node = this.citySprites[random(0, this.citySprites.length - 1)].clone();
@@ -210,7 +205,6 @@ var AgentView = Class({
         var nodeRadius = 2;
         var nodeSegments = 32;
         var nodeGeometry = new THREE.CircleGeometry( nodeRadius, nodeSegments );
-        var nodes = controller.graph.nodes;
         for (var j in nodes){
             var nodeMesh = new THREE.Mesh(nodeGeometry, nodeMaterial);
             nodeMesh.position.set(nodes[j].x, nodes[j].y, 3.1);
@@ -249,33 +243,23 @@ var AgentView = Class({
             if (ant.position.alongEdge.isEqual(edge)){
                 var source = ant.position.fromNode;
                 var antPos = ant.getXYCoordinates();
-                //var isMovingForwards = pointLiesOnPath(vEdge.particles[0], source, antPos);
                 var isMovingForwards = source.id == edge.nodeA.id;
                 var percent = ant.position.distance / edge.distance;
+                //percent = percent * 0.75;
                 var arrayScale = percent * vEdge.particles.length;
+                var blockRange = Math.floor(vEdge.particles.length / 10);
                 if (isMovingForwards){
-                    return random(0, arrayScale);
+                    var blockAmount = arrayScale - blockRange;
+                    if (blockAmount < 0){ blockAmount = 0; }
+                    return random(blockAmount, arrayScale);
                 }
                 else {
-                    return random(vEdge.particles.length - arrayScale, vEdge.particles.length - 1);
+                    var blockAmount = (vEdge.particles.length - arrayScale) + blockRange;
+                    if (blockAmount > vEdge.particles.length - 1){ blockAmount = vEdge.particles.length - 1; }
+                    return random(vEdge.particles.length - arrayScale, blockAmount);
                 }
             }
         }
         return random(0, vEdge.particles.length - 1);
-        // If there is no ant on the edge
-        // return newParticleNum = random(0, v_edges[i].particles.length - 1);
-        // If there is...
-        // Get the ants xy
-        // Get its source node xy
-        // Find a particle just behind it, return the index.
-
-        //xMax = 10;
-        //xMin = 1;
-        //
-        //yMax = 559.22;
-        //yMin = 300.77;
-        //
-        //percent = (inputY - yMin) / (yMax - yMin);
-        //outputX = percent * (xMax - xMin) + xMin;
     }
 });

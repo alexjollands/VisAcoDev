@@ -18,12 +18,13 @@ var AgentScenario = Class({
         outOfViewCoords.y = 15;
         outOfViewCoords.z = 0;
         this.outOfViewCoords = outOfViewCoords;
+        this.pheromoneFlatRate = 0.01;
     },
     getParams: function(){
         var params = {};
         params.pheromoneImportance    = 0;   // Alpha
         params.distanceImportance     = 10;      // Beta
-        params.pheromoneDecayRate     = 0.01;   // Rho
+        params.pheromoneDecayRate     = 0.001;   // Rho
         params.pheromoneDepositRate   = 1;
         params.initialPheromoneLevel  = 1;
         params.colonySize             = 2;
@@ -101,9 +102,7 @@ var AgentScenario = Class({
         }
     },
     calculatePheromoneDeposit: function(position){
-        return controller.pheromoneDepositRate / (position.alongEdge.distance / controller.antMovementPerUpdate);
+        return this.pheromoneFlatRate;
+        //return controller.pheromoneDepositRate / (position.alongEdge.distance / controller.antMovementPerUpdate);
     }
 });
-// Get the same amount of pheromone each time? So the blue and red agents look like they're depositing the same amount?
-// Who cares what the pheromone rate actually is? Its a demo.
-// These should be the controller.graph.redEdges or blueEdges (model vs view)
