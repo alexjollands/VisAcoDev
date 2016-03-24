@@ -10,7 +10,7 @@ var AgentScenario = Class({
         this.taskType = "Tour";
         this.displayAnts = true;
         this.antReleaseSpeed = 100;
-        this.showShortestRoute = true;
+        this.showShortestRoute = false;
         this.showCitySprite = true;
         this.numRedAgents = 1;
         var outOfViewCoords = {};
@@ -22,9 +22,9 @@ var AgentScenario = Class({
     },
     getParams: function(){
         var params = {};
-        params.pheromoneImportance    = 0;   // Alpha
-        params.distanceImportance     = 10;      // Beta
-        params.pheromoneDecayRate     = 0.001;   // Rho
+        params.pheromoneImportance    = 0;      // Alpha
+        params.distanceImportance     = 10;     // Beta
+        params.pheromoneDecayRate     = 0.0075; // Rho
         params.pheromoneDepositRate   = 1;
         params.initialPheromoneLevel  = 1;
         params.colonySize             = 2;
@@ -104,5 +104,11 @@ var AgentScenario = Class({
     calculatePheromoneDeposit: function(position){
         return this.pheromoneFlatRate * controller.antMovementPerUpdate;
         //return controller.pheromoneDepositRate / (position.alongEdge.distance / controller.antMovementPerUpdate);
+    },
+    calculatePheromoneEvaporationRate: function(){
+        return controller.antMovementPerUpdate / 1000;
+    },
+    getOptionValues: function(){
+        this.showCitySprite = document.getElementById("showCitySpriteCheckbox").checked;
     }
 });

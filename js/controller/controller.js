@@ -86,9 +86,13 @@ var Controller = Class({
         }
     },
     updateOptions: function(){
-        scenario.showShortestRoute = document.getElementById("showShortestRouteCheckbox").checked;
-        scenario.showCitySprite = document.getElementById("showCitySpriteCheckbox").checked;
+        scenario.getOptionValues();
         view.refreshNodeDisplay();
+    },
+    updateDemoSpeed: function(speed){
+        console.log("Changing speed: " + speed);
+        this.antMovementPerUpdate = Number(speed);
+        this.pheromoneDecayRate = scenario.calculatePheromoneEvaporationRate();
     }
 });
 

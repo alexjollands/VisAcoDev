@@ -57,54 +57,18 @@ function setupView(){
     scene.add(birdseye_cam);
     camera = birdseye_cam;
     birdseye_cam.position.x = 150;
-    //birdseye_cam.rotation.x = -Math.PI / 2;
     birdseye_cam.position.y = 150;
     birdseye_cam.position.z = 350;
-    //birdseye_cam.up = new THREE.Vector3(0,0,1);
-
-    //controls = new THREE.FlyControls( camera );
-    //controls.movementSpeed = 500;
-    //controls.domElement = displaySection;
-    //controls.rollSpeed = Math.PI / 24;
-    //controls.autoForward = false;
-    //controls.dragToLook = true;
     ambientLight = new THREE.AmbientLight( 0x303030 );
     scene.add(ambientLight);
 }
 
 function setupTabs(){
-    //tabSection = document.getElementById("tabSection");
-    //tabSection.width = width;
-    //tabSection.height = height / 12;
-    //ctx2D = tabSection.getContext('2d');
-    //
     var tabSize = width / 5;
     var tabSpacing = tabSize;
-
     tabgroup.nest = new Tab("Nest-Food Scenario", 0, 0, tabSize, height / tabHeightScale, 'black', 'b-nest-food2.png');
     tabgroup.agents = new Tab("TSP (Agents)", tabSpacing, 0, tabSize, height / tabHeightScale, 'black', 'b-tsp-agents.png');
     tabgroup.advanced = new Tab("TSP (Advanced)", (tabSpacing += tabSize), 0, tabSize, height / tabHeightScale, 'black', 'b-tsp-advanced2.png');
-
-    //tabs.push(new Tab("Nest-Food Scenario", 0, 0, tabSize, height / tabHeightScale, 'black', 'b-nest-food2.png'));
-    //tabs.push(new Tab("TSP (Agents)", tabSpacing, 0, tabSize, height / tabHeightScale, 'black', 'b-tsp-agents.png'));
-    //tabs.push(new Tab("TSP (Advanced)", (tabSpacing += tabSize), 0, tabSize, height / tabHeightScale, 'black', 'b-tsp-advanced2.png'));
-    //tabs.push(new Tab("Network (Real World)", (tabSpacing += tabSize), 0, tabSize, height / tabHeightScale, 'black', 'b-network.png'));
-    //tabs.push(new Tab("Google Maps (Real World)", (tabSpacing += tabSize), 0, tabSize, height / tabHeightScale, 'black', 'b-google-maps2.png'));
-    //
-    //tabSection.onclick = function(e) {
-    //    var r = tabSection.getBoundingClientRect(),
-    //        x = e.clientX - r.left,
-    //        y = e.clientY - r.top;
-    //
-    //    for(var i = 0, tab; tab = tabs[i++];) {
-    //        tab.getPath(ctx2D);
-    //
-    //        if (ctx2D.isPointInPath(x, y)) {
-    //            tab.performAction();
-    //            return;
-    //        }
-    //    }
-    //};
 }
 
 function renderMenu(){

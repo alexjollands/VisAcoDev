@@ -76,5 +76,12 @@ var AdvancedScenario = Class({
     },
     calculatePheromoneDeposit: function(position){
         return controller.pheromoneDepositRate / (position.alongEdge.distance / controller.antMovementPerUpdate);
+    },
+    calculatePheromoneEvaporationRate: function(){
+        return controller.antMovementPerUpdate / 700;
+    },
+    getOptionValues: function(){
+        this.showShortestRoute = document.getElementById("showShortestRouteCheckbox").checked;
+        this.showCitySprite = document.getElementById("showCitySpriteCheckbox").checked;
     }
 });

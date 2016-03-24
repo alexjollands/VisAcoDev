@@ -97,5 +97,8 @@ var NaturalScenario = Class({
     },
     calculatePheromoneDeposit: function(position){
         return controller.pheromoneDepositRate / (position.alongEdge.distance / controller.antMovementPerUpdate);
+    },
+    calculatePheromoneEvaporationRate: function(){
+        return controller.antMovementPerUpdate / 100;
     }
 });

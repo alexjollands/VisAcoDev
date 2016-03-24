@@ -1,6 +1,8 @@
 <div class="tab-content">
     <div id="uit-controls" class="tab-pane fade in active">
-        <p>Speed</p>
+        <p>Speed
+            <input id="demoSpeedSlider" type="range" min="1" max="100" step="1" onchange="controller.updateDemoSpeed(this.value)">
+        </p>
         <p>Colony size</p>
         <p>Display city graphics?
             <span class="switch">
@@ -8,8 +10,6 @@
                 <label for="showCitySpriteCheckbox"></label>
             </span>
             <!--<input id="showCitySpriteCheckbox" type="checkbox" checked="checked" onclick="controller.updateOptions()">-->
-
-
         </p>
         <div id="shortest-route">
             <p>Display shortest route?
@@ -51,11 +51,12 @@
                         <td>Initial pheromone level:</td>
                         <td><input type="number" name="initialPheromone" id="initialPheromone" value="" min="0" max="100"></td>
                     </tr>
-                    <tr>
-                        <td><input type="button" value="Change Parameters and Restart" onclick="controller.editParameters('TSP (Advanced)', true)"></td>
-                        <td><input type="button" value="Change Parameters Live" onclick="controller.editParameters('TSP (Advanced)', false)"></td>
-                    </tr>
                 </table>
+                <br  />
+                <input type="button" class="btn btn-primary" value="Change Parameters and Restart" onclick="controller.editParameters('TSP (Advanced)', true)">
+                <br><br>
+                <input type="button" class="btn btn-primary" value="Change Parameters Live" onclick="controller.editParameters('TSP (Advanced)', false)">
+
             </form>
         </div>
     </div>

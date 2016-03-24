@@ -180,11 +180,13 @@ function createNewScenario(viewType){
 }
 
 function restartScenario(viewType){
-    for (var i = 0; i < tabs.length; i++){
-        if (tabs[i].viewType == viewType){
-            tabs[i].performAction();
-            break;
-        }
+    switch (viewType) {
+        case "Nest-Food Scenario":  tabgroup.nest.performAction();
+                                    break;
+        case "TSP (Agents)":        tabgroup.agents.performAction();
+                                    break;
+        case "TSP (Advanced)":      tabgroup.advanced.performAction();
+                                    break;
     }
 }
 
@@ -245,9 +247,6 @@ function pointLiesOnPath(p, a, b){
     // (qx - px) * (ry - py) - (qy - py) * (rx - px)
     return (b.x - a.x) * (p.y - a.y) - (b.y - a.y) * (p.x - a.x) < 0.0001;
 }
-
-
-
 
 
 
