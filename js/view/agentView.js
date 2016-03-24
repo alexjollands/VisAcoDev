@@ -241,25 +241,23 @@ var AgentView = Class({
         for (var i = 0; i < controller.colony.ants.length; i++){
             var ant = controller.colony.ants[i];
             if (ant.position.alongEdge.isEqual(edge)){
+                var numParticles = vEdge.particles.length;
                 var source = ant.position.fromNode;
-                var antPos = ant.getXYCoordinates();
                 var isMovingForwards = source.id == edge.nodeA.id;
                 var percent = ant.position.distance / edge.distance;
-                //percent = percent * 0.75;
-                var arrayScale = percent * vEdge.particles.length;
-                var blockRange = Math.floor(vEdge.particles.length / 10);
+                var arrayScale = percent * numParticles;
+                var blockRange = Math.floor(numParticles / 10);
                 if (isMovingForwards){
                     var blockAmount = arrayScale - blockRange;
                     if (blockAmount < 0){ blockAmount = 0; }
                     return random(blockAmount, arrayScale);
                 }
                 else {
-                    var blockAmount = (vEdge.particles.length - arrayScale) + blockRange;
-                    if (blockAmount > vEdge.particles.length - 1){ blockAmount = vEdge.particles.length - 1; }
-                    return random(vEdge.particles.length - arrayScale, blockAmount);
+                    var blockAmount = (numParticles - arrayScale); // + blockRange;
+                    if (blockAmount > numParticles - 1){ blockAmount = numParticles - 1; }
+                    return random(numParticles - arrayScale, numParticles - 1);
                 }
             }
         }
-        return random(0, vEdge.particles.length - 1);
     }
 });

@@ -10,7 +10,7 @@ var NaturalView = Class({
         v_graph = this.representModel();
         scene.add(v_graph);
         birdseye_cam.position.x = 150;
-        birdseye_cam.position.y = 133;
+        birdseye_cam.position.y = 150;
         birdseye_cam.position.z = 275;
         render();
     },

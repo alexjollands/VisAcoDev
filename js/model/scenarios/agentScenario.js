@@ -102,7 +102,7 @@ var AgentScenario = Class({
         }
     },
     calculatePheromoneDeposit: function(position){
-        return this.pheromoneFlatRate;
+        return this.pheromoneFlatRate * controller.antMovementPerUpdate;
         //return controller.pheromoneDepositRate / (position.alongEdge.distance / controller.antMovementPerUpdate);
     }
 });
