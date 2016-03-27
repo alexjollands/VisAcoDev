@@ -16,7 +16,7 @@ var NaturalScenario = Class({
         paths.push([1,2,3,4,5,6,7,8,16,15,23,24,32,31,39,40,48,56,64]);
         this.paths = paths;
         this.pathCounter = 0;
-        this.pathRandomness = 20;
+        this.pathRandomness = 1;
         this.displayAnts = true;
         this.antReleaseSpeed = 0.15;
         this.showShortestRoute = false;

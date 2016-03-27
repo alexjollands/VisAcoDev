@@ -39,8 +39,9 @@ var AgentScenario = Class({
         return "agent.json";
     },
     setup: function(){
-        controller.graph.redEdges = controller.graph.edges.slice();
-        controller.graph.blueEdges = controller.graph.edges.slice();
+        populateMenuParameters(this.menuName);
+        //controller.graph.redEdges = controller.graph.edges.slice();
+        //controller.graph.blueEdges = controller.graph.edges.slice();
         controller.colony.disperseAnts();
         for (var i = 0; i < controller.colony.ants.length; i++) {
             controller.colony.ants[i].isActive = true;

@@ -7,6 +7,7 @@ var TouringAnt = Class({
         this.id = id;
         this.task = task;
         this.position = position;
+        this.agentType = "redAgent";
     },
     chooseNextNode: function(){
         /* This roulette wheel solution inspired by http://bit.ly/1Fo9IyN */
@@ -18,6 +19,7 @@ var TouringAnt = Class({
             var edge = currentNode.getEdgeTo(targetNode);
             var p = Math.pow(edge.pheromoneLevel, controller.pheromoneImportance);
             var d = Math.pow((1.0 / edge.distance), controller.distanceImportance);
+            if (this.agentType == "blueAgent") {d = Math.pow((edge.distance), controller.distanceImportance); }
             nodeProbabilities[i] = p * d;
             rouletteWheel += nodeProbabilities[i];
         }
@@ -45,6 +47,9 @@ var TouringAnt = Class({
     layPheromone: function(){
         this.position.alongEdge.pheromoneLevel += controller.pheromoneDepositRate;
     },
+    layPartialPheromone: function(pheromone){
+        scenario.layPheromoneOnEdge(this, pheromone);
+    },
     moveTo: function(targetNode, distanceMoved){
         this.position.fromNode = this.position.toNode;
         this.position.toNode = targetNode;
@@ -52,6 +57,11 @@ var TouringAnt = Class({
         this.position.alongEdge = controller.graph.findEdge(this.position.fromNode, this.position.toNode);
         this.position.distance = distanceMoved;
         this.task.totalLength += this.position.alongEdge.distance;
+    },
+    getXYCoordinates: function(){
+        var p1 = new THREE.Vector3(this.position.fromNode.x, this.position.fromNode.y, this.position.fromNode.z);
+        var p2 = new THREE.Vector3(this.position.toNode.x, this.position.toNode.y, this.position.toNode.z);
+        return getPointInBetweenByLength(p1, p2, this.position.distance);
     },
     toDetailedString: function() {
         return "Touring Ant #" + this.id + " is at position: " + this.position + ", on tour: " + this.task + ".";

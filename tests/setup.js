@@ -13,5 +13,5 @@ params.colonySize             = 30;
 params.antMovementPerUpdate   = 50;
 params.maximumIterations      = 50000;
 
-var scenario = new BasicScenario();
+var scenario = new NaturalScenario();
 var controller = new Controller();

@@ -131,7 +131,9 @@ function populateMenuParameters(menuName) {
         document.forms['parameter-form'].elements['initialPheromone'].value = controller.initialPheromoneLevel;
     }
     else if (menuName == "agentMenu"){
-        // Populate basic menu params
+        document.forms['parameter-form'].elements['agentNumber'].value = controller.colonySize;
+        document.forms['parameter-form'].elements['beta'].value = scenario.pheromoneFlatRate;
+        document.forms['parameter-form'].elements['rho'].value = controller.pheromoneDecayRate;
     }
     else if (menuName == "advancedMenu"){
         document.forms['parameter-form'].elements['colonySize'].value = controller.colonySize;
@@ -146,27 +148,29 @@ function populateMenuParameters(menuName) {
 function retrieveMenuParameters(menuName) {
     userSettings = {};
     if (menuName == "naturalMenu"){
-        userSettings.viewType = "naturalMenu";
+        userSettings.viewType = menuName;
         userSettings.colonySize = Number(document.forms['parameter-form'].elements['colonySize'].value);
         userSettings.antReleaseSpeed = Number(document.forms['parameter-form'].elements['antReleaseSpeed'].value);
         userSettings.pathRandomness = Number(document.forms['parameter-form'].elements['pathRandomness'].value);
         userSettings.pheromoneDepositRate = Number(document.forms['parameter-form'].elements['depositRate'].value);
         userSettings.initialPheromoneLevel = Number(document.forms['parameter-form'].elements['initialPheromone'].value);
-        return userSettings;
     }
     else if (menuName == "agentMenu"){
-        // Populate basic menu params
+        userSettings.viewType = menuName;
+        userSettings.numAgents = Number(document.forms['parameter-form'].elements['agentNumber'].value);
+        userSettings.pheromoneFlatRate = Number(document.forms['parameter-form'].elements['beta'].value);
+        userSettings.pheromoneDecayRate = Number(document.forms['parameter-form'].elements['rho'].value);
     }
     else if (menuName == "advancedMenu"){
-        userSettings.viewType = "advancedMenu";
+        userSettings.viewType = menuName;
         userSettings.colonySize = Number(document.forms['parameter-form'].elements['colonySize'].value);
         userSettings.pheromoneImportance = Number(document.forms['parameter-form'].elements['alpha'].value);
         userSettings.distanceImportance = Number(document.forms['parameter-form'].elements['beta'].value);
         userSettings.pheromoneDecayRate = Number(document.forms['parameter-form'].elements['rho'].value);
         userSettings.pheromoneDepositRate = Number(document.forms['parameter-form'].elements['depositRate'].value);
         userSettings.initialPheromoneLevel = Number(document.forms['parameter-form'].elements['initialPheromone'].value);
-        return userSettings;
     }
+    return userSettings;
 }
 
 function createNewScenario(viewType){
@@ -199,6 +203,7 @@ function loadSavedSettings(settings){
         return;
     }
     if (settings.viewType == "naturalMenu"){
+        if (scenario.viewType != "Nest-Food Scenario") { return; }
         controller.colonySize = settings.colonySize;
         scenario.antReleaseSpeed = settings.antReleaseSpeed;
         scenario.pathRandomness = settings.pathRandomness;
@@ -206,9 +211,14 @@ function loadSavedSettings(settings){
         controller.initialPheromoneLevel = settings.initialPheromoneLevel;
     }
     else if (settings.viewType == "agentMenu"){
-
+        if (scenario.viewType != "TSP (Agents)") { return; }
+        controller.colonySize = settings.numAgents;
+        controller.pheromoneDecayRate = settings.pheromoneDecayRate;
+        scenario.pheromoneFlatRate = settings.pheromoneFlatRate;
+        //controller.pheromoneDepositRate = settings.pheromoneDepositRate;
     }
     else if (settings.viewType == "advancedMenu"){
+        if (scenario.viewType != "TSP (Advanced)") { return; }
         controller.colonySize = settings.colonySize;
         controller.pheromoneImportance = settings.pheromoneImportance;
         controller.distanceImportance = settings.distanceImportance;
@@ -244,11 +254,24 @@ function refreshShortestRouteDisplay(){
 }
 
 function pointLiesOnPath(p, a, b){
-    // (qx - px) * (ry - py) - (qy - py) * (rx - px)
-    return (b.x - a.x) * (p.y - a.y) - (b.y - a.y) * (p.x - a.x) < 0.0001;
+    return (b.x - a.x) * (p.y - a.y) - (b.y - a.y) * (p.x - a.x) < 0.0000001;
 }
 
 
+
+function doMouseDown(event){
+    var vector = new THREE.Vector3();
+    vector.set(
+        ( event.clientX / (window.innerWidth / (canvasScale))) * 2 - 1,
+        - ( event.clientY / (window.innerHeight / (canvasScale))) * 2 + 1,
+        0.5 );
+    vector.unproject( camera );
+    var dir = vector.sub( camera.position ).normalize();
+    var distance = -camera.position.z / dir.z;
+    var pos = camera.position.clone().add( dir.multiplyScalar( distance ) );
+    alert("Boom" + " PosX:" + pos.x + " PosY: " + pos.y + " PosZ: " + pos.z);
+    console.log(pos);
+}
 
 
 

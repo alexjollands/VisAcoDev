@@ -1,9 +1,8 @@
 <div class="tab-content">
     <div id="uit-controls" class="tab-pane fade in active">
         <p>Speed
-            <input id="demoSpeedSlider" type="range" min="1" max="100" step="1" onchange="controller.updateDemoSpeed(this.value)">
+            <input id="demoSpeedSlider" type="range" min="1" max="100" step="1" value="50" onchange="controller.updateDemoSpeed(this.value)">
         </p>
-        <p>Colony size</p>
         <p>Display city graphics?
             <span class="switch">
                 <input id="showCitySpriteCheckbox" class="toggle toggle-round" type="checkbox" checked="checked" onclick="controller.updateOptions()">
@@ -20,14 +19,14 @@
 
                 <!--<input id="showShortestRouteCheckbox" type="checkbox" checked="checked" onclick="controller.updateOptions()">-->
             </p>
-            <p>Shortest route found so far: <span id="distance">____</span> found in iteration number <span id="iteration-number">____.</span></p>
+            <p>Shortest route so far: <span id="distance">____</span> (iteration number <span id="iteration-number">____.</span>)</p>
         </div>
     </div>
     <div id="uit-advanced" class="tab-pane fade">
         <p>This tab contains the whole gamut of editable parameters.</p>
         <div id="parameters">
             <form id="parameter-form">
-                <table border="1">
+                <table border="0">
                     <tr>
                         <td>Number of ants (between 1 and 100):</td>
                         <td><input type="number" name="colonySize" id="colonySize" min="1" max="100"> </td>

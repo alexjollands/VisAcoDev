@@ -36,6 +36,9 @@ var GatheringAnt = Class({
     layPheromone: function(){
         this.position.alongEdge.pheromoneLevel += controller.pheromoneDepositRate;
     },
+    layPartialPheromone: function(pheromone){
+        this.position.alongEdge.pheromoneLevel += pheromone;
+    },
     moveTo: function(targetNode, distanceMoved){
         this.position.fromNode = this.position.toNode;
         this.position.toNode = targetNode;

@@ -86,9 +86,6 @@ function onWindowResize() {
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
     renderer.setSize(width, height);
-   // tabSection.width = width;
-   // tabSection.height = height / tabHeightScale;
-  //  setTabSizes();
     renderMenu();
     render();
 }
@@ -100,7 +97,9 @@ function setupRenderer(){
     renderer.setClearColor( 0xffffff, 0);
     removeExistingCanvas(displaySection);
     displaySection.appendChild( renderer.domElement );
+    //renderer.domElement.addEventListener("mousedown", doMouseDown, false);
     window.addEventListener( 'resize', onWindowResize, false );
+
 }
 
 function calculateColourFromPheromoneLevel(pheromoneLevel){
