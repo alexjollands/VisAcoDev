@@ -3,20 +3,19 @@
         <p>Speed
             <input title="Use the slider to change the demonstration running speed." id="demoSpeedSlider" type="range" min="1" max="100" step="1" value="50" onchange="controller.updateDemoSpeed(this.value)">
         </p>
-        <p>Display city graphics?
+        <p title="Toggle the display of city building images.">Display city graphics?
             <span class="switch">
-                <input title="Toggle the display of city building images." id="showCitySpriteCheckbox" class="toggle toggle-round" type="checkbox" checked="checked" onclick="controller.updateOptions()">
+                <input id="showCitySpriteCheckbox" class="toggle toggle-round" type="checkbox" checked="checked" onclick="controller.updateOptions()">
                 <label for="showCitySpriteCheckbox"></label>
             </span>
         </p>
         <div id="shortest-route">
-            <p>Display shortest route?
+            <p title="Toggle the display of the shortest route found so far.">Display shortest route?
             <span class="switch">
-                <input title="Toggle the display of the shortest route found so far." id="showShortestRouteCheckbox" class="toggle toggle-round" type="checkbox" checked="checked" onclick="controller.updateOptions()">
+                <input id="showShortestRouteCheckbox" class="toggle toggle-round" type="checkbox" checked="checked" onclick="controller.updateOptions()">
                 <label for="showShortestRouteCheckbox"></label>
             </span>
 
-                <!--<input id="showShortestRouteCheckbox" type="checkbox" checked="checked" onclick="controller.updateOptions()">-->
             </p>
             <p>Shortest route so far: <span id="distance">____</span> (iteration number <span id="iteration-number">____.</span>)</p>
         </div>
@@ -59,7 +58,23 @@
         </div>
     </div>
     <div id="uit-info" class="tab-pane fade">
-        <p>This is the advanced scenario information section. </p>
-        <p> I could include info on the concept, any credits and attributions etc here.</p>
+        <p>
+            This scenario shows a simple ant colony optimisation (ACO) tackling the travelling salesman problem (TSP).
+        </p>
+        <p>
+            The artificial ants rapidly traverse the graph going from node to node visiting each exactly once per tour.
+            They lay pheromone as they go, with the stronger red colour indicating higher pheromone levels on that path.
+        </p>
+        <p>
+            The ants decide which node to visit next using a weighting system. This means they favour shorter paths with high
+            levels of pheromone on them. You can change these weightings yourself and see how it effects the overall outcome.
+        </p>
+        <p>
+            The green line shows the shortest route the algorithm has discovered so far. With a tiny graph like this the best
+            result found could very well be the actual shortest path, however in almost all real applications it will only ever be a reasonable approximation.
+        </p>
+        <p>
+            To find a reasonably optimum path in a short amount of time is of course the goal, as definitively finding the best route is too computationally expensive.
+        </p>
     </div>
 </div>

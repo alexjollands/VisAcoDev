@@ -3,7 +3,7 @@
         <p>Speed
             <input  title="Use the slider to change the demonstration running speed." id="demoSpeedSlider" type="range" min="0.5" max="10" step="0.25" value="0.75" onchange="controller.updateDemoSpeed(this.value)">
         </p>
-        <p>Display city graphics?
+        <p title="Toggle the display of city building images.">Display city graphics?
             <span class="switch">
                 <input id="showCitySpriteCheckbox" class="toggle toggle-round" type="checkbox" checked="checked" onclick="controller.updateOptions()">
                 <label for="showCitySpriteCheckbox"></label>
@@ -37,7 +37,21 @@
         </div>
     </div>
     <div id="uit-info" class="tab-pane fade">
-        <p>This is the basic scenario information section. </p>
-        <p> I could include info on the concept, any credits and attributions etc here.</p>
+        <p>
+            Travelling ants: this scenario shows artificial agents moving around a graph. The aim is to show how the
+            behaviour of ants can be applied to the travelling salesman problem (TSP).
+        </p>
+        <p>
+            These artificial agents travel from node to node loosely following the rules of the TSP, trying to visit each city once.
+            Laying pheromone as it goes, the red agent favours the closest city (with a shorter connecting path), whilst the blue agent(s) favour the farthest (meaning longer routes).
+        </p>
+        <p>
+            Turn up the speed and notice that when the red agent travels along a path for the second time it tops up the pheromone already there.
+            The blue agent on the other hand takes so long to get back to the same path that it has almost all evaporated.
+        </p>
+        <p>
+            This idea, that ants on a shorter route travel around the graph quicker (and therefore lay more pheromone) can be used
+            to create a simple ant colony optimisation (ACO) algorithm to solve complex combinatorial optimisation problems (such as the TSP).
+        </p>
     </div>
 </div>
