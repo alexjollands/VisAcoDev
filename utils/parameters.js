@@ -3,27 +3,30 @@
  */
 
 function populateMenuParameters(menuName) {
-    if (menuName == "naturalMenu"){
-        document.forms['parameter-form'].elements['colonySize'].value = controller.colonySize;
-        document.forms['parameter-form'].elements['antReleaseSpeed'].value = scenario.antReleaseSpeed;
-        document.forms['parameter-form'].elements['pathRandomness'].value = scenario.pathRandomness;
-        document.forms['parameter-form'].elements['depositRate'].value = controller.pheromoneDepositRate;
-        document.forms['parameter-form'].elements['initialPheromone'].value = controller.initialPheromoneLevel;
+    if (menuLoadComplete) {
+        if (menuName == "naturalMenu") {
+            document.forms['parameter-form'].elements['colonySize'].value = controller.colonySize;
+            document.forms['parameter-form'].elements['antReleaseSpeed'].value = scenario.antReleaseSpeed;
+            document.forms['parameter-form'].elements['pathRandomness'].value = scenario.pathRandomness;
+            document.forms['parameter-form'].elements['depositRate'].value = controller.pheromoneDepositRate;
+            document.forms['parameter-form'].elements['initialPheromone'].value = controller.initialPheromoneLevel;
+        }
+        else if (menuName == "agentMenu") {
+            document.forms['parameter-form'].elements['agentNumber'].value = controller.colonySize;
+            document.forms['parameter-form'].elements['beta'].value = scenario.pheromoneFlatRate;
+            document.forms['parameter-form'].elements['rho'].value = controller.pheromoneDecayRate;
+        }
+        else if (menuName == "advancedMenu") {
+            document.forms['parameter-form'].elements['colonySize'].value = controller.colonySize;
+            document.forms['parameter-form'].elements['alpha'].value = controller.pheromoneImportance;
+            document.forms['parameter-form'].elements['beta'].value = controller.distanceImportance;
+            document.forms['parameter-form'].elements['rho'].value = controller.pheromoneDecayRate;
+            document.forms['parameter-form'].elements['depositRate'].value = controller.pheromoneDepositRate;
+            document.forms['parameter-form'].elements['initialPheromone'].value = controller.initialPheromoneLevel;
+        }
+        refreshParameters = false;
+        menuLoadComplete = false;
     }
-    else if (menuName == "agentMenu"){
-        document.forms['parameter-form'].elements['agentNumber'].value = controller.colonySize;
-        document.forms['parameter-form'].elements['beta'].value = scenario.pheromoneFlatRate;
-        document.forms['parameter-form'].elements['rho'].value = controller.pheromoneDecayRate;
-    }
-    else if (menuName == "advancedMenu"){
-        document.forms['parameter-form'].elements['colonySize'].value = controller.colonySize;
-        document.forms['parameter-form'].elements['alpha'].value = controller.pheromoneImportance;
-        document.forms['parameter-form'].elements['beta'].value = controller.distanceImportance;
-        document.forms['parameter-form'].elements['rho'].value = controller.pheromoneDecayRate;
-        document.forms['parameter-form'].elements['depositRate'].value = controller.pheromoneDepositRate;
-        document.forms['parameter-form'].elements['initialPheromone'].value = controller.initialPheromoneLevel;
-    }
-    refreshParameters = false;
 }
 
 function retrieveMenuParameters(menuName) {

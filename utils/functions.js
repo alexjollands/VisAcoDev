@@ -104,11 +104,10 @@ function createNodeGridJSON(x, y, width, height, space){
 }
 
 function loadMenu(menuName){
-    var link = document.querySelector('link[id=' + menuName + ']');
-    var menuImport = link.import;
-    var menu = menuImport.querySelector('.tab-content');
-    document.getElementById("control-menu-content").innerHTML = menu.innerHTML;
-    resetMenu();
+    $( "#control-menu-content" ).load( url + "/menu/" + menuName + ".html", function() {
+        menuLoadComplete = true;
+        resetMenu();
+    } );
 }
 
 function resetMenu(){

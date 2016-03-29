@@ -27,9 +27,9 @@ var tabHeightScale = 12;
 var shortestPathColour = "0x00FF00";
 var tabgroup = {};
 var refreshParameters = false;
+var menuLoadComplete = false;
 
 function render() {
-    renderMenu();
     renderer.render( scene, camera );
 }
 
@@ -40,6 +40,7 @@ function animate() {
         view.updateAnts();
         var delta = clock.getDelta();
         //controls.update(delta);
+        updateMenu();
         feedbackInformation();
         render();
         requestAnimationFrame(animate);
@@ -76,10 +77,9 @@ function setupTabs(){
     $("#advanced").click(function(e){e.preventDefault(); tabgroup.advanced.performAction(); });
 }
 
-function renderMenu(){
-    for(var i = 0, tab; tab = tabs[i++];){
-        tab.render(ctx2D);
-        tab.renderBorder(ctx2D);
+function updateMenu(){
+    if (menuLoadComplete){
+        populateMenuParameters(scenario.menuName);
     }
 }
 
@@ -91,7 +91,6 @@ function onWindowResize() {
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
     renderer.setSize(width, height);
-    renderMenu();
     render();
 }
 
