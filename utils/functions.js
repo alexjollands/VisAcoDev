@@ -18,7 +18,6 @@ function findRouteDistance(nodeA, nodeB){
     return Math.sqrt(xDist + yDist);
 }
 
-
 function findShortestPathUsingBruteForce(nodes){
     var allPossibleRoutes = Combinatorics.permutation(nodes);
     allPossibleRoutes = allPossibleRoutes.toArray();
@@ -46,7 +45,6 @@ function findShortestPathUsingBruteForce(nodes){
     bestTour.totalLength = actualShortestRouteLength;
     return bestTour;
 }
-
 
 function manualCheckOfRoute(nodes){
     var routeLength = 0;
@@ -79,7 +77,6 @@ function sleep(delay) {
     var start = new Date().getTime();
     while (new Date().getTime() < start + delay);
 }
-
 
 function createNodeGridJSON(x, y, width, height, space){
     var jsonOutput = [];
@@ -122,57 +119,6 @@ function resetMenu(){
                     '<li><a data-toggle="tab" href="#uit-info">Information</a></li></ul>';
 }
 
-function populateMenuParameters(menuName) {
-    if (menuName == "naturalMenu"){
-        document.forms['parameter-form'].elements['colonySize'].value = controller.colonySize;
-        document.forms['parameter-form'].elements['antReleaseSpeed'].value = scenario.antReleaseSpeed;
-        document.forms['parameter-form'].elements['pathRandomness'].value = scenario.pathRandomness;
-        document.forms['parameter-form'].elements['depositRate'].value = controller.pheromoneDepositRate;
-        document.forms['parameter-form'].elements['initialPheromone'].value = controller.initialPheromoneLevel;
-    }
-    else if (menuName == "agentMenu"){
-        document.forms['parameter-form'].elements['agentNumber'].value = controller.colonySize;
-        document.forms['parameter-form'].elements['beta'].value = scenario.pheromoneFlatRate;
-        document.forms['parameter-form'].elements['rho'].value = controller.pheromoneDecayRate;
-    }
-    else if (menuName == "advancedMenu"){
-        document.forms['parameter-form'].elements['colonySize'].value = controller.colonySize;
-        document.forms['parameter-form'].elements['alpha'].value = controller.pheromoneImportance;
-        document.forms['parameter-form'].elements['beta'].value = controller.distanceImportance;
-        document.forms['parameter-form'].elements['rho'].value = controller.pheromoneDecayRate;
-        document.forms['parameter-form'].elements['depositRate'].value = controller.pheromoneDepositRate;
-        document.forms['parameter-form'].elements['initialPheromone'].value = controller.initialPheromoneLevel;
-    }
-}
-
-function retrieveMenuParameters(menuName) {
-    userSettings = {};
-    if (menuName == "naturalMenu"){
-        userSettings.viewType = menuName;
-        userSettings.colonySize = Number(document.forms['parameter-form'].elements['colonySize'].value);
-        userSettings.antReleaseSpeed = Number(document.forms['parameter-form'].elements['antReleaseSpeed'].value);
-        userSettings.pathRandomness = Number(document.forms['parameter-form'].elements['pathRandomness'].value);
-        userSettings.pheromoneDepositRate = Number(document.forms['parameter-form'].elements['depositRate'].value);
-        userSettings.initialPheromoneLevel = Number(document.forms['parameter-form'].elements['initialPheromone'].value);
-    }
-    else if (menuName == "agentMenu"){
-        userSettings.viewType = menuName;
-        userSettings.numAgents = Number(document.forms['parameter-form'].elements['agentNumber'].value);
-        userSettings.pheromoneFlatRate = Number(document.forms['parameter-form'].elements['beta'].value);
-        userSettings.pheromoneDecayRate = Number(document.forms['parameter-form'].elements['rho'].value);
-    }
-    else if (menuName == "advancedMenu"){
-        userSettings.viewType = menuName;
-        userSettings.colonySize = Number(document.forms['parameter-form'].elements['colonySize'].value);
-        userSettings.pheromoneImportance = Number(document.forms['parameter-form'].elements['alpha'].value);
-        userSettings.distanceImportance = Number(document.forms['parameter-form'].elements['beta'].value);
-        userSettings.pheromoneDecayRate = Number(document.forms['parameter-form'].elements['rho'].value);
-        userSettings.pheromoneDepositRate = Number(document.forms['parameter-form'].elements['depositRate'].value);
-        userSettings.initialPheromoneLevel = Number(document.forms['parameter-form'].elements['initialPheromone'].value);
-    }
-    return userSettings;
-}
-
 function createNewScenario(viewType){
     switch (viewType){
         case "Nest-Food Scenario":          return new NaturalScenario();   break;
@@ -194,46 +140,11 @@ function restartScenario(viewType){
     }
 }
 
-/*
- * This menu business needs a refactor.
- * Could use scenario.viewType here or overhaul the lot.
- */
-function loadSavedSettings(settings){
-    if (settings == null){
-        return;
-    }
-    if (settings.viewType == "naturalMenu"){
-        if (scenario.viewType != "Nest-Food Scenario") { return; }
-        controller.colonySize = settings.colonySize;
-        scenario.antReleaseSpeed = settings.antReleaseSpeed;
-        scenario.pathRandomness = settings.pathRandomness;
-        controller.pheromoneDepositRate = settings.pheromoneDepositRate;
-        controller.initialPheromoneLevel = settings.initialPheromoneLevel;
-    }
-    else if (settings.viewType == "agentMenu"){
-        if (scenario.viewType != "TSP (Agents)") { return; }
-        controller.colonySize = settings.numAgents;
-        controller.pheromoneDecayRate = settings.pheromoneDecayRate;
-        scenario.pheromoneFlatRate = settings.pheromoneFlatRate;
-        //controller.pheromoneDepositRate = settings.pheromoneDepositRate;
-    }
-    else if (settings.viewType == "advancedMenu"){
-        if (scenario.viewType != "TSP (Advanced)") { return; }
-        controller.colonySize = settings.colonySize;
-        controller.pheromoneImportance = settings.pheromoneImportance;
-        controller.distanceImportance = settings.distanceImportance;
-        controller.pheromoneDecayRate = settings.pheromoneDecayRate;
-        controller.pheromoneDepositRate = settings.pheromoneDepositRate;
-        controller.initialPheromoneLevel = settings.initialPheromoneLevel;
-    }
-}
-
 // This function originated here:
 // http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
 function rgbToHex(r, g, b) {
     return "0x" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
-
 
 function setupShortestRouteDisplay(graphMesh){
     for (var i = 0; i < v_edgesSR.length; i++){
@@ -257,8 +168,6 @@ function pointLiesOnPath(p, a, b){
     return (b.x - a.x) * (p.y - a.y) - (b.y - a.y) * (p.x - a.x) < 0.0000001;
 }
 
-
-
 function doMouseDown(event){
     var vector = new THREE.Vector3();
     vector.set(
@@ -269,9 +178,7 @@ function doMouseDown(event){
     var dir = vector.sub( camera.position ).normalize();
     var distance = -camera.position.z / dir.z;
     var pos = camera.position.clone().add( dir.multiplyScalar( distance ) );
-    alert("Boom" + " PosX:" + pos.x + " PosY: " + pos.y + " PosZ: " + pos.z);
+    alert("Click position: " + " PosX:" + pos.x + " PosY: " + pos.y + " PosZ: " + pos.z);
     console.log(pos);
 }
-
-
 

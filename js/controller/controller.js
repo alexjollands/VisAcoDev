@@ -73,6 +73,10 @@ var Controller = Class({
     },
     editParameters: function(viewType, restartDemo){
         userSettings = retrieveMenuParameters(scenario.menuName);
+        loadSavedSettings(userSettings);
+        if (refreshParameters) {
+            populateMenuParameters(scenario.menuName);
+        }
         if (restartDemo){
             restartScenario(viewType);
         }

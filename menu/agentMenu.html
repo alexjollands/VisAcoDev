@@ -1,7 +1,7 @@
 <div class="tab-content">
     <div id="uit-controls" class="tab-pane fade in active">
         <p>Speed
-            <input id="demoSpeedSlider" type="range" min="0.5" max="10" step="0.25" value="0.75" onchange="controller.updateDemoSpeed(this.value)">
+            <input  title="Use the slider to change the demonstration running speed." id="demoSpeedSlider" type="range" min="0.5" max="10" step="0.25" value="0.75" onchange="controller.updateDemoSpeed(this.value)">
         </p>
         <p>Display city graphics?
             <span class="switch">
@@ -16,14 +16,15 @@
         <div id="parameters">
             <form id="parameter-form">
                 <table border="0">
-                    <tr>
+                    <tr title="The number of ants/agents in the demonstration.">
                         <td>Number of agents:</td>
                         <td><input type="number" name="agentNumber" id="agentNumber" min="1" max="20"> </td>
                     </tr>
+                    <tr title="How much pheromone is laid down on the ground by each ant per movement.">
                         <td>Pheromone deposit rate:</td>
                         <td><input type="number" name="beta" id="beta" min="0.01" max="100"> </td>
                     </tr>
-                    <tr>
+                    <tr title="How quickly the pheromone trails evaporate.">
                         <td>Pheromone evaporation rate:</td>
                         <td><input type="number" name="rho" id="rho" value="" min="0.001" max="1"></td>
                     </tr>

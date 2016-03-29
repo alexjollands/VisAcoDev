@@ -26,6 +26,7 @@ var currentlyAnimating = true;
 var tabHeightScale = 12;
 var shortestPathColour = "0x00FF00";
 var tabgroup = {};
+var refreshParameters = false;
 
 function render() {
     renderMenu();
@@ -69,6 +70,10 @@ function setupTabs(){
     tabgroup.nest = new Tab("Nest-Food Scenario", 0, 0, tabSize, height / tabHeightScale, 'black', 'b-nest-food2.png');
     tabgroup.agents = new Tab("TSP (Agents)", tabSpacing, 0, tabSize, height / tabHeightScale, 'black', 'b-tsp-agents.png');
     tabgroup.advanced = new Tab("TSP (Advanced)", (tabSpacing += tabSize), 0, tabSize, height / tabHeightScale, 'black', 'b-tsp-advanced2.png');
+    $("#menulst li a").click(function(e){ $("#menulst li").removeClass('tab-current'); $(this).parent().addClass('tab-current'); });
+    $("#nest").click(function(e){e.preventDefault(); tabgroup.nest.performAction(); });
+    $("#agents").click(function(e){e.preventDefault(); tabgroup.agents.performAction(); });
+    $("#advanced").click(function(e){e.preventDefault(); tabgroup.advanced.performAction(); });
 }
 
 function renderMenu(){
@@ -138,12 +143,3 @@ function removeExistingCanvas(displaySection){
         displaySection.removeChild(displaySection.childNodes[i]);
     }
 }
-
-//function setTabSizes(){
-//    var tabSize = width / 5;
-//    var tabSpacing = tabSize;
-//    tabs[0].setDimensions(0,0,tabSize, height / tabHeightScale);
-//    for (var i = 0; i < tabs.length - 1; i++){
-//        tabs[i+1].setDimensions(tabSpacing + (i * tabSize), 0, tabSize, height / tabHeightScale);
-//    }
-//}

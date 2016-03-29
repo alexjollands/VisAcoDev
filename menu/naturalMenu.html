@@ -1,30 +1,30 @@
 <div class="tab-content">
     <div id="uit-controls" class="tab-pane fade in active">
         <p>Speed
-            <input id="demoSpeedSlider" type="range" min="0.25" max="5" step="0.25" value="1" onchange="controller.updateDemoSpeed(this.value)">
+            <input title="Use the slider to change the demonstration running speed." id="demoSpeedSlider" type="range" min="0.25" max="5" step="0.25" value="1" onchange="controller.updateDemoSpeed(this.value)">
         </p>
     </div>
     <div id="uit-advanced" class="tab-pane fade">
             <div id="parameters">
                 <form id="parameter-form">
                     <table border="0">
-                        <tr>
-                            <td width="200">Number of ants (between 1 and 100):</td>
+                        <tr title="The total number of ants in the system.">
+                            <td width="200">Number of ants:</td>
                             <td><input type="number" name="colonySize" id="colonySize" min="1" max="100"> </td>
                         </tr>
-                        <tr>
+                        <tr title="How quickly ants are released from the colony nest. A higher number means they leave closer together.">
                             <td>Ant release speed:</td>
-                            <td><input type="number" name="antReleaseSpeed" id="antReleaseSpeed" value="" min="0.1" max="1"></td>
+                            <td><input type="number" name="antReleaseSpeed" id="antReleaseSpeed" value="" min="1" max="10"></td>
                         </tr>
-                        <tr>
+                        <tr title="How much pheromone is laid down on the ground by each ant per movement.">
                             <td>Pheromone deposit rate:</td>
                             <td><input type="number" name="depositRate" id="depositRate" value="" min="0" max="100"></td>
                         </tr>
-                        <tr>
+                        <tr title="How much pheromone is on each path at the beginning.">
                             <td>Initial path pheromone level:</td>
                             <td><input type="number" name="initialPheromone" id="initialPheromone" value="" min="0" max="100"></td>
                         </tr>
-                        <tr>
+                        <tr title="How likely ants are to choose a random path over the one with the most pheromone.">
                             <td>Path choosing randomness factor:</td>
                             <td><input type="number" name="pathRandomness" id="pathRandomness" min="1" max="5"></td>
                         </tr>

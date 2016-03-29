@@ -1,19 +1,18 @@
 <div class="tab-content">
     <div id="uit-controls" class="tab-pane fade in active">
         <p>Speed
-            <input id="demoSpeedSlider" type="range" min="1" max="100" step="1" value="50" onchange="controller.updateDemoSpeed(this.value)">
+            <input title="Use the slider to change the demonstration running speed." id="demoSpeedSlider" type="range" min="1" max="100" step="1" value="50" onchange="controller.updateDemoSpeed(this.value)">
         </p>
         <p>Display city graphics?
             <span class="switch">
-                <input id="showCitySpriteCheckbox" class="toggle toggle-round" type="checkbox" checked="checked" onclick="controller.updateOptions()">
+                <input title="Toggle the display of city building images." id="showCitySpriteCheckbox" class="toggle toggle-round" type="checkbox" checked="checked" onclick="controller.updateOptions()">
                 <label for="showCitySpriteCheckbox"></label>
             </span>
-            <!--<input id="showCitySpriteCheckbox" type="checkbox" checked="checked" onclick="controller.updateOptions()">-->
         </p>
         <div id="shortest-route">
             <p>Display shortest route?
             <span class="switch">
-                <input id="showShortestRouteCheckbox" class="toggle toggle-round" type="checkbox" checked="checked" onclick="controller.updateOptions()">
+                <input title="Toggle the display of the shortest route found so far." id="showShortestRouteCheckbox" class="toggle toggle-round" type="checkbox" checked="checked" onclick="controller.updateOptions()">
                 <label for="showShortestRouteCheckbox"></label>
             </span>
 
@@ -27,26 +26,26 @@
         <div id="parameters">
             <form id="parameter-form">
                 <table border="0">
-                    <tr>
-                        <td>Number of ants (between 1 and 100):</td>
+                    <tr title="The size of the colony - the number of artificial agents active in the scenario.">
+                        <td>Number of ants:</td>
                         <td><input type="number" name="colonySize" id="colonySize" min="1" max="100"> </td>
                     </tr>
-                    <tr>
+                    <tr title="The weighting given to pheromone levels when an ant is choosing the best route.">
                         <td>Alpha (pheromone importance):</td>
                         <td><input type="number" name="alpha" id="alpha" min="0.01" max="100"> </td>
-                    <tr>
+                    <tr title="The weighting given to the length of an edge when ants are choosing the best route.">
                         <td>Beta (distance importance):</td>
                         <td><input type="number" name="beta" id="beta" min="0.01" max="100"> </td>
                     </tr>
-                    <tr>
+                    <tr title="How quickly pheromone trails evaporate from the edges.">
                         <td>Rho (pheromone evaporation rate):</td>
                         <td><input type="number" name="rho" id="rho" value="" min="0.001" max="1"></td>
                     </tr>
-                    <tr>
+                    <tr title="The rate at which ants lay pheromone on the paths they travel along.">
                         <td>Pheromone deposit rate:</td>
                         <td><input type="number" name="depositRate" id="depositRate" value="" min="0" max="100"></td>
                     </tr>
-                    <tr>
+                    <tr title="The amount of pheromone on each edge at the beginning of the scenario.">
                         <td>Initial pheromone level:</td>
                         <td><input type="number" name="initialPheromone" id="initialPheromone" value="" min="0" max="100"></td>
                     </tr>

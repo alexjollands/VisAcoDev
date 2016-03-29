@@ -18,7 +18,7 @@ var AgentScenario = Class({
         outOfViewCoords.y = 15;
         outOfViewCoords.z = 0;
         this.outOfViewCoords = outOfViewCoords;
-        this.pheromoneFlatRate = 0.01;
+        this.pheromoneFlatRate = 1;
     },
     getParams: function(){
         var params = {};
@@ -103,7 +103,7 @@ var AgentScenario = Class({
         }
     },
     calculatePheromoneDeposit: function(position){
-        return this.pheromoneFlatRate * controller.antMovementPerUpdate;
+        return (this.pheromoneFlatRate / 100) * controller.antMovementPerUpdate;
         //return controller.pheromoneDepositRate / (position.alongEdge.distance / controller.antMovementPerUpdate);
     },
     calculatePheromoneEvaporationRate: function(){

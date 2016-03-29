@@ -104,7 +104,7 @@ var NaturalView = Class({
         }
         if (controller.colony.deployingAnts){
             if (random(1,9) % 3 == 0){
-                controller.colony.numActiveAnts += scenario.antReleaseSpeed;
+                controller.colony.numActiveAnts += (scenario.antReleaseSpeed / 10);
                 var numActiveAnts = Math.floor(controller.colony.numActiveAnts);
                 if (controller.colonySize >= numActiveAnts){
                     for (var i = 0; i < numActiveAnts; i++){
