@@ -12,7 +12,6 @@
         </p>
     </div>
     <div id="uit-advanced" class="tab-pane fade">
-        <p>This tab contains the whole gamut of editable parameters.</p>
         <div id="parameters">
             <form id="parameter-form">
                 <table border="0">
@@ -22,7 +21,7 @@
                     </tr>
                     <tr title="How much pheromone is laid down on the ground by each ant per movement.">
                         <td>Pheromone deposit rate:</td>
-                        <td><input type="number" name="beta" id="beta" min="0.01" max="100"> </td>
+                        <td><input type="number" name="depositRate" id="depositRate" min="0.01" max="100"> </td>
                     </tr>
                     <tr title="How quickly the pheromone trails evaporate.">
                         <td>Pheromone evaporation rate:</td>
@@ -30,9 +29,9 @@
                     </tr>
                 </table>
                 <br  />
-                <input type="button" class="btn btn-primary" value="Change Parameters and Restart" onclick="controller.editParameters('TSP (Agents)', true)">
+                <input type="button" class="btn btn-primary" name="restartScene" value="Change Parameters and Restart" onclick="controller.editParameters('TSP (Agents)', true)">
                 <br><br>
-                <input type="button" class="btn btn-primary" value="Change Parameters Live" onclick="controller.editParameters('TSP (Agents)', false)">
+                <input type="button" class="btn btn-primary" name="changeLive" value="Change Parameters Live" onclick="controller.editParameters('TSP (Agents)', false)">
             </form>
         </div>
     </div>

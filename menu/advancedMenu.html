@@ -21,7 +21,6 @@
         </div>
     </div>
     <div id="uit-advanced" class="tab-pane fade">
-        <p>This tab contains the whole gamut of editable parameters.</p>
         <div id="parameters">
             <form id="parameter-form">
                 <table border="0">
@@ -50,9 +49,9 @@
                     </tr>
                 </table>
                 <br  />
-                <input type="button" class="btn btn-primary" value="Change Parameters and Restart" onclick="controller.editParameters('TSP (Advanced)', true)">
+                <input type="button" class="btn btn-primary" name="restartScene" value="Change Parameters and Restart" onclick="controller.editParameters('TSP (Advanced)', true)">
                 <br><br>
-                <input type="button" class="btn btn-primary" value="Change Parameters Live" onclick="controller.editParameters('TSP (Advanced)', false)">
+                <input type="button" class="btn btn-primary" name="changeLive" value="Change Parameters Live" onclick="controller.editParameters('TSP (Advanced)', false)">
 
             </form>
         </div>

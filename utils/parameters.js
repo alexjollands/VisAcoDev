@@ -13,7 +13,7 @@ function populateMenuParameters(menuName) {
         }
         else if (menuName == "agentMenu") {
             document.forms['parameter-form'].elements['agentNumber'].value = controller.colonySize;
-            document.forms['parameter-form'].elements['beta'].value = scenario.pheromoneFlatRate;
+            document.forms['parameter-form'].elements['depositRate'].value = scenario.pheromoneFlatRate;
             document.forms['parameter-form'].elements['rho'].value = controller.pheromoneDecayRate;
         }
         else if (menuName == "advancedMenu") {
@@ -42,7 +42,7 @@ function retrieveMenuParameters(menuName) {
     else if (menuName == "agentMenu"){
         userSettings.viewType = menuName;
         userSettings.numAgents = validateParameter(Number(document.forms['parameter-form'].elements['agentNumber'].value), 2, 10);
-        userSettings.pheromoneFlatRate = validateParameter(Number(document.forms['parameter-form'].elements['beta'].value), 0, 10);
+        userSettings.pheromoneFlatRate = validateParameter(Number(document.forms['parameter-form'].elements['depositRate'].value), 0, 10);
         userSettings.pheromoneDecayRate = validateParameter(Number(document.forms['parameter-form'].elements['rho'].value), 0, 100);
     }
     else if (menuName == "advancedMenu"){
