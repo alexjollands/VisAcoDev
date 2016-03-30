@@ -3,9 +3,8 @@
  */
 
 QUnit.test("Testing the Graph class", function( assert ) {
-    /* Setup */
-    controller = new Controller(params);
 
+    /* Setup */
     var nodeA = new Node(1,0,100,[]);
     var nodeB = new Node(2,50,100,[]);
     var nodeC = new Node(3,100,50,[]);
@@ -41,6 +40,7 @@ QUnit.test("Testing the Graph class", function( assert ) {
     var decayRate = 0.1;
     graph.edges[0].pheromoneLevel = 10;
     graph.edges[1].pheromoneLevel = 20;
+    controller.graph = graph;
     graph.applyPheromoneDecay(decayRate);
     assert.equal(graph.edges[0].pheromoneLevel, 9);
     assert.equal(graph.edges[1].pheromoneLevel, 18);

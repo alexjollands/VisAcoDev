@@ -103,42 +103,6 @@ function createNodeGridJSON(x, y, width, height, space){
     return jsonOutput;
 }
 
-function loadMenu(menuName){
-    $( "#control-menu-content" ).load( url + "/menu/" + menuName + ".html", function() {
-        menuLoadComplete = true;
-        resetMenu();
-    } );
-}
-
-function resetMenu(){
-    document.getElementById("control-menu").innerHTML = '' +
-                    '<ul id="control-menu" class="nav nav-tabs" id="uiTabs">' +
-                    '<li class="active"><a data-toggle="tab" href="#uit-controls">Controls</a></li>' +
-                    '<li><a data-toggle="tab" href="#uit-advanced">Advanced</a></li>' +
-                    '<li><a data-toggle="tab" href="#uit-info">Information</a></li></ul>';
-}
-
-function createNewScenario(viewType){
-    switch (viewType){
-        case "Nest-Food Scenario":          return new NaturalScenario();   break;
-        case "TSP (Agents)":                return new AgentScenario();     break;
-        case "TSP (Advanced)":              return new AdvancedScenario();  break;
-        case "Network (Real World)":        return new NaturalScenario();   break;
-        case "Google Maps (Real World)":    return new NaturalScenario();   break;
-    }
-}
-
-function restartScenario(viewType){
-    switch (viewType) {
-        case "Nest-Food Scenario":  tabgroup.nest.performAction();
-                                    break;
-        case "TSP (Agents)":        tabgroup.agents.performAction();
-                                    break;
-        case "TSP (Advanced)":      tabgroup.advanced.performAction();
-                                    break;
-    }
-}
-
 // This function originated here:
 // http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
 function rgbToHex(r, g, b) {

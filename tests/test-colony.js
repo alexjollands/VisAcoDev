@@ -4,21 +4,16 @@
 
 QUnit.test("Testing the Colony class", function( assert ) {
 
-    /* Setup */
-    controller = new Controller(params);
-    controller.setupGraph();
-    controller.createColony();
-    var colony = controller.colony;
-    
-    /* Testing the disperseAnts() function */
-    assert.equal(colony.ants[0].position.fromNode, undefined);
-    assert.equal(colony.ants[0].position.toNode, undefined);
-    colony.disperseAnts();
-    assert.notEqual(colony.ants[0].position.fromNode, undefined);
-    assert.notEqual(colony.ants[0].position.toNode, undefined);
-    assert.equal(colony.ants[0].position.distance, 0);
+    var ants = createSampleAnts(10);
 
-    /* Test the updateAnts() function */
-    colony.updateAnts();
+    /* Test the constructor */
+    var colony = new Colony(ants);
+    assert.equal(colony.ants.length, ants.length);
+    assert.equal(colony.ants[0].id, ants[0].id);
+    assert.equal(colony.numActiveAnts, 0);
+    assert.equal(colony.deployingAnts, true);
+
+    /* Unable to test disperseAnts() due to too many dependencies */
+    /* Unable to test updateAnts() and updateAnt() due to too many dependencies */
 
 });

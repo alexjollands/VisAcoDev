@@ -3,9 +3,8 @@
  */
 
 QUnit.test("Testing the Mission class", function( assert ) {
-    /* Setup */
-    controller = new Controller(params);
 
+    /* Setup */
     var nodes = [];
     var nodeA = new Node(1, 100, 100, 10);
     var nodeB = new Node(2, 0, 50, 5);
@@ -14,14 +13,14 @@ QUnit.test("Testing the Mission class", function( assert ) {
 
     /* Test the constructor */
     var mission = new Mission(nodes.slice());
-
-    assert.equal(mission.unvisitedNodes.length, 3);
+    assert.equal(mission.targetNode.id, nodes[2].id);
     assert.notEqual(mission.unvisitedNodes, nodes);
     assert.equal(mission.visitedNodes.length, 0);
-    assert.equal(mission.nestNode, nodes[0]);
-    assert.equal(mission.foodNode, nodes[2]);
+    assert.equal(mission.nestNode.id, nodes[0].id);
+    assert.equal(mission.foodNode.id, nodes[2].id);
 
     /* Test the nodeVisited() function */
+    mission.unvisitedNodes = nodes.slice();
     mission.nodeVisited(nodeA);
     assert.equal(mission.unvisitedNodes.length, 2);
     assert.equal(mission.unvisitedNodes[0].id, nodeB.id);

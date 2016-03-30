@@ -12,6 +12,11 @@ var AdvancedScenario = Class({
         this.antReleaseSpeed = 100;
         this.showShortestRoute = true;
         this.showCitySprite = true;
+        var outOfViewCoords = {};
+        outOfViewCoords.x = 50;
+        outOfViewCoords.y = 50;
+        outOfViewCoords.z = 200;
+        this.outOfViewCoords = outOfViewCoords;
     },
     getParams: function(){
         var params = {};
@@ -68,6 +73,9 @@ var AdvancedScenario = Class({
     },
     layPheromoneOnEdge: function(ant, pheromone){
         ant.position.alongEdge.pheromoneLevel += pheromone;
+    },
+    getParticleHideCoordinates: function(){
+        return this.outOfViewCoords;
     },
     evaporatePheromoneEffects: function(decayRate){
         for (var i = 0; i < controller.graph.edges.length; i++){

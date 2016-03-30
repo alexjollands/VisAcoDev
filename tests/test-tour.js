@@ -3,9 +3,8 @@
  */
 
 QUnit.test("Testing the Tour class", function( assert ) {
-    /* Setup */
-    controller = new Controller(params);
 
+    /* Setup */
     var nodes = [];
     var nodeA = new Node(1, 100, 100, 10);
     var nodeB = new Node(2, 0, 50, 5);

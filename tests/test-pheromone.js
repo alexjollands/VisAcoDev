@@ -3,9 +3,8 @@
  */
 
 QUnit.test("Testing the Pheromone class", function( assert ) {
-    /* Setup */
-    controller = new Controller(params);
 
+    /* Setup */
     var x = 100;
     var y = 250;
     var z = 0;

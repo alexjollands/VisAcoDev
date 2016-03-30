@@ -3,9 +3,8 @@
  */
 
 QUnit.test("Testing the Position class", function( assert ) {
-    /* Setup */
-    controller = new Controller(params);
 
+    /* Setup */
     var fromNode = new Node(1,0,100,[]);
     var toNode = new Node(2,0,0,[]);
     var alongEdge = new Edge(fromNode, toNode, 10);
