@@ -6,14 +6,14 @@
         <p title="Toggle the display of city building images.">Display city graphics?
             <span class="switch">
                 <input id="showCitySpriteCheckbox" class="toggle toggle-round" type="checkbox" checked="checked" onclick="controller.updateOptions()">
-                <label for="showCitySpriteCheckbox"></label>
+                <label for="showCitySpriteCheckbox" id="showCitySpriteCheckboxLabel"></label>
             </span>
         </p>
         <div id="shortest-route">
             <p title="Toggle the display of the shortest route found so far.">Display shortest route?
             <span class="switch">
                 <input id="showShortestRouteCheckbox" class="toggle toggle-round" type="checkbox" checked="checked" onclick="controller.updateOptions()">
-                <label for="showShortestRouteCheckbox"></label>
+                <label for="showShortestRouteCheckbox" id="showShortestRouteCheckboxLabel"></label>
             </span>
 
             </p>
@@ -58,7 +58,7 @@
     </div>
     <div id="uit-info" class="tab-pane fade">
         <p>
-            This scenario shows a simple ant colony optimisation (ACO) tackling the travelling salesman problem (TSP).
+            This scenario shows a simple ant colony optimisation (ACO) algorithm tackling a small example of the travelling salesman problem (TSP).
         </p>
         <p>
             The artificial ants rapidly traverse the graph going from node to node visiting each exactly once per tour.

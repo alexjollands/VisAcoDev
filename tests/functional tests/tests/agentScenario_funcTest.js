@@ -1,5 +1,8 @@
 var url = "http://localhost:50008/VisAcoDev/";
 
+/*
+ * Testing the functionality of the Agents scenario.
+*/
 module.exports = {
 
     beforeEach : function(browser) {
@@ -19,6 +22,14 @@ module.exports = {
             .pause(3000)
             .verify.attributeEquals('#demoSpeedSlider', 'value', '5.25')
     },
+
+     'Toggle display city graphics' : function (browser) {
+        browser
+             .pause(1000)
+             .click('#showCitySpriteCheckboxLabel')
+             .pause(2000)
+             .expect.element('#showCitySpriteCheckbox').to.not.be.selected
+     },
 
     'Switch to advanced controls and information tabs' : function (browser) {
         browser

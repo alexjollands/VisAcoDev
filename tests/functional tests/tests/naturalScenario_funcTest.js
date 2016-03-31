@@ -1,5 +1,8 @@
 var url = "http://localhost:50008/VisAcoDev/";
 
+/*
+ * Testing the functionality of the Natural scenario.
+*/
 module.exports = {
 
     beforeEach : function(browser) {
