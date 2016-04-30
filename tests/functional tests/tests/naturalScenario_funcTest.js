@@ -1,4 +1,4 @@
-var url = "http://localhost:50008/VisAcoDev/";
+var url = "http://users.aber.ac.uk/arj24/visaco/";
 
 /*
  * Testing the functionality of the Natural scenario.
