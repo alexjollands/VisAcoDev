@@ -9,6 +9,7 @@ function populateMenuParameters(menuName) {
             document.forms['parameter-form'].elements['antReleaseSpeed'].value = scenario.antReleaseSpeed;
             document.forms['parameter-form'].elements['pathRandomness'].value = scenario.pathRandomness;
             document.forms['parameter-form'].elements['depositRate'].value = controller.pheromoneDepositRate;
+            document.forms['parameter-form'].elements['rho'].value = controller.pheromoneDecayRate;
             document.forms['parameter-form'].elements['initialPheromone'].value = controller.initialPheromoneLevel;
         }
         else if (menuName == "agentMenu") {
@@ -37,20 +38,21 @@ function retrieveMenuParameters(menuName) {
         userSettings.antReleaseSpeed = validateParameter(Number(document.forms['parameter-form'].elements['antReleaseSpeed'].value), 1, 10);
         userSettings.pathRandomness = validateParameter(Number(document.forms['parameter-form'].elements['pathRandomness'].value), 1, 4);
         userSettings.pheromoneDepositRate = validateParameter(Number(document.forms['parameter-form'].elements['depositRate'].value), 0, 10);
-        userSettings.initialPheromoneLevel = validateParameter(Number(document.forms['parameter-form'].elements['initialPheromone'].value), 0, 10);
+        userSettings.pheromoneDecayRate = validateParameter(Number(document.forms['parameter-form'].elements['rho'].value), 0, 1);
+        userSettings.initialPheromoneLevel = validateParameter(Number(document.forms['parameter-form'].elements['initialPheromone'].value), 0, 1);
     }
     else if (menuName == "agentMenu"){
         userSettings.viewType = menuName;
         userSettings.numAgents = validateParameter(Number(document.forms['parameter-form'].elements['agentNumber'].value), 2, 10);
         userSettings.pheromoneFlatRate = validateParameter(Number(document.forms['parameter-form'].elements['depositRate'].value), 0, 10);
-        userSettings.pheromoneDecayRate = validateParameter(Number(document.forms['parameter-form'].elements['rho'].value), 0, 100);
+        userSettings.pheromoneDecayRate = validateParameter(Number(document.forms['parameter-form'].elements['rho'].value), 0, 1);
     }
     else if (menuName == "advancedMenu"){
         userSettings.viewType = menuName;
         userSettings.colonySize = validateParameter(Number(document.forms['parameter-form'].elements['colonySize'].value), 1, 300);
         userSettings.pheromoneImportance = validateParameter(Number(document.forms['parameter-form'].elements['alpha'].value), 0, 10);
         userSettings.distanceImportance = validateParameter(Number(document.forms['parameter-form'].elements['beta'].value), 0, 10);
-        userSettings.pheromoneDecayRate = validateParameter(Number(document.forms['parameter-form'].elements['rho'].value), 0, 100);
+        userSettings.pheromoneDecayRate = validateParameter(Number(document.forms['parameter-form'].elements['rho'].value), 0, 1);
         userSettings.pheromoneDepositRate = validateParameter(Number(document.forms['parameter-form'].elements['depositRate'].value), 0, 10);
         userSettings.initialPheromoneLevel = validateParameter(Number(document.forms['parameter-form'].elements['initialPheromone'].value), 0, 10);
     }
@@ -67,6 +69,7 @@ function loadSavedSettings(settings){
         scenario.antReleaseSpeed = settings.antReleaseSpeed;
         scenario.pathRandomness = settings.pathRandomness;
         controller.pheromoneDepositRate = settings.pheromoneDepositRate;
+        controller.pheromoneDecayRate = settings.pheromoneDecayRate;
         controller.initialPheromoneLevel = settings.initialPheromoneLevel;
     }
     else if (settings.viewType == "agentMenu"){

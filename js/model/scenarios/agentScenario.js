@@ -46,6 +46,7 @@ var AgentScenario = Class({
         for (var i = 0; i < controller.colony.ants.length; i++) {
             controller.colony.ants[i].isActive = true;
         }
+        controller.pheromoneDecayRate = this.calculatePheromoneEvaporationRate();
     },
     createNewAnt: function(i){
         var newAnt = new TouringAnt(i+1, new Tour(controller.graph.nodes.slice()), new Position());

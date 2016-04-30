@@ -48,7 +48,6 @@ var Controller = Class({
                 }
             }
         }
-        // Link nodes and edges here, rather than do another O(n2) process
         return edges;
     },
     setupGraph: function(){
@@ -99,21 +98,3 @@ var Controller = Class({
         this.pheromoneDecayRate = scenario.calculatePheromoneEvaporationRate();
     }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

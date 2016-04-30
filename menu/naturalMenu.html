@@ -1,5 +1,15 @@
 <div class="tab-content">
     <div id="uit-controls" class="tab-pane fade in active">
+
+        <p>
+            Watch as a colony of ants leaves its nest in search of food, with each one laying pheromone on the ground as it travels.
+        </p>
+        <p>
+            This pheromone influences and attracts the other ants, and because more of it accumulates on shorter paths the whole colony eventually converges on the shorter (and quicker) route.
+        </p>
+
+
+        <br />
         <p>Speed
             <input title="Use the slider to change the demonstration running speed." id="demoSpeedSlider" type="range" min="0.25" max="5" step="0.25" value="1" onchange="controller.updateDemoSpeed(this.value)">
         </p>
@@ -20,9 +30,13 @@
                             <td>Pheromone deposit rate:</td>
                             <td><input type="number" name="depositRate" id="depositRate" value="" min="0" max="100"></td>
                         </tr>
+                        <tr title="How quickly the pheromone trails evaporate.">
+                            <td>Pheromone evaporation rate:</td>
+                            <td><input type="number" name="rho" id="rho" value="" min="0.001" max="1"></td>
+                        </tr>
                         <tr title="How much pheromone is on each path at the beginning.">
                             <td>Initial path pheromone level:</td>
-                            <td><input type="number" name="initialPheromone" id="initialPheromone" value="" min="0" max="100"></td>
+                            <td><input type="number" name="initialPheromone" id="initialPheromone" value="" min="0" max="1"></td>
                         </tr>
                         <tr title="How likely ants are to choose a random path over the one with the most pheromone.">
                             <td>Path choosing randomness factor:</td>

@@ -1,5 +1,17 @@
 <div class="tab-content">
     <div id="uit-controls" class="tab-pane fade in active">
+
+
+        <p>
+            These artificial agents having been given the task of traversing the graph, laying pheromone as they go. The red agent prefers shorter routes between nodes whilst the blue tends to pick the longest.
+        </p>
+
+        <p>
+            Use the controls below to speed up the demo, fine tune the parameters in the advanced tab or click the information tab for a more detailed explanation of the scenario.
+        </p>
+
+
+        <br  />
         <p>Speed
             <input  title="Use the slider to change the demonstration running speed." id="demoSpeedSlider" type="range" min="0.5" max="10" step="0.25" value="0.75" onchange="controller.updateDemoSpeed(this.value)">
         </p>
@@ -49,7 +61,7 @@
             The blue agent on the other hand takes so long to get back to the same path that it has almost all evaporated.
         </p>
         <p>
-            This idea, that ants on a shorter route travel around the graph quicker (and therefore lay more pheromone) can be used
+            This idea that ants on a shorter route travel around the graph quicker (and therefore lay more pheromone) can be used
             to create a simple ant colony optimisation (ACO) algorithm to solve complex combinatorial optimisation problems (such as the TSP).
         </p>
     </div>

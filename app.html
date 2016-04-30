@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta data -->
+    <meta charset="UTF-8">
+    <title>Visualising Ant Colony Optimisation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="app.min.css">
+</head>
+<body>
+
+<div class="menutabs">
+    <nav>
+        <ul id="menulst">
+            <li class="tab-current"><a href="#" id="nest"><span>Nest Food</span></a></li>
+            <li><a href="#" id="agents"><span>TSP Agents</span></a></li>
+            <li><a href="#" id="advanced"><span>TSP Advanced</span></a></li>
+        </ul>
+    </nav>
+</div>
+<div id="page-container">
+    <div id="canvas-container">
+        <div id="displaySection"></div>
+        <div id="infoSection">
+            <div>
+                <h3>Controls</h3>
+                <ul id="control-menu" class="nav nav-tabs" id="uiTabs">
+                    <li class="active"><a data-toggle="tab" href="#uit-controls">Controls</a></li>
+                    <li><a data-toggle="tab" href="#uit-advanced" title="A tab containing basic controls.">Advanced</a></li>
+                    <li><a data-toggle="tab" href="#uit-info">Information</a></li>
+                </ul>
+                <div id="control-menu-content" class="tab-content">
+                    <div id="uit-controls" class="tab-pane fade in active"></div>
+                    <div id="uit-advanced" class="tab-pane fade"></div>
+                    <div id="uit-info" class="tab-pane fade"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    &copy: Alex Jollands 2016
+</footer>
+<script src="production.min.js"></script>
+</body>
+</html>
